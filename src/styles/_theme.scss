@@ -8,27 +8,29 @@
    feel free to play around with these and see what other look you can come up with! :D
 */
 
-$accent: #97ABFF;
-$accentDark: #123597;
-$textColor: white;
-$background: #262632;
+:root {
+  /* Theme Colors */
+  --accent: #484848;
+  --accentDark: #000000;
+  --textColor: #ffffff;
+  --background: #9b9b9b;
 
-/* some constants */
+  /* some constants */
+  --DESKTOP_WIDTH: 1160px;
+  --SMALL_LAPTOPS_WIDTH: 970px;
+  --TABLETS_WIDTH: 750px;
+  --SMALL_WIDTH: 768px;
 
-$DESKTOP_WIDTH: 1160px;
-$SMALL_LAPTOPS_WIDTH: 970px;
-$TABLETS_WIDTH: 750px;
-$SMALL_WIDTH: 768px;
+  /* some standard elements */
+  /* fonts */
+  --fontDefault: "M PLUS Rounded 1c", sans-serif;
+  --fontMono: "Roboto Mono", monospace;
 
-/* some standard elements */
-/* fonts */
-$fontDefault: "M PLUS Rounded 1c", sans-serif;
-$fontMono: "Roboto Mono", monospace;
+  /* a standard drop shadow */
+  --dropShadow: 0 0.5em 0.5em rgba(0, 0, 0, 0.25);
 
-/* a standard drop shadow */
-$dropShadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25);
-
-$borderRadius: 0.75em;
+  --borderRadius: 0.75em;
+}
 
 /* mixins
 

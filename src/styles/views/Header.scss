@@ -7,7 +7,8 @@
 
   &.title {
     font-weight: bold;
-    color: $background;
+    color: var(--background);
     text-align: center;
+    color: var(--textColor);
   }
 }
