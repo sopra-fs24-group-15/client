@@ -44,6 +44,15 @@
     top: 2em;
     left: 5%;
   }
+  .logo_small.middle {
+    user-select: none;
+    margin: 0 auto;
+    margin-top: 1em;
+    margin-bottom: 2em;
+    display: block;
+    justify-content: center;
+    width: 10em;
+  }
   .logo_small.right {
     width: 4.5em;
     user-select: none;
@@ -54,11 +63,15 @@
   }
   &.field {
     display: flex;
+    font-size: 18px;
+    padding-left: 10%;
+    padding-right: 10%;
     flex-direction: column;
     justify-content: center;
+    padding-bottom: 0em;
   }
   &.input {
-    height: 35px;
+    height: 3.5em;
     padding-left: 15px;
     margin-left: -4px;
     border: none;
@@ -76,6 +89,7 @@
   &.button-container {
     display: flex;
     justify-content: center;
+    margin-top: 2em;
     margin-bottom: 2em;
   }
 }

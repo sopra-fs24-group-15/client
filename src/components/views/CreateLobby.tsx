@@ -6,6 +6,12 @@ import { Button } from "components/ui/Button";
 import "styles/views/Login.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
+// @ts-ignore
+import logo from "../img/logo.png";
+// @ts-ignore
+import rules from "../img/rules.png";
+// @ts-ignore
+import back from "../img/back.png";
 
 /*
 It is possible to add multiple components inside a single file,
@@ -37,30 +43,28 @@ const Login = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState<string>(null);
 
-  const doLogin = async () => {
-    try {
-      const requestBody = JSON.stringify({ username, name });
-      const response = await api.post("/users", requestBody);
+  /* Back Button */
+  const doBack = async () => {
+    navigate("/login");
+  };
 
-      // Get the returned user and update a new object.
-      const user = new User(response.data);
+  /* Rule Button */
+  const doRule = async () => {
+    //TODO go to rule page
+  };
 
-      // Store the token into the local storage.
-      localStorage.setItem("token", user.token);
-
-      // Login successfully worked --> navigate to the route /game in the GameRouter
-      navigate("/game");
-    } catch (error) {
-      alert(
-        `Something went wrong during the login: \n${handleError(error)}`
-      );
-    }
+  /* Create Lobby Button */
+  const doCreate = async () => {
+    //TODO create Lobby, go to lobby
   };
 
   return (
     <BaseContainer>
       <div className="login container">
         <div className="login form">
+          <img src={back} draggable="false" alt="Back" className="login logo_small left" onClick={() => doBack()}/>
+          <img src={logo} draggable="false" alt="Logo" className="login logo_small middle"/>
+          <img src={rules} draggable="false" alt="Rules" className="login logo_small right" onClick={() => doRule()}/>
           <FormField
             value={username}
             onChange={(un: string) => setUsername(un)}
@@ -69,7 +73,7 @@ const Login = () => {
             <Button
               disabled={!username}
               width="100%"
-              onClick={() => doLogin()}
+              onClick={() => doCreate()}
             >
               Create Lobby
             </Button>

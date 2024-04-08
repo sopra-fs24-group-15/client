@@ -4,11 +4,11 @@ import { Button } from "components/ui/Button";
 import "styles/views/Login.scss";
 import BaseContainer from "components/ui/BaseContainer";
 // @ts-ignore
-import logo from "../ui/logo.png";
+import logo from "../img/logo.png";
 // @ts-ignore
-import rules from "../ui/rules.png";
+import rules from "../img/rules.png";
 // @ts-ignore
-import theme from "../ui/theme.png";
+import theme from "../img/theme.png";
 
 /*
 It is possible to add multiple components inside a single file,
