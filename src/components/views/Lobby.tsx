@@ -75,11 +75,13 @@ const Game = () => {
         );
       }
     }
-
-    fetchData();
+    // TODO reactivate fetch data
+    //fetchData();
   }, []);
 
-  let content = <Spinner />;
+  // TODO reactivate loading spinner
+  //let content = <Spinner />;
+  let content;
 
   if (users) {
     content = (
@@ -100,7 +102,7 @@ const Game = () => {
 
   return (
     <BaseContainer className="game container">
-      <h2>Happy Coding!</h2>
+      <h2>Lobby</h2>
       <p className="game paragraph">
         Get all users from secure endpoint:
       </p>
