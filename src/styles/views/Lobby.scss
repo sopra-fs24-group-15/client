@@ -90,6 +90,15 @@
     align-items: center;
     justify-content: center;
   }
+  .button-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px; /* Adjust this value to your liking */
+    margin-bottom: 2em;
+  }
+  .button{
+    width: 10em;
+  }
 }
 
 .player {

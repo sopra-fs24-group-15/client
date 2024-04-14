@@ -52,6 +52,14 @@ const Lobby = () => {
     //TODO go to rule page
   };
 
+  /* Game Settings */
+  const gameSettings = async () => {
+  };
+
+  /* Start Game */
+  const startGame = async () => {
+  };
+
 
   // TODO reactivate loading spinner
   //let content = <Spinner />;
@@ -97,6 +105,24 @@ const Lobby = () => {
           </tr>
         </table>
         {content}
+        <div className="lobby button-container">
+          <div className="lobby button">
+            <Button
+              width="100%"
+              onClick={() => gameSettings()}
+            >
+              game settings
+            </Button>
+          </div>
+          <div className="lobby button">
+            <Button
+              width="100%"
+              onClick={() => startGame()}
+            >
+              start game
+            </Button>
+          </div>
+        </div>
       </div>
     </BaseContainer>
   );

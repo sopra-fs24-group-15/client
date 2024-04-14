@@ -59,8 +59,8 @@ const Lobby = () => {
 
   if (users) {
     content = (
-      <div className="game">
-        <ul className="game user-list">
+      <div className="lobby">
+        <ul className="lobby user-list">
           {users.map((user: User) => (
             <li key={user.id}>
               <Player user={user} />
@@ -73,34 +73,34 @@ const Lobby = () => {
 
   return (
     <BaseContainer className="lobby container">
+      <div className="lobby content">
+        <img src={home} draggable="false" alt="Back" className="lobby logo_small left" onClick={() => doHome()}/>
+        <img src={logo} draggable="false" alt="Logo" className="lobby logo_small middle"/>
+        <img src={rules} draggable="false" alt="Rules" className="lobby logo_small right" onClick={() => doRule()}/>
 
-      <img src={home} draggable="false" alt="Back" className="login logo_small left" onClick={() => doHome()}/>
-      <img src={logo} draggable="false" alt="Logo" className="login logo_small middle"/>
-      <img src={rules} draggable="false" alt="Rules" className="login logo_small right" onClick={() => doRule()}/>
-
-      <table className="lobby infoContainer">
-        <tr className="infoLobbyCode">
-          <td>lobby code</td>
-          <td>:</td>
-          <td className="infoContent">CODE</td>
-        </tr>
-        <tr>
-          <td>gamemode</td>
-          <td>:</td>
-          <td className="infoContent">standard</td>
-        </tr>
-        <tr>
-          <td>creation time</td>
-          <td>:</td>
-          <td className="infoContent">60s</td>
-        </tr>
-        <tr>
-          <td>rounds</td>
-          <td>:</td>
-          <td className="infoContent">5</td>
-        </tr>
-      </table>
-      {content}
+        <table className="lobby infoContainer">
+          <tr className="infoLobbyCode">
+            <td>LOBBY CODE</td>
+            <td className="infoContent">code</td>
+          </tr>
+          <tr>
+            <td>GAMEMODE</td>
+            <td className="infoContent">standard</td>
+          </tr>
+          <tr>
+            <td>CREATION TIME</td>
+            <td className="infoContent">60s</td>
+          </tr>
+          <tr>
+            <td>ROUNDS</td>
+            <td className="infoContent">5</td>
+          </tr>
+        </table>
+        {content}
+        <p>waiting for lobby owner to start the game</p>
+        <Spinner />
+        <br></br>
+      </div>
     </BaseContainer>
   );
 };
