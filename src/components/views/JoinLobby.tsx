@@ -75,7 +75,8 @@ const Login = () => {
 
   /* Create Lobby Button */
   const doJoin = async () => {
-    //TODO join Lobby, go to lobby
+    //TODO create Lobby logic, go to lobby
+    navigate("/lobby/player");
   };
 
   return (

@@ -1,0 +1,119 @@
+@import "../theme";
+
+/* The '&' is a shorthand for the containing element,
+  so for example a '&.user-list' inside .game will compile to
+  .game.user-list
+
+  for more information visit https://sass-lang.com/guide
+ */
+
+.lobby {
+  &.container {
+    margin-top: 2em;
+    min-height: 300px;
+    /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
+    @include center;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    min-width: 34em;
+    max-width: 60em;
+    font-size: 16px;
+    font-weight: 300;
+    padding-left: 37px;
+    padding-right: 37px;
+    border-radius: 0.75em;
+    background-color: var(--background);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    box-shadow: var(--dropShadow);
+    position: relative;
+  }
+  
+  .logo_small.left {
+    width: 4.5em;
+    user-select: none;
+    justify-self: end;
+    position: absolute;
+    top: 2em;
+    left: 5%;
+  }
+  .logo_small.middle {
+    user-select: none;
+    margin: 0 auto;
+    margin-top: 5%;
+    margin-bottom: 2em;
+    display: block;
+    justify-content: center;
+    width: 10em;
+  }
+  .logo_small.right {
+    width: 4.5em;
+    user-select: none;
+    justify-self: end;
+    position: absolute;
+    top: 2em;
+    right: 5%;
+  }
+
+  .infoContainer {
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    margin-top: -1em;
+    margin-bottom: 4em;
+    margin-left: -1em;
+    width: 20em;
+  }
+  .infoLobbyCode{
+    margin-bottom: 14em;
+    font-weight: bolder;
+  }
+  .infoContent {
+    text-align: right;
+  }
+
+  &.user-list {
+    list-style: none;
+    padding-left: 0;
+  }
+  &.user-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.player {
+  &.container {
+    margin: 0.5em 0;
+    width: 20em;
+    padding: 10px;
+    border-radius: var(--borderRadius);
+    display: flex;
+    align-items: center;
+    background: lighten(pink, 5);
+  }
+  &.name {
+    font-weight: 300;
+    margin-left: 5px;
+  }
+  &.username {
+    font-weight: 500;
+    color: var(--accent);
+  }
+  &.id {
+    margin-left: auto;
+    margin-right: 10px;
+    font-family: var(--fontMono);
+    font-weight: 300;
+  }
+}

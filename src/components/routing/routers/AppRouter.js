@@ -1,11 +1,12 @@
 import React from "react";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import {GameGuard} from "../routeProtectors/GameGuard";
-import GameRouter from "./GameRouter";
 import {LoginGuard} from "../routeProtectors/LoginGuard";
 import Login from "../../views/Login";
 import CreateLobby from "../../views/CreateLobby";
 import JoinLobby from "../../views/JoinLobby";
+import LobbyOwner from "../../views/LobbyOwner";
+import LobbyPlayer from "../../views/LobbyPlayer";
 
 /**
  * Main router of your application.
@@ -17,30 +18,15 @@ import JoinLobby from "../../views/JoinLobby";
  * Documentation about routing in React: https://reactrouter.com/en/main/start/tutorial 
  */
 
-/*
-<Routes>
-        
-        <Route path="/game/*" element={<GameGuard />}>
-          <Route path="/game/*" element={<GameRouter base="/game"/>} />
-        </Route>
-
-        <Route path="/login" element={<LoginGuard />}>
-          <Route path="/login" element={<Login/>} />
-        </Route>
-
-        <Route path="/" element={
-          <Navigate to="/game" replace />
-        }/>
-
-      </Routes>
-*/
 const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        
-        <Route path="/lobby/*" element={<GameGuard />}>
-          <Route path="/lobby/*" element={<GameRouter base="/lobby"/>} />
+        <Route path="/lobby/owner" element={<GameGuard />}>
+          <Route path="/lobby/owner" element={<LobbyOwner/>} />
+        </Route>
+        <Route path="/lobby/player" element={<GameGuard />}>
+          <Route path="/lobby/player" element={<LobbyPlayer/>} />
         </Route>
 
         <Route path="/login" element={<LoginGuard />}>

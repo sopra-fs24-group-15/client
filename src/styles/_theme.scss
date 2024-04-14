@@ -8,6 +8,10 @@
    feel free to play around with these and see what other look you can come up with! :D
 */
 
+
+// <uniquifier>: Use a unique and descriptive class name
+// <weight>: Use a value from 300 to 700
+
 :root {
   /* Theme Colors */
   --accent: #484848;
@@ -23,8 +27,8 @@
 
   /* some standard elements */
   /* fonts */
-  --fontDefault: "M PLUS Rounded 1c", sans-serif;
-  --fontMono: "Roboto Mono", monospace;
+  --fontDefault: Jura, "M PLUS Rounded 1c", sans-serif;
+  --fontMono: Jura, "Roboto Mono", monospace;
 
   /* a standard drop shadow */
   --dropShadow: 0 0.5em 0.5em rgba(0, 0, 0, 0.25);
