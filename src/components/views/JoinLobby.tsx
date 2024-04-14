@@ -25,7 +25,7 @@ const FormField1 = (props) => {
       <label className="login label">{props.label}</label>
       <input
         className="login input"
-        placeholder="username"
+        placeholder="Username"
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
       />
@@ -44,7 +44,7 @@ const FormField2 = (props) => {
       <label className="login label">{props.label}</label>
       <input
         className="login input"
-        placeholder="lobby ID"
+        placeholder="Join code"
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
       />
