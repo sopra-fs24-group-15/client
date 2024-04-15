@@ -24,8 +24,8 @@
     align-items: center;
     justify-content: center;
     width: 60%;
-    min-width: 34em;
-    max-width: 60em;
+    min-width: 60em;
+    max-width: 80%;
     font-size: 16px;
     font-weight: 300;
     padding-left: 37px;
@@ -48,7 +48,7 @@
   .logo_small.middle {
     user-select: none;
     margin: 0 auto;
-    margin-top: 5%;
+    margin-top: 1em;
     margin-bottom: 2em;
     display: block;
     justify-content: center;
@@ -61,6 +61,13 @@
     position: absolute;
     top: 2em;
     right: 5%;
+  }
+
+  .title {
+    font-size: 4em;
+    font-weight: 900;
+    margin-top: 0em;
+    margin-bottom: 0.5em;
   }
 
   .infoContainer {

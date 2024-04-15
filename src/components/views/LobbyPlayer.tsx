@@ -73,6 +73,8 @@ const LobbyPlayer = () => {
         <img src={logo} draggable="false" alt="Logo" className="lobby logo_small middle"/>
         <img src={rules} draggable="false" alt="Rules" className="lobby logo_small right" onClick={() => doRule()}/>
 
+        <p className="lobby title"> WAITING </p>
+
         <table className="lobby infoContainer">
           <tr className="infoLobbyCode">
             <td>LOBBY CODE</td>
