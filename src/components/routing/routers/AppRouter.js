@@ -2,7 +2,7 @@ import React from "react";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import {GameGuard} from "../routeProtectors/GameGuard";
 import {LoginGuard} from "../routeProtectors/LoginGuard";
-import Login from "../../views/Login";
+import Home from "../../views/Home";
 import CreateLobby from "../../views/CreateLobby";
 import JoinLobby from "../../views/JoinLobby";
 import LobbyOwner from "../../views/LobbyOwner";
@@ -29,8 +29,8 @@ const AppRouter = () => {
           <Route path="/lobby/player" element={<LobbyPlayer/>} />
         </Route>
 
-        <Route path="/login" element={<LoginGuard />}>
-          <Route path="/login" element={<Login/>} />
+        <Route path="/home" element={<LoginGuard />}>
+          <Route path="/home" element={<Home/>} />
         </Route>
 
         <Route path="/createLobby" element={<LoginGuard />}>
@@ -42,7 +42,7 @@ const AppRouter = () => {
         </Route>
 
         <Route path="/" element={
-          <Navigate to="/game" replace />
+          <Navigate to="/home" replace />
         }/>
 
       </Routes>

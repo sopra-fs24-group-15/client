@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {useNavigate} from "react-router-dom";
 import { Button } from "components/ui/Button";
-import "styles/views/Login.scss";
+import "styles/views/Home.scss";
 import BaseContainer from "components/ui/BaseContainer";
 // @ts-ignore
 import logo from "../img/logo.png";
@@ -17,7 +17,7 @@ As a rule of thumb, use one file per component and only add small,
 specific components that belong to the main one in the same file.
  */
 
-const Login = () => {
+const Home = () => {
   const navigate = useNavigate();
   const [name, setName] = useState<string>(null);
   const [username, setUsername] = useState<string>(null);
@@ -53,8 +53,8 @@ const Login = () => {
 
   /* define themes here!*/
   const themes = [
-    ["#484848", "#000000", "#ffffff", "#9b9b9b"],
-    ["#d0d0d0", "#313131", "#000000", "#454545"]
+    ["#575757", "#000000", "#ffffff", "#1d1d1d", "#c3c3c3"],
+    ["#d0d0d0", "#313131", "#000000", "#ffffff", "#575757" ]
   ]
   let activeTheme = 0;
   
@@ -66,24 +66,26 @@ const Login = () => {
     }
     let accent = themes[activeTheme][0];
     let accentDark = themes[activeTheme][1];
-    let textColor = themes[activeTheme][2];
-    let background = themes[activeTheme][3];
+    let buttonTextColor = themes[activeTheme][2];
+    let normalTextColor = themes[activeTheme][3];
+    let background = themes[activeTheme][4];
+
 
     document.documentElement.style.setProperty("--accent", accent);
     document.documentElement.style.setProperty("--accentDark", accentDark);
-    document.documentElement.style.setProperty("--textColor", textColor);
+    document.documentElement.style.setProperty("--buttonTextColor", buttonTextColor);
+    document.documentElement.style.setProperty("--normalTextColor", normalTextColor);
     document.documentElement.style.setProperty("--background", background);
-    console.log("test")
   };
 
   return (
     <BaseContainer>
-      <div className="login container">
-        <div className="login form">
-          <img src={theme} draggable="false" alt="Theme" className="login logo_small left" onClick={() => doTheme()}/>
-          <img src={rules} draggable="false" alt="rules" className="login logo_small right"/>
-          <img src={logo} draggable="false" alt="Logo" className="login logo_large"/>
-          <div className="login button-container">
+      <div className="home container">
+        <div className="home form">
+          <img src={theme} draggable="false" alt="Theme" className="home logo_small left" onClick={() => doTheme()}/>
+          <img src={rules} draggable="false" alt="rules" className="home logo_small right"/>
+          <img src={logo} draggable="false" alt="Logo" className="home logo_large"/>
+          <div className="home button-container">
             <Button
               width="100%"
               onClick={() => doCreate()}
@@ -91,7 +93,7 @@ const Login = () => {
               Create Lobby
             </Button>
           </div>
-          <div className="login button-container">
+          <div className="home button-container">
             <Button
               width="100%"
               onClick={() => doJoin()}
@@ -108,4 +110,4 @@ const Login = () => {
 /**
  * You can get access to the history object's properties via the useLocation, useNavigate, useParams, ... hooks.
  */
-export default Login;
+export default Home;

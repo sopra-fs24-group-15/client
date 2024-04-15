@@ -26,7 +26,7 @@ Player.propTypes = {
   user: PropTypes.object,
 };
 
-const Lobby = () => {
+const LobbyOwner = () => {
   // use react-router-dom's hook to access navigation, more info: https://reactrouter.com/en/main/hooks/use-navigate 
   const navigate = useNavigate();
 
@@ -37,14 +37,9 @@ const Lobby = () => {
   // more information can be found under https://react.dev/learn/state-a-components-memory and https://react.dev/reference/react/useState 
   const [users, setUsers] = useState<User[]>(null);
 
-  const logout = (): void => {
-    localStorage.removeItem("token");
-    navigate("/login");
-  };
-
   /* Home Button */
   const doHome = async () => {
-    navigate("/login");
+    navigate("/home");
   };
 
   /* Rule Button */
@@ -128,4 +123,4 @@ const Lobby = () => {
   );
 };
 
-export default Lobby;
+export default LobbyOwner;

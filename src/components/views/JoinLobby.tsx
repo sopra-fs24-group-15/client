@@ -3,7 +3,7 @@ import { api, handleError } from "helpers/api";
 import User from "models/User";
 import {useNavigate} from "react-router-dom";
 import { Button } from "components/ui/Button";
-import "styles/views/Login.scss";
+import "styles/views/Home.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 // @ts-ignore
@@ -21,10 +21,9 @@ specific components that belong to the main one in the same file.
  */
 const FormField1 = (props) => {
   return (
-    <div className="login field">
-      <label className="login label">{props.label}</label>
+    <div className="home field">
       <input
-        className="login input"
+        className="home input"
         placeholder="Username"
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
@@ -40,10 +39,10 @@ FormField1.propTypes = {
 
 const FormField2 = (props) => {
   return (
-    <div className="login field">
-      <label className="login label">{props.label}</label>
+    <div className="home field">
+      <label className="home label">{props.label}</label>
       <input
-        className="login input"
+        className="home input"
         placeholder="Join code"
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
@@ -58,14 +57,14 @@ FormField2.propTypes = {
   onChange: PropTypes.func,
 };
 
-const Login = () => {
+const JoinLobby = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState<string>(null);
   const [lobby, setLobby] = useState<string>(null);
 
   /* Back Button */
   const doBack = async () => {
-    navigate("/login");
+    navigate("/home");
   };
 
   /* Rule Button */
@@ -81,11 +80,11 @@ const Login = () => {
 
   return (
     <BaseContainer>
-      <div className="login container">
-        <div className="login form">
-          <img src={back} draggable="false" alt="Back" className="login logo_small left" onClick={() => doBack()}/>
-          <img src={logo} draggable="false" alt="Logo" className="login logo_small middle"/>
-          <img src={rules} draggable="false" alt="Rules" className="login logo_small right" onClick={() => doRule()}/>
+      <div className="home container">
+        <div className="home form">
+          <img src={back} draggable="false" alt="Back" className="home logo_small left" onClick={() => doBack()}/>
+          <img src={logo} draggable="false" alt="Logo" className="home logo_small middle"/>
+          <img src={rules} draggable="false" alt="Rules" className="home logo_small right" onClick={() => doRule()}/>
           <FormField1
             value={username}
             onChange={(un: string) => setUsername(un)}
@@ -94,7 +93,7 @@ const Login = () => {
             value={lobby}
             onChange={(n) => setLobby(n)}
           />
-          <div className="login button-container">
+          <div className="home button-container">
             <Button
               disabled={!username || !lobby}
               width="100%"
@@ -112,4 +111,4 @@ const Login = () => {
 /**
  * You can get access to the history object's properties via the useLocation, useNavigate, useParams, ... hooks.
  */
-export default Login;
+export default JoinLobby;
