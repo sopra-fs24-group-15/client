@@ -16,30 +16,11 @@ import home from "../img/home.png";
 //Rules
 import { Rules } from "../ui/Rules";
 
-const Player = ({ user }: { user: User }) => (
-  <div className="player container">
-    <div className="player username">{user.username}</div>
-    <div className="player name">{user.name}</div>
-    <div className="player id">id: {user.id}</div>
-  </div>
-);
-
-Player.propTypes = {
-  user: PropTypes.object,
-};
-
 const LobbyPlayer = () => {
   // use react-router-dom's hook to access navigation, more info: https://reactrouter.com/en/main/hooks/use-navigate 
   const navigate = useNavigate();
   // Rules
   const [showRules, setShowRules] = useState(false);
-
-  // define a state variable (using the state hook).
-  // if this variable changes, the component will re-render, but the variable will
-  // keep its value throughout render cycles.
-  // a component can have as many state variables as you like.
-  // more information can be found under https://react.dev/learn/state-a-components-memory and https://react.dev/reference/react/useState 
-  const [users, setUsers] = useState<User[]>(null);
 
   /* Home Button */
   const doHome = async () => {
@@ -51,23 +32,10 @@ const LobbyPlayer = () => {
     setShowRules(!showRules);
   };
 
-
-  // TODO reactivate loading spinner
-  //let content = <Spinner />;
-  let content;
-
-  if (users) {
-    content = (
-      <div className="lobby">
-        <ul className="lobby user-list">
-          {users.map((user: User) => (
-            <li key={user.id}>
-              <Player user={user} />
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
+  /* Users DIV*/
+  let names = ["Gian", "Marc2", "Jana", "Christoph", "Marc1"];
+  const getUsers = async () => {
+    //add logic to change names
   }
 
   return (
@@ -100,7 +68,11 @@ const LobbyPlayer = () => {
             <td className="infoContent">5</td>
           </tr>
         </table>
-        {content}
+        <div className="lobby users">
+          {names.map((name, index) => (
+            <span key={index}>{name}</span>
+          ))}
+        </div>
         <p>waiting for lobby owner to start the game</p>
         <Spinner />
         <br></br>
