@@ -13,6 +13,8 @@ import logo from "../img/logo.png";
 import rules from "../img/rules.png";
 // @ts-ignore
 import home from "../img/home.png";
+//Rules
+import { Rules } from "../ui/Rules";
 
 const Player = ({ user }: { user: User }) => (
   <div className="player container">
@@ -29,6 +31,8 @@ Player.propTypes = {
 const LobbyPlayer = () => {
   // use react-router-dom's hook to access navigation, more info: https://reactrouter.com/en/main/hooks/use-navigate 
   const navigate = useNavigate();
+  // Rules
+  const [showRules, setShowRules] = useState(false);
 
   // define a state variable (using the state hook).
   // if this variable changes, the component will re-render, but the variable will
@@ -44,7 +48,7 @@ const LobbyPlayer = () => {
 
   /* Rule Button */
   const doRule = async () => {
-    //TODO go to rule page
+    setShowRules(!showRules);
   };
 
 
@@ -68,6 +72,9 @@ const LobbyPlayer = () => {
 
   return (
     <BaseContainer className="lobby container">
+      <div>
+        {showRules && <Rules close={() => setShowRules(false)} />}
+      </div>
       <div className="lobby content">
         <img src={home} draggable="false" alt="Back" className="lobby logo_small left" onClick={() => doHome()}/>
         <img src={logo} draggable="false" alt="Logo" className="lobby logo_small middle"/>

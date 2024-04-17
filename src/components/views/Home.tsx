@@ -9,6 +9,8 @@ import logo from "../img/logo.png";
 import rules from "../img/rules.png";
 // @ts-ignore
 import theme from "../img/theme.png";
+//Rules
+import { Rules } from "../ui/Rules";
 
 /*
 It is possible to add multiple components inside a single file,
@@ -19,6 +21,8 @@ specific components that belong to the main one in the same file.
 
 const Home = () => {
   const navigate = useNavigate();
+  // Rules
+  const [showRules, setShowRules] = useState(false);
   const [name, setName] = useState<string>(null);
   const [username, setUsername] = useState<string>(null);
 
@@ -43,6 +47,7 @@ const Home = () => {
     }
   };
   */
+
   const doCreate = async () => {
     navigate("/CreateLobby");
   };
@@ -78,12 +83,19 @@ const Home = () => {
     document.documentElement.style.setProperty("--background", background);
   };
 
+  const doRule = () => {
+    setShowRules(!showRules);
+  };
+
   return (
     <BaseContainer>
+      <div>
+        {showRules && <Rules close={() => setShowRules(false)} />}
+      </div>
       <div className="home container">
         <div className="home form">
           <img src={theme} draggable="false" alt="Theme" className="home logo_small left" onClick={() => doTheme()}/>
-          <img src={rules} draggable="false" alt="rules" className="home logo_small right"/>
+          <img src={rules} draggable="false" alt="Rules" className="home logo_small right" onClick={() => doRule()}/>
           <img src={logo} draggable="false" alt="Logo" className="home logo_large"/>
           <div className="home button-container">
             <Button

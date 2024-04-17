@@ -12,6 +12,8 @@ import logo from "../img/logo.png";
 import rules from "../img/rules.png";
 // @ts-ignore
 import back from "../img/back.png";
+//Rules
+import { Rules } from "../ui/Rules";
 
 /*
 It is possible to add multiple components inside a single file,
@@ -59,6 +61,8 @@ FormField2.propTypes = {
 
 const JoinLobby = () => {
   const navigate = useNavigate();
+  // Rules
+  const [showRules, setShowRules] = useState(false);
   const [username, setUsername] = useState<string>(null);
   const [lobby, setLobby] = useState<string>(null);
 
@@ -69,7 +73,7 @@ const JoinLobby = () => {
 
   /* Rule Button */
   const doRule = async () => {
-    //TODO go to rule page
+    setShowRules(!showRules);
   };
 
   /* Create Lobby Button */
@@ -80,6 +84,9 @@ const JoinLobby = () => {
 
   return (
     <BaseContainer>
+      <div>
+        {showRules && <Rules close={() => setShowRules(false)} />}
+      </div>
       <div className="home container">
         <div className="home form">
           <img src={back} draggable="false" alt="Back" className="home logo_small left" onClick={() => doBack()}/>
