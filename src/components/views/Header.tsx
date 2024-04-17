@@ -12,11 +12,7 @@ import "../../styles/views/Header.scss";
  * @FunctionalComponent
  */
 const Header = props => (
-  <div className="header container" style={{height: props.height}}>
-    <ReactLogo width="60px" height="60px"/>
-    <h1 className="header title">MEME BATTLE</h1>
-    <ReactLogo width="60px" height="60px"/>
-  </div>
+  <p></p>
 );
 
 Header.propTypes = {
