@@ -32,7 +32,7 @@ jobs:
         username: ${{ secrets.dockerhub_username }}
         password: ${{ secrets.dockerhub_password }}
 
-    # docker build and push
+    # docker build & push
     - name: Build and push (including latest tag)
       uses: docker/build-push-action@v5
       with:
