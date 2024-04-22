@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { api, handleError } from "helpers/api";
 import User from "models/User";
+import Lobby from "models/Lobby";
 import {useNavigate} from "react-router-dom";
 import { Button } from "components/ui/Button";
 import "styles/views/Home.scss";
@@ -58,6 +59,22 @@ const CreateLobby = () => {
 
   /* Create Lobby Button */
   const doCreate = async () => {
+    const requestBody = JSON.stringify({username: username, isOwner: true});
+    console.log(requestBody);
+    const response = await api.post("/users", requestBody);
+    const user = new User(response.data);
+    console.log(response.data);
+    localStorage.setItem("username", user.username);
+    localStorage.setItem("userId", user.userid);
+    const requestBody2 = JSON.stringify({lobbyOwner: user.id });
+    console.log(requestBody2);
+    const response2 = await api.get("/lobbys", requestBody2);
+    console.log(response2.data);
+    const lobby = new Lobby(response2.data);
+    localStorage.setItem("lobbyId", lobby.id);
+    localStorage.setItem("lobbyOwner", lobby.lobbyOwner);
+    localStorage.setItem("players", lobby.players);
+    localStorage.setItem("lobbyjoincode", lobby.lobbyjoinCode);
     //TODO create Lobby logic, go to lobby
     navigate("/lobby/owner");
   };
