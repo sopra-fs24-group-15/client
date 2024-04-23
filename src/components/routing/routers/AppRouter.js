@@ -7,6 +7,7 @@ import CreateLobby from "../../views/CreateLobby";
 import JoinLobby from "../../views/JoinLobby";
 import LobbyOwner from "../../views/LobbyOwner";
 import LobbyPlayer from "../../views/LobbyPlayer";
+import CreateMeme from "../../views/CreateMeme";
 
 /**
  * Main router of your application.
@@ -39,6 +40,10 @@ const AppRouter = () => {
 
         <Route path="/joinLobby" element={<LoginGuard />}>
           <Route path="/joinLobby" element={<JoinLobby/>} />
+        </Route>
+
+        <Route path="/createMeme" element={<GameGuard />}>
+          <Route path="/createMeme" element={<CreateMeme/>} />
         </Route>
 
         <Route path="/" element={

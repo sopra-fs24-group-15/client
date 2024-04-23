@@ -38,6 +38,7 @@ const LobbyOwner = () => {
 
   /* Start Game */
   const startGame = async () => {
+    navigate("/createMeme")
   };
 
   /* Users DIV*/
