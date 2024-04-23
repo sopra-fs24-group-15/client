@@ -54,6 +54,7 @@ const LobbyOwner = () => {
   const fetchUsers = async () => {
     try {
       const response = await api.get("/users");
+      console.log(response.data);
       setUsers(response.data);
     }
     catch (error) {
@@ -65,7 +66,7 @@ const LobbyOwner = () => {
 
     fetchUsers();
 
-    const intervalId = setInterval(fetchUsers, 1000);
+    const intervalId = setInterval(fetchUsers, 5000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -99,8 +100,8 @@ const LobbyOwner = () => {
           </tr>
         </table>
         <div className="lobby users">
-          {users.map((name, index) => (
-            <span key={index}>{users.username}</span>
+          {users.map((user, index) => (
+            <span key={index}>{user.username}</span>
           ))}
         </div>
         <div className="lobby button-container">
