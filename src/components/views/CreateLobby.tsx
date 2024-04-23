@@ -64,13 +64,11 @@ const CreateLobby = () => {
     const createUserResponse = await api.post("/users", requestBody);
     const user = new User(createUserResponse.data);
     console.log("Server response: ", createUserResponse.data);
-    localStorage.setItem("user", user);
     const requestBody2 = JSON.stringify({lobbyOwner: user.userId });
     console.log(requestBody2);
     const createLobbyResponse = await api.post("/lobbys", requestBody2);
     console.log(createLobbyResponse.data);
     const lobby = new Lobby(createLobbyResponse.data);
-    localStorage.setItem("lobby", lobby);
     //TODO create Lobby logic, go to lobby
     navigate("/lobby/owner");
   };

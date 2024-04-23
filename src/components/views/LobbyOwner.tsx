@@ -22,6 +22,9 @@ const LobbyOwner = () => {
   // Rules
   const [showRules, setShowRules] = useState(false);
 
+  const [users, setUsers] = useState<User[]>([]);
+  //const [users, setUsers] = useState([]);
+
   /* Home Button */
   const doHome = async () => {
     navigate("/home");
@@ -41,11 +44,31 @@ const LobbyOwner = () => {
     navigate("/createMeme")
   };
 
-  /* Users DIV*/
+  /* Users DIV
   let names = ["Gian", "Marc2", "Jana", "Christoph", "Marc1"];
   const getUsers = async () => {
     //add logic to change names
   }
+  */
+
+  const fetchUsers = async () => {
+    try {
+      const response = await api.get("/users");
+      setUsers(response.data);
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+
+    fetchUsers();
+
+    const intervalId = setInterval(fetchUsers, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <BaseContainer className="lobby container">
@@ -76,8 +99,8 @@ const LobbyOwner = () => {
           </tr>
         </table>
         <div className="lobby users">
-          {names.map((name, index) => (
-            <span key={index}>{name}</span>
+          {users.map((name, index) => (
+            <span key={index}>{users.username}</span>
           ))}
         </div>
         <div className="lobby button-container">
@@ -93,7 +116,7 @@ const LobbyOwner = () => {
             <Button
               width="100%"
               onClick={() => startGame()}
-              disabled={names.length < 3}
+              disabled={users.length < 3}
             >
               start game
             </Button>
