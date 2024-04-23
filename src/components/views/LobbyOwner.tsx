@@ -53,9 +53,11 @@ const LobbyOwner = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await api.get("/users");
+      const lobbyId = localStorage.getItem("lobbyId");
+      console.log(lobbyId);
+      const response = await api.get(`/lobbys/${lobbyId}`);
       console.log(response.data);
-      setUsers(response.data);
+      setUsers(response.data.players);
     }
     catch (error) {
       console.log(error);

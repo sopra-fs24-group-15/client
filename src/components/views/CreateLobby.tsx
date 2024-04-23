@@ -69,6 +69,7 @@ const CreateLobby = () => {
     const createLobbyResponse = await api.post("/lobbys", requestBody2);
     console.log(createLobbyResponse.data);
     const lobby = new Lobby(createLobbyResponse.data);
+    localStorage.setItem("lobbyId", lobby.lobbyId);
     //TODO create Lobby logic, go to lobby
     navigate("/lobby/owner");
   };
