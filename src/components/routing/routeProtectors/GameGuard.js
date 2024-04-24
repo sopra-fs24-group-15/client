@@ -23,7 +23,7 @@ import PropTypes from "prop-types";
  */
 export const GameGuard = () => {
 
-  if (true) {
+  if (localStorage.getItem("ownUserId")) {
     
     return <Outlet />;
   }

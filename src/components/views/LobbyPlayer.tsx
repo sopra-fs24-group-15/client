@@ -28,6 +28,7 @@ const LobbyPlayer = () => {
   /* Home Button */
   const doHome = async () => {
     const ownUser = localStorage.getItem("ownUserId");
+    localStorage.removeItem("ownUserId");
     const removeUser = await api.delete(`/users/${ownUser}`);
     navigate("/home");
   };
@@ -46,6 +47,10 @@ const LobbyPlayer = () => {
       console.log(response.data);
       setLobbycode(response.data.lobbyJoinCode);
       setUsers(response.data.players);
+      if (response.data.gameActive === true) {
+        //TODO start game logic
+        navigate("/createMeme");
+      }
     }
     catch (error) {
       console.log(error);

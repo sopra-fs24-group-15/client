@@ -95,14 +95,15 @@ const JoinLobby = () => {
       console.log(requestBody2);
       try{
         const createLobbyResponse = await api.put(`/lobbys/${user.userId}`, requestBody2);
-      console.log(createLobbyResponse.data);
-      const lobby = new Lobby(createLobbyResponse.data);
-      localStorage.setItem("lobbyId", lobby.lobbyId);
-      //TODO create Lobby logic, go to lobby
-      navigate("/lobby/player");
+        console.log(createLobbyResponse.data);
+        const lobby = new Lobby(createLobbyResponse.data);
+        localStorage.setItem("lobbyId", lobby.lobbyId);
+        //TODO create Lobby logic, go to lobby
+        navigate("/lobby/player");
       }
       catch (err) {
         const ownUser = localStorage.getItem("ownUserId");
+        localStorage.removeItem("ownUserId");
         const removeUser = await api.delete(`/users/${ownUser}`);
         setErrorJoincode(err.message);
       }
