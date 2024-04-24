@@ -46,6 +46,7 @@ const CreateLobby = () => {
   // Rules
   const [showRules, setShowRules] = useState(false);
   const [username, setUsername] = useState<string>(null);
+  const [errorUsername, setErrorUsername] = useState(null);
 
   /* Back Button */
   const doBack = async () => {
@@ -59,20 +60,26 @@ const CreateLobby = () => {
 
   /* Create Lobby Button */
   const doCreate = async () => {
+    setErrorUsername(null);
     const requestBody = JSON.stringify({username: username, isOwner: true});
     console.log("Request to create user: " , requestBody);
-    const createUserResponse = await api.post("/users", requestBody);
-    const user = new User(createUserResponse.data);
-    console.log("Server response: ", createUserResponse.data);
-    const requestBody2 = JSON.stringify({lobbyOwner: user.userId });
-    console.log(requestBody2)
-    console.log(requestBody2);
-    const createLobbyResponse = await api.post("/lobbys", requestBody2);
-    console.log(createLobbyResponse.data);
-    const lobby = new Lobby(createLobbyResponse.data);
-    localStorage.setItem("lobbyId", lobby.lobbyId);
-    //TODO create Lobby logic, go to lobby
-    navigate("/lobby/owner");
+    try{
+      const createUserResponse = await api.post("/users", requestBody);
+      const user = new User(createUserResponse.data)
+      localStorage.setItem("ownUserId", user.userId);
+      console.log("Server response: ", createUserResponse.data);
+      const requestBody2 = JSON.stringify({lobbyOwner: user.userId });
+      console.log(requestBody2)
+      console.log(requestBody2);
+      const createLobbyResponse = await api.post("/lobbys", requestBody2);
+      console.log(createLobbyResponse.data);
+      const lobby = new Lobby(createLobbyResponse.data);
+      localStorage.setItem("lobbyId", lobby.lobbyId);
+      navigate("/lobby/owner");
+    }
+    catch (err) {
+      setErrorUsername(err.message);
+    }
   };
 
   return (
@@ -85,6 +92,7 @@ const CreateLobby = () => {
           <img src={back} draggable="false" alt="Back" className="home logo_small left" onClick={() => doBack()}/>
           <img src={logo} draggable="false" alt="Logo" className="home logo_small middle"/>
           <img src={rules} draggable="false" alt="Rules" className="home logo_small right" onClick={() => doRule()}/>
+          {errorUsername && <div className="home error">Username already taken</div>}
           <FormField
             value={username}
             onChange={(un: string) => setUsername(un)}

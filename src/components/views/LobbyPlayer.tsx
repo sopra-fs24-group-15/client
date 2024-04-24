@@ -5,6 +5,7 @@ import { Button } from "components/ui/Button";
 import {useNavigate} from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
+import Lobby from "models/Lobby";
 import "styles/views/Lobby.scss";
 import { User } from "types";
 // @ts-ignore
@@ -19,11 +20,15 @@ import { Rules } from "../ui/Rules";
 const LobbyPlayer = () => {
   // use react-router-dom's hook to access navigation, more info: https://reactrouter.com/en/main/hooks/use-navigate 
   const navigate = useNavigate();
+  const [lobbycode, setLobbycode] = useState<Lobby[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   // Rules
   const [showRules, setShowRules] = useState(false);
 
   /* Home Button */
   const doHome = async () => {
+    const ownUser = localStorage.getItem("ownUserId");
+    const removeUser = await api.delete(`/users/${ownUser}`);
     navigate("/home");
   };
 
@@ -33,10 +38,28 @@ const LobbyPlayer = () => {
   };
 
   /* Users DIV*/
-  let names = ["Gian", "Marc2", "Jana", "Christoph", "Marc1"];
-  const getUsers = async () => {
-    //add logic to change names
-  }
+  const fetchUsers = async () => {
+    try {
+      const lobbyId = localStorage.getItem("lobbyId");
+      console.log(lobbyId);
+      const response = await api.get(`/lobbys/${lobbyId}`);
+      console.log(response.data);
+      setLobbycode(response.data.lobbyJoinCode);
+      setUsers(response.data.players);
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+
+    fetchUsers();
+
+    const intervalId = setInterval(fetchUsers, 5000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <BaseContainer className="lobby container">
@@ -53,7 +76,7 @@ const LobbyPlayer = () => {
         <table className="lobby infoContainer">
           <tr className="infoLobbyCode">
             <td>LOBBY CODE</td>
-            <td className="infoContent">code</td>
+            <td className="infoContent">{lobbycode}</td>
           </tr>
           <tr>
             <td>GAMEMODE</td>
@@ -69,8 +92,8 @@ const LobbyPlayer = () => {
           </tr>
         </table>
         <div className="lobby users">
-          {names.map((name, index) => (
-            <span key={index}>{name}</span>
+          {users.map((user, index) => (
+            <span key={index}>{user.username}</span>
           ))}
         </div>
         <p>waiting for lobby owner to start the game</p>

@@ -66,6 +66,8 @@ const JoinLobby = () => {
   const [showRules, setShowRules] = useState(false);
   const [username, setUsername] = useState<string>(null);
   const [joinLobby, setJoinLobby] = useState<string>(null);
+  const [errorUsername, setErrorUsername] = useState(null);
+  const [errorJoincode, setErrorJoincode] = useState(null);
 
   /* Back Button */
   const doBack = async () => {
@@ -79,20 +81,35 @@ const JoinLobby = () => {
 
   /* Create Lobby Button */
   const doJoin = async () => {
+    setErrorUsername(null);
+    setErrorJoincode(null);
     //TODO create Lobby logic, go to lobby
     const requestBody = JSON.stringify({username: username, isOwner: false});
     console.log("Request to create user: " , requestBody);
-    const createUserResponse = await api.post("/users", requestBody);
-    const user = new User(createUserResponse.data);
-    console.log("Server response: ", createUserResponse.data);
-    const requestBody2 = JSON.stringify({lobbyJoinCode: joinLobby, userId: user.userId});
-    console.log(requestBody2);
-    const createLobbyResponse = await api.post(`/lobbys/${user.userId}`, requestBody2);
-    console.log(createLobbyResponse.data);
-    const lobby = new Lobby(createLobbyResponse.data);
-    localStorage.setItem("lobbyId", lobby.lobbyId);
-    //TODO create Lobby logic, go to lobby
-    navigate("/lobby/player");
+    try{
+      const createUserResponse = await api.post("/users", requestBody);
+      const user = new User(createUserResponse.data);
+      localStorage.setItem("ownUserId", user.userId);
+      console.log("Server response: ", createUserResponse.data);
+      const requestBody2 = JSON.stringify({lobbyJoinCode: joinLobby});
+      console.log(requestBody2);
+      try{
+        const createLobbyResponse = await api.put(`/lobbys/${user.userId}`, requestBody2);
+      console.log(createLobbyResponse.data);
+      const lobby = new Lobby(createLobbyResponse.data);
+      localStorage.setItem("lobbyId", lobby.lobbyId);
+      //TODO create Lobby logic, go to lobby
+      navigate("/lobby/player");
+      }
+      catch (err) {
+        const ownUser = localStorage.getItem("ownUserId");
+        const removeUser = await api.delete(`/users/${ownUser}`);
+        setErrorJoincode(err.message);
+      }
+    }
+    catch (err) {
+      setErrorUsername(err.message);
+    }
   };
 
   return (
@@ -105,10 +122,12 @@ const JoinLobby = () => {
           <img src={back} draggable="false" alt="Back" className="home logo_small left" onClick={() => doBack()}/>
           <img src={logo} draggable="false" alt="Logo" className="home logo_small middle"/>
           <img src={rules} draggable="false" alt="Rules" className="home logo_small right" onClick={() => doRule()}/>
+          {errorUsername && <div className="home error">Username already taken</div>}
           <FormField1
             value={username}
             onChange={(un: string) => setUsername(un)}
           />
+          {errorJoincode && <div className="home error">Invalid Join Code</div>}
           <FormField2
             value={joinLobby}
             onChange={(n) => setJoinLobby(n)}

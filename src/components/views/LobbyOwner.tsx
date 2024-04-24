@@ -30,6 +30,8 @@ const LobbyOwner = () => {
 
   /* Home Button */
   const doHome = async () => {
+    const ownUser = localStorage.getItem("ownUserId");
+    const removeUser = await api.delete(`/users/${ownUser}`);
     navigate("/home");
   };
 
