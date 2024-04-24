@@ -65,6 +65,7 @@ const CreateLobby = () => {
     const user = new User(createUserResponse.data);
     console.log("Server response: ", createUserResponse.data);
     const requestBody2 = JSON.stringify({lobbyOwner: user.userId });
+    console.log(requestBody2)
     console.log(requestBody2);
     const createLobbyResponse = await api.post("/lobbys", requestBody2);
     console.log(createLobbyResponse.data);

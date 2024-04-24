@@ -15,6 +15,7 @@ import rules from "../img/rules.png";
 import home from "../img/home.png";
 //Rules
 import { Rules } from "../ui/Rules";
+import Lobby from "models/Lobby";
 
 const LobbyOwner = () => {
   // use react-router-dom's hook to access navigation, more info: https://reactrouter.com/en/main/hooks/use-navigate 
@@ -24,6 +25,8 @@ const LobbyOwner = () => {
 
   const [users, setUsers] = useState<User[]>([]);
   //const [users, setUsers] = useState([]);
+
+  const [lobbycode, setLobbycode] = useState<Lobby[]>([]);
 
   /* Home Button */
   const doHome = async () => {
@@ -57,6 +60,7 @@ const LobbyOwner = () => {
       console.log(lobbyId);
       const response = await api.get(`/lobbys/${lobbyId}`);
       console.log(response.data);
+      setLobbycode(response.data.lobbyJoinCode);
       setUsers(response.data.players);
     }
     catch (error) {
@@ -86,7 +90,7 @@ const LobbyOwner = () => {
         <table className="lobby infoContainer">
           <tr className="infoLobbyCode">
             <td>LOBBY CODE</td>
-            <td className="infoContent">code</td>
+            <td className="infoContent">{lobbycode}</td>
           </tr>
           <tr>
             <td>GAMEMODE</td>

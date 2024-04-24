@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { api, handleError } from "helpers/api";
 import User from "models/User";
+import Lobby from "models/Lobby";
 import {useNavigate} from "react-router-dom";
 import { Button } from "components/ui/Button";
 import "styles/views/Home.scss";
@@ -64,7 +65,7 @@ const JoinLobby = () => {
   // Rules
   const [showRules, setShowRules] = useState(false);
   const [username, setUsername] = useState<string>(null);
-  const [lobby, setLobby] = useState<string>(null);
+  const [joinLobby, setJoinLobby] = useState<string>(null);
 
   /* Back Button */
   const doBack = async () => {
@@ -78,6 +79,18 @@ const JoinLobby = () => {
 
   /* Create Lobby Button */
   const doJoin = async () => {
+    //TODO create Lobby logic, go to lobby
+    const requestBody = JSON.stringify({username: username, isOwner: false});
+    console.log("Request to create user: " , requestBody);
+    const createUserResponse = await api.post("/users", requestBody);
+    const user = new User(createUserResponse.data);
+    console.log("Server response: ", createUserResponse.data);
+    const requestBody2 = JSON.stringify({lobbyJoinCode: joinLobby, userId: user.userId});
+    console.log(requestBody2);
+    const createLobbyResponse = await api.post(`/lobbys/${user.userId}`, requestBody2);
+    console.log(createLobbyResponse.data);
+    const lobby = new Lobby(createLobbyResponse.data);
+    localStorage.setItem("lobbyId", lobby.lobbyId);
     //TODO create Lobby logic, go to lobby
     navigate("/lobby/player");
   };
@@ -97,12 +110,12 @@ const JoinLobby = () => {
             onChange={(un: string) => setUsername(un)}
           />
           <FormField2
-            value={lobby}
-            onChange={(n) => setLobby(n)}
+            value={joinLobby}
+            onChange={(n) => setJoinLobby(n)}
           />
           <div className="home button-container">
             <Button
-              disabled={!username || !lobby}
+              disabled={!username || !joinLobby}
               width="100%"
               onClick={() => doJoin()}
             >
