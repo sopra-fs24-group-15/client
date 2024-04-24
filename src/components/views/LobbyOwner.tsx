@@ -66,6 +66,10 @@ const LobbyOwner = () => {
       console.log(response.data);
       setLobbycode(response.data.lobbyJoinCode);
       setUsers(response.data.players);
+      const ownUser = Number(localStorage.getItem("ownUserId"));
+      if (response.data.lobbyOwner !== ownUser) {
+        navigate("/lobby/player");
+      }
     }
     catch (error) {
       console.log(error);

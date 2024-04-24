@@ -47,6 +47,10 @@ const LobbyPlayer = () => {
       console.log(response.data);
       setLobbycode(response.data.lobbyJoinCode);
       setUsers(response.data.players);
+      const ownUser = Number(localStorage.getItem("ownUserId"));
+      if (response.data.lobbyOwner === ownUser) {
+        navigate("/lobby/owner");
+      }
       if (response.data.gameActive === true) {
         //TODO start game logic
         navigate("/createMeme");
