@@ -47,7 +47,9 @@ const LobbyOwner = () => {
 
   /* Start Game */
   const startGame = async () => {
-    
+    const ownUser = Number(localStorage.getItem("ownUserId"));
+    const requestBody = JSON.stringify({lobbyId: localStorage.getItem("lobbyId")});
+    await api.post(`lobbys/${localStorage.getItem("lobbyId")}/start/${ownUser}`, requestBody);
     navigate("/createMeme")
   };
 
