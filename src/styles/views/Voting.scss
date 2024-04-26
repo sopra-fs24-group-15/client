@@ -117,8 +117,9 @@
   }
   .button-container {
     box-sizing: border-box;
-    width: 1em;
+    width: flex;
     overflow: hidden; 
     padding-left: 1em;
+    
   }
 }
