@@ -44,16 +44,20 @@ const LobbyPlayer = () => {
       const lobbyId = localStorage.getItem("lobbyId");
       const response1 = await api.get(`/lobbys/${lobbyId}`);
       setLobbycode(response1.data.lobbyJoinCode);
-      setUsers(response1.data.players);
       let userList = [];
       const response2 = await api.get("/users");
-      for (let i = 0; i < response1.data.players.length; i++) {
-        userList.push(response2.data[i].username)
+      for (let i = 0; i < response2.data.length; i++) {
+        if (response1.data.players.includes(response2.data[i].userId)) {
+          userList.push(response2.data[i].username)
+        }
       }
       setUsers(userList);
       const ownUser = Number(localStorage.getItem("ownUserId"));
       if (response1.data.lobbyOwner !== ownUser) {
         navigate("/lobby/player");
+      }
+      if (response1.data.gameActive) {
+        navigate("/createMeme");
       }
     }
     catch (error) {
@@ -65,7 +69,7 @@ const LobbyPlayer = () => {
 
     fetchUsers();
 
-    const intervalId = setInterval(fetchUsers, 5000);
+    const intervalId = setInterval(fetchUsers, 1000);
 
     return () => clearInterval(intervalId);
   }, []);
