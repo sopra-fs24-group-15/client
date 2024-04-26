@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { Spinner } from "components/ui/Spinner";
 import { api, handleError } from "helpers/api";
@@ -57,6 +57,8 @@ FormField2.propTypes = {
 const LobbyPlayer = () => {
   // use react-router-dom's hook to access navigation, more info: https://reactrouter.com/en/main/hooks/use-navigate 
   const navigate = useNavigate();
+  // meme
+  const [meme, setMeme] = useState("https://i.imgflip.com/22bdq6.jpg");
   // Rules
   const [showRules, setShowRules] = useState(false);
   // Captions
@@ -79,10 +81,14 @@ const LobbyPlayer = () => {
   };
 
   /* Meme */
-  let meme = "https://i.imgflip.com/22bdq6.jpg";
   const getMeme = async () => {
-    //add logic to change names
-  }
+    const response = await api.get(`lobby/${localStorage.getItem("lobbyId")}/template`);
+    console.log(response.data)
+    setMeme(response.data.url); // Assuming the new meme URL is in response.data
+  };
+  useEffect(() => {
+    getMeme();
+  }, []);
 
   /* Submit Button */
   const doSubmit = async () => {
