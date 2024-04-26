@@ -48,8 +48,15 @@ const LobbyOwner = () => {
   /* Start Game */
   const startGame = async () => {
     const ownUser = Number(localStorage.getItem("ownUserId"));
-    const requestBody = JSON.stringify({lobbyId: localStorage.getItem("lobbyId")});
-    await api.post(`lobbys/${localStorage.getItem("lobbyId")}/start/${ownUser}`, requestBody);
+    //TODO create game with settings
+    const standardTime = 60
+    const standardRounds = 5
+    const requestBody1 = JSON.stringify({totalRounds: `${standardRounds}`, timer: `${standardTime}`});
+    console.log(ownUser)
+    await api.put(`lobbys/${localStorage.getItem("lobbyId")}/settings/${ownUser}`, requestBody1);
+    //TODO start game
+    const requestBody2 = JSON.stringify({lobbyId: localStorage.getItem("lobbyId")});
+    await api.post(`lobbys/${localStorage.getItem("lobbyId")}/start/${ownUser}`, requestBody2);
     navigate("/createMeme")
   };
 

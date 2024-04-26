@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { Spinner } from "components/ui/Spinner";
+import { api, handleError } from "helpers/api";
 import {useNavigate} from "react-router-dom";
 import PropTypes from "prop-types";
 import { Button } from "components/ui/Button";
@@ -66,6 +67,9 @@ const LobbyPlayer = () => {
 
   /* Home Button */
   const doHome = async () => {
+    const ownUser = localStorage.getItem("ownUserId");
+    localStorage.removeItem("ownUserId");
+    const removeUser = await api.delete(`/users/${ownUser}`);
     navigate("/home");
   };
 
