@@ -102,32 +102,34 @@ const LobbyPlayer = () => {
             <img src={meme}></img>
           </div>
 
-          <Button 
-            className="voting button-container"
-            width = "100%"
-            onClick={() => doPreviousMeme()}
-          >
-            Previous Meme
-          </Button>
-
-          <Button
-            className="voting button-container"
-            width="100%"
-            onClick={() => doSubmit()}
-            disabled={submitted}
-          >
-            Submit
-          </Button>
-
-          <Button 
-            className="voting button-container"
-            width = "100%"
-            onClick={() => doNextMeme()}
-          >
-            Next Meme
-          </Button>
-
         </div>
+        <div className="button-container">
+          <Button 
+              className="voting button-container"
+              width = "100%"
+              onClick={() => doPreviousMeme()}
+            >
+              Previous Meme
+            </Button>
+
+            <Button
+              className="voting button-container"
+              width="100%"
+              onClick={() => doSubmit()}
+              disabled={submitted}
+            >
+              Submit
+            </Button>
+
+            <Button 
+              className="voting button-container"
+              width = "100%"
+              onClick={() => doNextMeme()}
+            >
+              Next Meme
+            </Button>
+          </div>
+
 
       </div>
     </BaseContainer>
