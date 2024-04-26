@@ -1,0 +1,124 @@
+@import "../theme";
+
+/* The '&' is a shorthand for the containing element,
+  so for example a '&.user-list' inside .game will compile to
+  .game.user-list
+
+  for more information visit https://sass-lang.com/guide
+ */
+
+.voting {
+  &.container {
+    margin-top: 2em;
+    min-height: 300px;
+    /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
+    @include center;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    min-width: 60em;
+    max-width: 80%;
+    font-size: 16px;
+    font-weight: 300;
+    padding-left: 37px;
+    padding-right: 37px;
+    padding-bottom: 1em;
+    border-radius: 0.75em;
+    background-color: var(--background);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    box-shadow: var(--dropShadow);
+    position: relative;
+  }
+  
+  .logo_small.left {
+    width: 4.5em;
+    user-select: none;
+    justify-self: end;
+    position: absolute;
+    top: 2em;
+    left: 5%;
+  }
+  .logo_small.left:hover {
+    transform: translateY(-2px);
+  }
+  .logo_small.middle {
+    user-select: none;
+    margin: 0 auto;
+    margin-top: 1em;
+    margin-bottom: 2em;
+    display: block;
+    justify-content: center;
+    width: 10em;
+  }
+  .logo_small.right {
+    width: 4.5em;
+    user-select: none;
+    justify-self: end;
+    position: absolute;
+    top: 2em;
+    right: 5%;
+  }
+  .logo_small.right:hover {
+    transform: translateY(-2px);
+  }
+  &.field {
+    display: flex;
+    width: 60%;
+    font-size: 18px;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 0em;
+  }
+  &.input {
+    height: 2.5em;
+    padding-left: 15px;
+    margin-left: -4px;
+    font-size: 1.5em;
+    border: none;
+    border-radius: 0.75em;
+    margin-bottom: 20px;
+    background: transparentize(white, 0.85);
+    color: var(--normalTextColor);
+  }
+  &.input::placeholder {
+    color: var(--accent);
+  }
+
+  .memeContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 1em;
+  }
+  h1 {
+    text-align: center;
+  }
+  .timerValue{
+    font-size: 40px;
+    font-weight: 600;
+  }
+  .meme{
+    width: 170em;
+  }
+  .meme img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 1em;
+  }
+  .button-container {
+    box-sizing: border-box;
+    width: 1em;
+    overflow: hidden; 
+    padding-left: 1em;
+  }
+}
