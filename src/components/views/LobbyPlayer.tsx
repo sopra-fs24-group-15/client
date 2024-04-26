@@ -42,18 +42,18 @@ const LobbyPlayer = () => {
   const fetchUsers = async () => {
     try {
       const lobbyId = localStorage.getItem("lobbyId");
-      console.log(lobbyId);
-      const response = await api.get(`/lobbys/${lobbyId}`);
-      console.log(response.data);
-      setLobbycode(response.data.lobbyJoinCode);
-      setUsers(response.data.players);
-      const ownUser = Number(localStorage.getItem("ownUserId"));
-      if (response.data.lobbyOwner === ownUser) {
-        navigate("/lobby/owner");
+      const response1 = await api.get(`/lobbys/${lobbyId}`);
+      setLobbycode(response1.data.lobbyJoinCode);
+      setUsers(response1.data.players);
+      let userList = [];
+      const response2 = await api.get("/users");
+      for (let i = 0; i < response1.data.players.length; i++) {
+        userList.push(response2.data[i].username)
       }
-      if (response.data.gameActive === true) {
-        //TODO start game logic
-        navigate("/createMeme");
+      setUsers(userList);
+      const ownUser = Number(localStorage.getItem("ownUserId"));
+      if (response1.data.lobbyOwner !== ownUser) {
+        navigate("/lobby/player");
       }
     }
     catch (error) {
@@ -102,7 +102,7 @@ const LobbyPlayer = () => {
         </table>
         <div className="lobby users">
           {users.map((user, index) => (
-            <span key={index}>{user.username}</span>
+            <span key={index}>{user}</span>
           ))}
         </div>
         <p>waiting for lobby owner to start the game</p>
