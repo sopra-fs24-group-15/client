@@ -8,27 +8,34 @@
    feel free to play around with these and see what other look you can come up with! :D
 */
 
-$accent: #97ABFF;
-$accentDark: #123597;
-$textColor: white;
-$background: #262632;
 
-/* some constants */
+// <uniquifier>: Use a unique and descriptive class name
+// <weight>: Use a value from 300 to 700
 
-$DESKTOP_WIDTH: 1160px;
-$SMALL_LAPTOPS_WIDTH: 970px;
-$TABLETS_WIDTH: 750px;
-$SMALL_WIDTH: 768px;
+:root {
+  /* Theme Colors */
+  --accent: #575757;
+  --accentDark: #000000;
+  --buttonTextColor: #ffffff;
+  --normalTextColor: #1d1d1d;
+  --background: #c3c3c3;
 
-/* some standard elements */
-/* fonts */
-$fontDefault: "M PLUS Rounded 1c", sans-serif;
-$fontMono: "Roboto Mono", monospace;
+  /* some constants */
+  --DESKTOP_WIDTH: 1160px;
+  --SMALL_LAPTOPS_WIDTH: 970px;
+  --TABLETS_WIDTH: 750px;
+  --SMALL_WIDTH: 768px;
 
-/* a standard drop shadow */
-$dropShadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25);
+  /* some standard elements */
+  /* fonts */
+  --fontDefault: Jura, "M PLUS Rounded 1c", sans-serif;
+  --fontMono: Jura, "Roboto Mono", monospace;
 
-$borderRadius: 0.75em;
+  /* a standard drop shadow */
+  --dropShadow: 0 0.5em 0.5em rgba(0, 0, 0, 0.25);
+
+  --borderRadius: 0.75em;
+}
 
 /* mixins
 

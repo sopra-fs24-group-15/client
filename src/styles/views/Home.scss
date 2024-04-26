@@ -1,0 +1,109 @@
+@import "../theme";
+
+.home {
+  &.container {
+    margin-top: 2em;
+    min-height: 300px;
+    /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
+    @include center;
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+  }
+  &.form {
+    display: block;
+    flex-direction: column;
+    justify-content: center;
+    width: 60%;
+    min-width: 34em;
+    max-width: 60em;
+    font-size: 16px;
+    font-weight: 300;
+    padding-left: 37px;
+    padding-right: 37px;
+    border-radius: 0.75em;
+    background-color: var(--background);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    box-shadow: var(--dropShadow);
+    position: relative;
+  }
+  &.logo_large {
+    user-select: none;
+    margin: 0 auto;
+    margin-top: 5em;
+    margin-bottom: 2em;
+    display: block;
+    justify-content: center;
+    width: 25em;
+  }
+  .logo_small.left {
+    width: 4.5em;
+    user-select: none;
+    justify-self: end;
+    position: absolute;
+    top: 2em;
+    left: 5%;
+  }
+  .logo_small.left:hover {
+    transform: translateY(-2px);
+  }
+  .logo_small.middle {
+    user-select: none;
+    margin: 0 auto;
+    margin-top: 1em;
+    margin-bottom: 2em;
+    display: block;
+    justify-content: center;
+    width: 10em;
+  }
+  .logo_small.right {
+    width: 4.5em;
+    user-select: none;
+    justify-self: end;
+    position: absolute;
+    top: 2em;
+    right: 5%;
+  }
+  .logo_small.right:hover {
+    transform: translateY(-2px);
+  }
+  &.field {
+    display: flex;
+    font-size: 18px;
+    padding-left: 10%;
+    padding-right: 10%;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 0em;
+  }
+  &.input {
+    height: 3.5em;
+    padding-left: 15px;
+    margin-left: -4px;
+    border: none;
+    border-radius: 0.75em;
+    margin-bottom: 20px;
+    background: transparentize(white, 0.85);
+    color: var(--normalTextColor);
+  }
+  &.input::placeholder {
+    color: var(--accent);
+  }
+  &.label {
+    color: var(--buttonTextColor);
+    margin-bottom: 10px;
+    text-transform: lowercase;
+    font-weight: 300;
+  }
+  &.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
+    margin-bottom: 2em;
+  }
+  .error {
+    text-align: center;
+    color: red;
+    font-size: large;
+  }
+}

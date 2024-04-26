@@ -8,12 +8,12 @@ import PropTypes from "prop-types";
  * instead of 'export default' at the end of the file.
  */
 export const LoginGuard = () => {
-  if (!localStorage.getItem("token")) {
+  if (!localStorage.getItem("ownUserId")) {
     
     return <Outlet />;
   }
   
-  return <Navigate to="/game" replace />;
+  return <Navigate to="/lobby/player" replace />;
 };
 
 LoginGuard.propTypes = {

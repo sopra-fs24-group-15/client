@@ -1,5 +1,6 @@
 import React from "react";
 import {ReactLogo} from "../ui/ReactLogo";
+import { api, handleError } from "helpers/api";
 import PropTypes from "prop-types";
 import "../../styles/views/Header.scss";
 
@@ -11,11 +12,20 @@ import "../../styles/views/Header.scss";
  * https://react.dev/learn/your-first-component and https://react.dev/learn/passing-props-to-a-component 
  * @FunctionalComponent
  */
+window.addEventListener("beforeunload", (event) => {
+  if (localStorage.getItem("ownUserId") !== null) {
+    api.delete(`/users/${localStorage.getItem("ownUserId")}`);
+    localStorage.removeItem("ownUserId");
+  } else {
+    // Prevent the page from unloading
+    event.preventDefault();
+    
+    return confirm;
+  }
+});
+
 const Header = props => (
-  <div className="header container" style={{height: props.height}}>
-    <h1 className="header title">Group 15 rocks with React!</h1>
-    <ReactLogo width="60px" height="60px"/>
-  </div>
+  <p></p>
 );
 
 Header.propTypes = {

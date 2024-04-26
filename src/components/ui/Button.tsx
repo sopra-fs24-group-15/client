@@ -11,7 +11,6 @@ export const Button = props => (
   </button>
 );
 
-
 Button.propTypes = {
   width: PropTypes.number,
   style: PropTypes.string,

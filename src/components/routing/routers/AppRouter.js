@@ -1,9 +1,15 @@
 import React from "react";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import {GameGuard} from "../routeProtectors/GameGuard";
-import GameRouter from "./GameRouter";
 import {LoginGuard} from "../routeProtectors/LoginGuard";
-import Login from "../../views/Login";
+import Home from "../../views/Home";
+import CreateLobby from "../../views/CreateLobby";
+import JoinLobby from "../../views/JoinLobby";
+import LobbyOwner from "../../views/LobbyOwner";
+import LobbyPlayer from "../../views/LobbyPlayer";
+import CreateMeme from "../../views/CreateMeme";
+import ScoreboardRound from "../../views/ScoreboardRound";
+import ScoreboardFinal from "../../views/ScoreboardFinal";
 
 /**
  * Main router of your application.
@@ -14,21 +20,44 @@ import Login from "../../views/Login";
  * /game renders a Router that contains other sub-routes that render in turn other react components
  * Documentation about routing in React: https://reactrouter.com/en/main/start/tutorial 
  */
+
 const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-
-        <Route path="/game/*" element={<GameGuard />}>
-          <Route path="/game/*" element={<GameRouter base="/game"/>} />
+        <Route path="/lobby/owner" element={<GameGuard />}>
+          <Route path="/lobby/owner" element={<LobbyOwner/>} />
+        </Route>
+        <Route path="/lobby/player" element={<GameGuard />}>
+          <Route path="/lobby/player" element={<LobbyPlayer/>} />
         </Route>
 
-        <Route path="/login" element={<LoginGuard />}>
-          <Route path="/login" element={<Login/>} />
+        <Route path="/home" element={<LoginGuard />}>
+          <Route path="/home" element={<Home/>} />
+        </Route>
+
+        <Route path="/createLobby" element={<LoginGuard />}>
+          <Route path="/createLobby" element={<CreateLobby/>} />
+        </Route>
+
+        <Route path="/joinLobby" element={<LoginGuard />}>
+          <Route path="/joinLobby" element={<JoinLobby/>} />
+        </Route>
+
+        <Route path="/createMeme" element={<GameGuard />}>
+          <Route path="/createMeme" element={<CreateMeme/>} />
+        </Route>
+
+        <Route path="/scoreboardFinal" element={<GameGuard />}>
+          <Route path="/scoreboardFinal" element={<ScoreboardFinal/>} />
+        </Route>
+
+        <Route path="/scoreboardRound" element={<GameGuard />}>
+          <Route path="/scoreboardRound" element={<ScoreboardRound/>} />
         </Route>
 
         <Route path="/" element={
-          <Navigate to="/game" replace />
+          <Navigate to="/home" replace />
         }/>
 
       </Routes>
