@@ -1,8 +1,8 @@
-import React from "react";
-import {ReactLogo} from "../ui/ReactLogo";
-import { api, handleError } from "helpers/api";
+import React, { useEffect, useState } from "react";
+import { api } from "helpers/api";
 import PropTypes from "prop-types";
 import "../../styles/views/Header.scss";
+import { Spinner } from "components/ui/Spinner";
 
 /**
  * This is an example of a Functional and stateless component (View) in React. Functional components are not classes and thus don't handle internal state changes.
@@ -24,15 +24,39 @@ window.addEventListener("beforeunload", (event) => {
   }
 });
 
-const Header = props => (
-  <p></p>
-);
+const Header = props => {
+  const [isLoading, setIsLoading] = useState(true);
 
-Header.propTypes = {
-  height: PropTypes.string,
+  const fetchLobbys = async () => {
+    try {
+      const response = await api.get("/lobbys");
+      // Handle the response here...
+      setIsLoading(false);
+
+      return
+    } catch (error) {
+      // Handle the error here...
+      if (localStorage.getItem("ownUserId") !== null) {
+        api.delete(`/users/${localStorage.getItem("ownUserId")}`);
+        localStorage.removeItem("ownUserId");
+      }
+      setTimeout(fetchLobbys, 2000); // Wait 1 second before retrying
+      
+    }
+  };
+
+  useEffect(() => {
+    fetchLobbys();
+  }, []);
+
+  return (
+    isLoading ? (
+      <div className="header title">
+        <h1>connecting to server</h1>
+        <Spinner />
+      </div>
+    ) : null
+  );
 };
 
-/**
- * Don't forget to export your component!
- */
 export default Header;
