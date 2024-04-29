@@ -9,8 +9,7 @@ import LobbyOwner from "../../views/LobbyOwner";
 import LobbyPlayer from "../../views/LobbyPlayer";
 import CreateMeme from "../../views/CreateMeme";
 import Voting from "../../views/Voting";
-import ScoreboardRound from "../../views/ScoreboardRound";
-import ScoreboardFinal from "../../views/ScoreboardFinal";
+import Scoreboard from "../../views/Scoreboard";
 
 /**
  * Main router of your application.
@@ -53,12 +52,8 @@ const AppRouter = () => {
           <Route path="/voting" element={<Voting/>} />
         </Route>
 
-        <Route path="/scoreboardFinal" element={<GameGuard />}>
-          <Route path="/scoreboardFinal" element={<ScoreboardFinal/>} />
-        </Route>
-
-        <Route path="/scoreboardRound" element={<GameGuard />}>
-          <Route path="/scoreboardRound" element={<ScoreboardRound/>} />
+        <Route path="/scoreboard" element={<GameGuard />}>
+          <Route path="/scoreboard" element={<Scoreboard/>} />
         </Route>
 
         <Route path="/" element={
