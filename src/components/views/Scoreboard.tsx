@@ -43,8 +43,10 @@ const ScoreboardFinal = () => {
   let ranking = []
   useEffect(() => {
     const fetchScores = async () => {
-      const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/ranks`); // Replace with your endpoint
-      setScores(response.data);
+      const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/ranks`);
+      const sortedData = response.data.sort((a, b) => b.score - a.score);
+      setScores(sortedData);
+      console.log(response.data);
     };
 
     fetchScores();
@@ -92,7 +94,7 @@ const ScoreboardFinal = () => {
           <div className="ranking">
             {scores.map((user, index) => (
               <div key={index} className="scoreboard rankedUsers">
-                {index + 1}. {user.username}
+                <div>{index + 1}. {user.username}</div><div>{user.score} Points</div>
               </div>
             ))}
           </div>

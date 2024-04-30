@@ -52,7 +52,6 @@ const LobbyOwner = () => {
     const standardTime = 60
     const standardRounds = 5
     const requestBody1 = JSON.stringify({totalRounds: `${standardRounds}`, timer: `${standardTime}`});
-    console.log(ownUser)
     await api.post(`lobbys/${localStorage.getItem("lobbyId")}/settings/${ownUser}`, requestBody1);
     //TODO start game
     const requestBody2 = JSON.stringify({lobbyId: localStorage.getItem("lobbyId")});
