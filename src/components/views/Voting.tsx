@@ -103,18 +103,16 @@ const LobbyPlayer = () => {
           </div>
 
         </div>
-        <div className="button-container">
+        <div className="voting button-container">
           <Button 
-            className="voting button-container"
-            width = "100%"
+            width = "30%"
             onClick={() => doPreviousMeme()}
           >
               Previous Meme
           </Button>
 
           <Button
-            className="voting button-container"
-            width="100%"
+            width="30%"
             onClick={() => doSubmit()}
             disabled={submitted}
           >
@@ -122,8 +120,7 @@ const LobbyPlayer = () => {
           </Button>
 
           <Button 
-            className="voting button-container"
-            width = "100%"
+            width = "30%"
             onClick={() => doNextMeme()}
           >
             Next Meme
