@@ -93,6 +93,7 @@ const LobbyPlayer = () => {
   /* Submit Button */
   const doSubmit = async () => {
     setSubmitted(true);
+    navigate("/scoreboard")
     //TODO add submit
   };
 
