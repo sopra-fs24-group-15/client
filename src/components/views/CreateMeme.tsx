@@ -2,7 +2,7 @@ import React, { useState, useEffect} from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { Spinner } from "components/ui/Spinner";
 import { api, handleError } from "helpers/api";
-import {useNavigate} from "react-router-dom";
+import {json, useNavigate} from "react-router-dom";
 import PropTypes from "prop-types";
 import { Button } from "components/ui/Button";
 import BaseContainer from "components/ui/BaseContainer";
@@ -59,11 +59,12 @@ const LobbyPlayer = () => {
   const navigate = useNavigate();
   // meme
   const [meme, setMeme] = useState("https://i.imgflip.com/22bdq6.jpg");
+  const [memeId, setMemeId] = useState(1);
   // Rules
   const [showRules, setShowRules] = useState(false);
   // Captions
-  const [topCaption, setTopCaption] = useState<string>(null);
-  const [bottomCaption, setBottomCaption] = useState<string>(null);
+  const [topCaption, setTopCaption] = useState<string>(" ");
+  const [bottomCaption, setBottomCaption] = useState<string>(" ");
   // Disable submit button
   const [submitted, setSubmitted] = useState(false);
 
@@ -84,17 +85,33 @@ const LobbyPlayer = () => {
   const getMeme = async () => {
     const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/templates`);
     console.log(response.data)
-    setMeme(response.data.url); // Assuming the new meme URL is in response.data
+    setMeme(response.data.url);
+    setMemeId(response.data.templateId)
   };
   useEffect(() => {
     getMeme();
   }, []);
 
+  /* Time Up*/
+  const doTimeUp = async () => {
+    await doSubmit();
+    navigate("/voting")
+  }
+
   /* Submit Button */
   const doSubmit = async () => {
+    const ownUser = Number(localStorage.getItem("ownUserId"))
     setSubmitted(true);
-    navigate("/scoreboard")
-    //TODO add submit
+    let text0 = topCaption.replace(/ /g, "%20");
+    let text1 = bottomCaption.replace(/ /g, "%20");
+    const username = "MemeBattleFrontend"
+    const password = "dysryw-Nepjen-6gudha"
+    const imgflip = await fetch(`https://api.imgflip.com/caption_image?template_id=${memeId}&username=${username}&password=${password}&text0=${text0}&text1=${text1}`)
+    const data = await imgflip.json();
+    const urlOnly = { MemeURL: data.data.url };
+    setMeme(urlOnly.MemeURL, urlOnly)
+    //TODO reactivate send to Server!
+    //const sendToServer = await api.post(`lobbys/${localStorage.getItem("lobbyId")}/memes/${ownUser}`, urlOnly);
   };
 
   const renderTime = ({ remainingTime }) => {
@@ -124,9 +141,6 @@ const LobbyPlayer = () => {
             onChange={(n) => setTopCaption(n)}
           />
         )}
-        {submitted && (
-          <h1>{topCaption}</h1>
-        )}
 
         <div className="createMeme memeContainer">
           
@@ -139,7 +153,7 @@ const LobbyPlayer = () => {
               size={180}
               colors={["#adf7b6", "#fcf5c7", "#fce1e4"]}
               colorsTime={[60, 30, 0]}
-              onComplete={() => { doSubmit().then(() => {}); }}
+              onComplete={() => { doTimeUp().then(() => {}); }}
             >
               {renderTime}
             </CountdownCircleTimer>
@@ -165,9 +179,6 @@ const LobbyPlayer = () => {
             value={bottomCaption}
             onChange={(n) => setBottomCaption(n)}
           />
-        )}
-        {submitted && (
-          <h1>{bottomCaption}</h1>
         )}
       </div>
     </BaseContainer>
