@@ -116,7 +116,7 @@ const LobbyPlayer = () => {
             onClick={() => doSubmit()}
             disabled={submitted}
           >
-            Submit
+            Vote for this meme
           </Button>
 
           <Button 
