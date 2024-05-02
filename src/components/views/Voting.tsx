@@ -15,6 +15,7 @@ import rules from "../img/rules.png";
 import home from "../img/home.png";
 //Rules
 import { Rules } from "../ui/Rules";
+import { isConstructorDeclaration } from "typescript";
 
 
 const Votingscreen = () => {
@@ -29,13 +30,14 @@ const Votingscreen = () => {
   const [voting, setVoting] = useState(false);
 
   useEffect(() => {
-    getMemes();
+    getMockedMemes();
   }, []);
 
   /* Home Button */
   const doHome = async () => {
     const ownUser = localStorage.getItem("ownUserId");
     localStorage.removeItem("ownUserId");
+    console.log(ownUser);
     const removeUser = await api.delete(`/users/${ownUser}`);
     navigate("/home");
   };
@@ -52,6 +54,29 @@ const Votingscreen = () => {
       const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/memes/${localStorage.getItem("ownUserId")}`);
       console.log(response.data);
       setMemeData(response.data);
+    } catch (error) {
+      console.error("Error while fetching memes: ", error);
+    }
+  };
+
+  const getMockedMemes = () => {
+    try {
+      const response = [
+        {
+          memeurl: "https://i.imgflip.com/22bdq6.jpg",
+          id: 1
+        },
+        {
+          memeurl: "https://imgflip.com/i/8oqmj9.jpg",
+          id: 2
+        },
+        {
+          memeurl: "https://imgflip.com/i/8oqmli.jpg",
+          id: 3
+        }
+      ];
+      setMemeData(response);
+      console.log(response);
     } catch (error) {
       console.error("Error while fetching memes: ", error);
     }
@@ -73,6 +98,11 @@ const Votingscreen = () => {
   const doVoting = async () => {
     setVoting(true);
     //TODO add submit
+    const requestBody = JSON.stringify(currentMeme.id);
+    console.log(requestBody);
+    await api.post(`/lobbys/${localStorage.getItem("lobbyId")}/votes`, requestBody);
+    //TODO  wait for all users to vote and then go to the next screen, for now directly to the scoreboard
+    navigate("/scoreboard");
   };
 
   const renderTime = ({ remainingTime }) => {
@@ -88,6 +118,8 @@ const Votingscreen = () => {
   };
 
   const currentMeme = memeData[currentMemeIndex] || "";
+  console.log(currentMeme); 
+  console.log(currentMeme.memeurl)
     
   return (
     <BaseContainer className="voting container">
@@ -117,7 +149,7 @@ const Votingscreen = () => {
           </div>
 
           <div className="voting meme">
-            <img src={currentMeme.memeurl} alt="Meme"></img>
+            <img src={currentMeme.memeurl}></img>
           </div>
 
         </div>
@@ -150,5 +182,6 @@ const Votingscreen = () => {
     </BaseContainer>
   );
 };
+
 
 export default Votingscreen;
