@@ -30,7 +30,7 @@ const Votingscreen = () => {
   const [voting, setVoting] = useState(false);
 
   useEffect(() => {
-    getMockedMemes();
+    getMemes();
   }, []);
 
   /* Home Button */
@@ -52,31 +52,12 @@ const Votingscreen = () => {
   const getMemes = async () => {
     try {
       const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/memes/${localStorage.getItem("ownUserId")}`);
-      console.log(response.data);
-      setMemeData(response.data);
-    } catch (error) {
-      console.error("Error while fetching memes: ", error);
-    }
-  };
-
-  const getMockedMemes = () => {
-    try {
-      const response = [
-        {
-          memeurl: "https://i.imgflip.com/22bdq6.jpg",
-          id: 1
-        },
-        {
-          memeurl: "https://imgflip.com/i/8oqmj9.jpg",
-          id: 2
-        },
-        {
-          memeurl: "https://imgflip.com/i/8oqmli.jpg",
-          id: 3
-        }
-      ];
-      setMemeData(response);
-      console.log(response);
+      const data = response.data.map(item => ({
+        ...item,
+        memeURL: JSON.parse(item.memeURL).MemeURL
+      }));
+      console.log(data);
+      setMemeData(data);
     } catch (error) {
       console.error("Error while fetching memes: ", error);
     }
@@ -94,15 +75,32 @@ const Votingscreen = () => {
       prevIndex < memeData.length - 1 ? prevIndex + 1 : 0);
   };
 
+  /* Time Up */
+  const doTimeUp = async () => {
+    await doVoting();
+    navigate("/scoreboard")
+  }
+
   /* Submit Button */
   const doVoting = async () => {
-    setVoting(true);
-    //TODO add submit
-    const requestBody = JSON.stringify(currentMeme.id);
-    console.log(requestBody);
-    await api.post(`/lobbys/${localStorage.getItem("lobbyId")}/votes`, requestBody);
+    if (voting === false) {
+      setVoting(true);
+      //TODO add submit
+      const requestBody = JSON.stringify(currentMeme.userId);
+      console.log(requestBody);
+      await api.post(`/lobbys/${localStorage.getItem("lobbyId")}/votes`, requestBody);
+    }
+    const ownUser = Number(localStorage.getItem("ownUserId"))
+    const responseIsOwner = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
+    if (responseIsOwner.data.lobbyOwner === ownUser) {
+      //end round as owner
+      const res = api.put(`lobbys/${localStorage.getItem("lobbyId")}/rounds/end`);
+    } else {
+      setTimeout(() => {
+        return
+      }, 2000); // Wait for 2 seconds
+    }
     //TODO  wait for all users to vote and then go to the next screen, for now directly to the scoreboard
-    navigate("/scoreboard");
   };
 
   const renderTime = ({ remainingTime }) => {
@@ -142,14 +140,14 @@ const Votingscreen = () => {
               size={180}
               colors={["#adf7b6", "#fcf5c7", "#fce1e4"]}
               colorsTime={[60, 30, 0]}
-              onComplete={() => { doVoting().then(() => {}); }}
+              onComplete={() => { doTimeUp().then(() => {}); }}
             >
               {renderTime}
             </CountdownCircleTimer>
           </div>
 
           <div className="voting meme">
-            <img src={currentMeme.memeurl}></img>
+            <img src={currentMeme.memeURL}></img>
           </div>
 
         </div>

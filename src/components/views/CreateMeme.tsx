@@ -92,6 +92,20 @@ const LobbyPlayer = () => {
     getMeme();
   }, []);
 
+  /* check if everyone submitted */
+  useEffect(() => {
+    if (!submitted) return; // Don't start checking if shouldCheck is false
+    const intervalId = setInterval(async () => {
+      const response1 = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/memes/${localStorage.getItem("ownUserId")}`);
+      const response2 = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
+      if (response1.data.length === response2.data.players.length -1) {
+        // Do something
+        clearInterval(intervalId); // Stop checking once the condition is true
+        doTimeUp();
+      }
+    }, 2000); // Check every second
+  });
+
   /* Time Up*/
   const doTimeUp = async () => {
     await doSubmit();
@@ -100,18 +114,20 @@ const LobbyPlayer = () => {
 
   /* Submit Button */
   const doSubmit = async () => {
-    const ownUser = Number(localStorage.getItem("ownUserId"))
-    setSubmitted(true);
-    let text0 = topCaption.replace(/ /g, "%20");
-    let text1 = bottomCaption.replace(/ /g, "%20");
-    const username = "MemeBattleFrontend"
-    const password = "dysryw-Nepjen-6gudha"
-    const imgflip = await fetch(`https://api.imgflip.com/caption_image?template_id=${memeId}&username=${username}&password=${password}&text0=${text0}&text1=${text1}`)
-    const data = await imgflip.json();
-    const urlOnly = { MemeURL: data.data.url };
-    setMeme(urlOnly.MemeURL, urlOnly)
-    //TODO reactivate send to Server!
-    //const sendToServer = await api.post(`lobbys/${localStorage.getItem("lobbyId")}/memes/${ownUser}`, urlOnly);
+    if (submitted === false) {
+      const ownUser = Number(localStorage.getItem("ownUserId"))
+      setSubmitted(true);
+      let text0 = topCaption.replace(/ /g, "%20");
+      let text1 = bottomCaption.replace(/ /g, "%20");
+      const username = "MemeBattleFrontend"
+      const password = "dysryw-Nepjen-6gudha"
+      const imgflip = await fetch(`https://api.imgflip.com/caption_image?template_id=${memeId}&username=${username}&password=${password}&text0=${text0}&text1=${text1}`)
+      const data = await imgflip.json();
+      const urlOnly = { MemeURL: data.data.url };
+      setMeme(urlOnly.MemeURL, urlOnly);
+      const sendToServer = await api.post(`lobbys/${localStorage.getItem("lobbyId")}/memes/${ownUser}`, urlOnly);
+    }
+    
   };
 
   const renderTime = ({ remainingTime }) => {
