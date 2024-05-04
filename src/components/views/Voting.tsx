@@ -133,7 +133,7 @@ const Votingscreen = () => {
             <h1 className="voting timerTitle">countdown</h1>
             <CountdownCircleTimer
               isPlaying
-              duration={30}
+              duration={60}
               strokeWidth={20}
               size={180}
               colors={["#adf7b6", "#fcf5c7", "#fce1e4"]}
