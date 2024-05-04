@@ -92,6 +92,16 @@ const LobbyPlayer = () => {
     getMeme();
   }, []);
 
+  /* return to lobby if game is inactive*/
+  useEffect(() => {
+    const checkStatus = async () => {
+      const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
+      if (!response.data.gameActive) {
+        navigate("/lobby/player");
+      }
+    };
+  })
+
   /* check if everyone submitted */
   useEffect(() => {
     if (!submitted) return; // Don't start checking if shouldCheck is false
@@ -103,12 +113,15 @@ const LobbyPlayer = () => {
         clearInterval(intervalId); // Stop checking once the condition is true
         doTimeUp();
       }
-    }, 2000); // Check every second
+    }, 500); // Check for other users to finish
   });
 
   /* Time Up*/
   const doTimeUp = async () => {
-    await doSubmit();
+    doSubmit();
+    setTimeout(() => {
+      navigate("/voting")
+    }, 6000); // let server work
     navigate("/voting")
   }
 

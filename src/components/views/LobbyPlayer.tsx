@@ -59,7 +59,7 @@ const LobbyPlayer = () => {
       if (response1.data.gameActive) {
         setTimeout(() => {
           navigate("/createMeme");
-        }, 2000); // Wait for 2 seconds
+        }, 3000); // Wait for 3 seconds
       }
     }
     catch (error) {

@@ -78,8 +78,10 @@ const Votingscreen = () => {
   /* Time Up */
   const doTimeUp = async () => {
     await doVoting();
-    navigate("/scoreboard")
-  }
+    setTimeout(() => {
+      navigate("/scoreboard");
+    }, 3000);
+  };
 
   /* Submit Button */
   const doVoting = async () => {
@@ -95,12 +97,7 @@ const Votingscreen = () => {
     if (responseIsOwner.data.lobbyOwner === ownUser) {
       //end round as owner
       const res = api.put(`lobbys/${localStorage.getItem("lobbyId")}/rounds/end`);
-    } else {
-      setTimeout(() => {
-        return
-      }, 2000); // Wait for 2 seconds
     }
-    //TODO  wait for all users to vote and then go to the next screen, for now directly to the scoreboard
   };
 
   const renderTime = ({ remainingTime }) => {
