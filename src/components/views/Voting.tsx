@@ -79,6 +79,12 @@ const Votingscreen = () => {
   const doTimeUp = async () => {
     navigate("/loading")
     await doVoting();
+    const ownUser = Number(localStorage.getItem("ownUserId"))
+    const responseIsOwner = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
+    if (responseIsOwner.data.lobbyOwner === ownUser) {
+      //end round as owner
+      const res = api.put(`lobbys/${localStorage.getItem("lobbyId")}/rounds/end`);
+    }
     setTimeout(() => {
       navigate("/scoreboard");
     }, 3000);
@@ -92,12 +98,6 @@ const Votingscreen = () => {
       const requestBody = JSON.stringify(currentMeme.userId);
       console.log(requestBody);
       await api.post(`/lobbys/${localStorage.getItem("lobbyId")}/votes`, requestBody);
-    }
-    const ownUser = Number(localStorage.getItem("ownUserId"))
-    const responseIsOwner = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
-    if (responseIsOwner.data.lobbyOwner === ownUser) {
-      //end round as owner
-      const res = api.put(`lobbys/${localStorage.getItem("lobbyId")}/rounds/end`);
     }
   };
 
@@ -133,7 +133,7 @@ const Votingscreen = () => {
             <h1 className="voting timerTitle">countdown</h1>
             <CountdownCircleTimer
               isPlaying
-              duration={10}
+              duration={30}
               strokeWidth={20}
               size={180}
               colors={["#adf7b6", "#fcf5c7", "#fce1e4"]}

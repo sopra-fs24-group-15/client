@@ -50,7 +50,7 @@ const LobbyOwner = () => {
     const ownUser = Number(localStorage.getItem("ownUserId"));
     //TODO create game with settings
     const standardTime = 60
-    const standardRounds = 5
+    const standardRounds = 2
     const requestBody1 = JSON.stringify({totalRounds: `${standardRounds}`, timer: `${standardTime}`});
     await api.post(`lobbys/${localStorage.getItem("lobbyId")}/settings/${ownUser}`, requestBody1);
     //TODO start game

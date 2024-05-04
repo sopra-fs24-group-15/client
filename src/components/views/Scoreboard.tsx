@@ -85,7 +85,6 @@ const ScoreboardFinal = () => {
       const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/ranks`);
       const sortedData = response.data.sort((a, b) => b.score - a.score);
       setScores(sortedData);
-      console.log(response.data);
     };
 
     fetchScores();
@@ -119,11 +118,11 @@ const ScoreboardFinal = () => {
             <h1 className="scoreboard timerTitle">next round</h1>
             <CountdownCircleTimer
               isPlaying
-              duration={10}
+              duration={16}
               strokeWidth={20}
               size={180}
               colors={["#adf7b6", "#fcf5c7", "#fce1e4"]}
-              colorsTime={[10, 5, 0]}
+              colorsTime={[16, 8, 0]}
               onComplete={() => { doNextRound().then(() => {}); }}
             >
               {renderTime}

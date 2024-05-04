@@ -84,7 +84,6 @@ const LobbyPlayer = () => {
   /* Meme */
   const getMeme = async () => {
     const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/templates`);
-    console.log(response.data)
     setMeme(response.data.url);
     setMemeId(response.data.templateId)
   };
