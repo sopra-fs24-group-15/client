@@ -75,6 +75,22 @@ const Votingscreen = () => {
       prevIndex < memeData.length - 1 ? prevIndex + 1 : 0);
   };
 
+  /* check if everyone submitted */
+  useEffect(() => {
+    if (voting === false) return; // Don't start checking if shouldCheck is false
+    const intervalId = setInterval(async () => {
+      const response1 = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/votes`);
+      const response2 = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
+      if (response1.data === response2.data.players.length) {
+        // Do something
+        clearInterval(intervalId); // Stop checking once the condition is true
+        doTimeUp();
+
+        return
+      }
+    }, 1000); // Check for other users to finish
+  });
+
   /* Time Up */
   const doTimeUp = async () => {
     navigate("/loading")

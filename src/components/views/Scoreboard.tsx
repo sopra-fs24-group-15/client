@@ -118,11 +118,11 @@ const ScoreboardFinal = () => {
             <h1 className="scoreboard timerTitle">next round</h1>
             <CountdownCircleTimer
               isPlaying
-              duration={16}
+              duration={10}
               strokeWidth={20}
               size={180}
               colors={["#adf7b6", "#fcf5c7", "#fce1e4"]}
-              colorsTime={[16, 8, 0]}
+              colorsTime={[10, 5, 0]}
               onComplete={() => { doNextRound().then(() => {}); }}
             >
               {renderTime}
