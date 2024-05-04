@@ -40,6 +40,15 @@ const ScoreboardFinal = () => {
     const responseIsOwner = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
     if (responseIsOwner.data.lobbyOwner === ownUser) {
       // TODO check if another round should be played. start if yes lobby if not.
+      const gameActive = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}`);
+      if (!gameActive.data.gameActive) {
+        navigate("/lobby/owner")
+      } else {
+        //start next round
+        await api.post(`lobbys/${localStorage.getItem("lobbyId")}/rounds/start`);
+        navigate("/createMeme")
+      }
+      /* OLD VERSION OF CHECK OWNER
       const currentRound = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}/rounds`);
       const temp = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}/settings`)
       const totalRounds = Number(temp.data.totalRounds)
@@ -51,7 +60,18 @@ const ScoreboardFinal = () => {
         //go back to lobby
         navigate("/lobby/owner")
       }
-    } else {
+      */
+    } else { 
+      const gameActive = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}`);
+      if (!gameActive.data.gameActive) {
+        navigate("/lobby/player")
+      } else {
+        //Join with a short break for owner to start.
+        setTimeout(() => {
+          navigate("/createMeme")
+        }, 2000); // Wait for 2 seconds
+      }
+      /* OLD VERSION OF CHECK PLAYER
       const currentRound = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}/rounds`);
       const temp = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}/settings`)
       const totalRounds = Number(temp.data.totalRounds)
@@ -64,7 +84,7 @@ const ScoreboardFinal = () => {
       } else {
         // game finished, go back to lobby
         navigate("/lobby/player")
-      }
+      } */
     }
   };
 
