@@ -57,7 +57,10 @@ const LobbyOwner = () => {
     const requestBody2 = JSON.stringify({lobbyId: localStorage.getItem("lobbyId")});
     await api.put(`lobbys/${localStorage.getItem("lobbyId")}/start/${ownUser}`, requestBody2);
     await api.post(`lobbys/${localStorage.getItem("lobbyId")}/rounds/start`);
-    navigate("/createMeme")
+    navigate("/loading")
+    setTimeout(() => {
+      navigate("/createMeme");
+    }, 3000); // Wait for 3 seconds
   };
 
   /* Users DIV

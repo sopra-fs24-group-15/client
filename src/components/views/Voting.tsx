@@ -77,6 +77,7 @@ const Votingscreen = () => {
 
   /* Time Up */
   const doTimeUp = async () => {
+    navigate("/loading")
     await doVoting();
     setTimeout(() => {
       navigate("/scoreboard");
@@ -132,7 +133,7 @@ const Votingscreen = () => {
             <h1 className="voting timerTitle">countdown</h1>
             <CountdownCircleTimer
               isPlaying
-              duration={60}
+              duration={10}
               strokeWidth={20}
               size={180}
               colors={["#adf7b6", "#fcf5c7", "#fce1e4"]}

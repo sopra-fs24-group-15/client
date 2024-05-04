@@ -106,23 +106,26 @@ const LobbyPlayer = () => {
   useEffect(() => {
     if (!submitted) return; // Don't start checking if shouldCheck is false
     const intervalId = setInterval(async () => {
-      const response1 = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/memes/${localStorage.getItem("ownUserId")}`);
+      const response1 = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/memes/0`);
       const response2 = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
-      if (response1.data.length === response2.data.players.length -1) {
+      if (response1.data.length === response2.data.players.length) {
         // Do something
         clearInterval(intervalId); // Stop checking once the condition is true
         doTimeUp();
+
+        return
       }
-    }, 500); // Check for other users to finish
+    }, 1000); // Check for other users to finish
   });
 
   /* Time Up*/
   const doTimeUp = async () => {
     doSubmit();
+    navigate("/loading")
     setTimeout(() => {
+      setSubmitted(false);
       navigate("/voting")
-    }, 6000); // let server work
-    navigate("/voting")
+    }, 5000); // let server work
   }
 
   /* Submit Button */

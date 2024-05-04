@@ -57,6 +57,7 @@ const LobbyPlayer = () => {
         navigate("/lobby/player");
       }
       if (response1.data.gameActive) {
+        await navigate("/loading")
         setTimeout(() => {
           navigate("/createMeme");
         }, 3000); // Wait for 3 seconds

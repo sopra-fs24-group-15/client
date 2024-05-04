@@ -52,6 +52,7 @@ const ScoreboardFinal = () => {
     const intervalId = setInterval(async () => {
       const newRound = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}/rounds`);
       if (roundPlayed !== newRound) {
+        clearInterval(intervalId);
         setTimeout(async () => {
           const ownUser = Number(localStorage.getItem("ownUserId"))
           const responseIsOwner = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
