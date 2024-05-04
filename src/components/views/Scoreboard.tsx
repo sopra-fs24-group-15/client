@@ -21,6 +21,8 @@ const ScoreboardFinal = () => {
   const [scores, setScores] = useState([]);
   // Rules
   const [showRules, setShowRules] = useState(false);
+  //round played
+  const roundPlayed = api.get(`/lobbys/${localStorage.getItem("lobbyId")}/rounds`);
   /* Home Button */
   const doHome = async () => {
     const ownUser = localStorage.getItem("ownUserId");
@@ -40,25 +42,41 @@ const ScoreboardFinal = () => {
     const responseIsOwner = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
     if (responseIsOwner.data.lobbyOwner === ownUser) {
       api.post(`lobbys/${localStorage.getItem("lobbyId")}/rounds/start`);
-      setTimeout(async () => {
-        const gameActive = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}`);
-        if (!gameActive.data.gameActive) {
-          navigate("/lobby/owner");
-        } else {
-          navigate("/createMeme");
-        }
-      }, 3000);
-    } else {
-      setTimeout(async () => {
-        const gameActive = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}`);
-        if (!gameActive.data.gameActive) {
-          navigate("/lobby/player");
-        } else {
-          navigate("/createMeme");
-        }
-      }, 3000);
     }
+    checkNextRound();
   };
+
+  /* new round funciton seperate not necesarly owner */
+  const checkNextRound = async () => {
+    navigate("/loading");
+    const intervalId = setInterval(async () => {
+      const newRound = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}/rounds`);
+      if (roundPlayed !== newRound) {
+        setTimeout(async () => {
+          const ownUser = Number(localStorage.getItem("ownUserId"))
+          const responseIsOwner = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
+          if (responseIsOwner.data.lobbyOwner === ownUser){
+            const gameActive = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}`);
+            if (!gameActive.data.gameActive) {
+              navigate("/lobby/owner");
+            } else {
+              navigate("/createMeme");
+            }
+          } else {
+            const gameActive = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}`);
+            if (!gameActive.data.gameActive) {
+              navigate("/lobby/player");
+            } else {
+              navigate("/createMeme");
+            }
+          }
+        }, 3000);
+      }
+    }, 500); // Check every second
+  
+    return () => clearInterval(intervalId); // Return a function to stop checking
+  };
+
 
   /* Ranking */
   useEffect(() => {
