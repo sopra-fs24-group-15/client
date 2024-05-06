@@ -43,6 +43,7 @@ const LobbyOwner = () => {
 
   /* Game Settings */
   const gameSettings = async () => {
+    navigate("/lobby/owner/settings");
   };
 
   /* Start Game */

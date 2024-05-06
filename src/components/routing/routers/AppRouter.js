@@ -6,11 +6,13 @@ import Home from "../../views/Home";
 import CreateLobby from "../../views/CreateLobby";
 import JoinLobby from "../../views/JoinLobby";
 import LobbyOwner from "../../views/LobbyOwner";
+import Settings from "../../views/Settings";
 import LobbyPlayer from "../../views/LobbyPlayer";
 import CreateMeme from "../../views/CreateMeme";
 import Voting from "../../views/Voting";
 import Scoreboard from "../../views/Scoreboard";
 import Loading from "../../views/Loading";
+
 
 /**
  * Main router of your application.
@@ -29,6 +31,11 @@ const AppRouter = () => {
         <Route path="/lobby/owner" element={<GameGuard />}>
           <Route path="/lobby/owner" element={<LobbyOwner/>} />
         </Route>
+
+        <Route path="/lobby/owner/settings" element={<GameGuard />}>
+          <Route path="/lobby/owner/settings" element={<Settings/>} />
+        </Route>
+
         <Route path="/lobby/player" element={<GameGuard />}>
           <Route path="/lobby/player" element={<LobbyPlayer/>} />
         </Route>
