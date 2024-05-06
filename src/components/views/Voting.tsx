@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import { Spinner } from "components/ui/Spinner";
 import {useNavigate} from "react-router-dom";
-import { api, handleError } from "helpers/api";
+import { api } from "helpers/api";
 import { Button } from "components/ui/Button";
 import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Voting.scss";
@@ -15,8 +14,6 @@ import rules from "../img/rules.png";
 import home from "../img/home.png";
 //Rules
 import { Rules } from "../ui/Rules";
-import { isConstructorDeclaration } from "typescript";
-
 
 const Votingscreen = () => {
   // use react-router-dom's hook to access navigation, more info: https://reactrouter.com/en/main/hooks/use-navigate 
@@ -38,7 +35,7 @@ const Votingscreen = () => {
     const ownUser = localStorage.getItem("ownUserId");
     localStorage.removeItem("ownUserId");
     console.log(ownUser);
-    const removeUser = await api.delete(`/users/${ownUser}`);
+    await api.delete(`/users/${ownUser}`);
     navigate("/home");
   };
 
@@ -48,7 +45,6 @@ const Votingscreen = () => {
   };
 
   /* Meme */
-  let meme = "https://i.imgflip.com/22bdq6.jpg";
   const getMemes = async () => {
     try {
       const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/memes/${localStorage.getItem("ownUserId")}`);
@@ -85,8 +81,6 @@ const Votingscreen = () => {
         // Do something
         clearInterval(intervalId); // Stop checking once the condition is true
         doTimeUp();
-
-        return
       }
     }, 1000); // Check for other users to finish
   });
@@ -94,12 +88,11 @@ const Votingscreen = () => {
   /* Time Up */
   const doTimeUp = async () => {
     navigate("/loading")
-    await doVoting();
     const ownUser = Number(localStorage.getItem("ownUserId"))
     const responseIsOwner = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
     if (responseIsOwner.data.lobbyOwner === ownUser) {
       //end round as owner
-      const res = api.put(`lobbys/${localStorage.getItem("lobbyId")}/rounds/end`);
+      api.put(`lobbys/${localStorage.getItem("lobbyId")}/rounds/end`);
     }
     setTimeout(() => {
       navigate("/scoreboard");
@@ -161,7 +154,7 @@ const Votingscreen = () => {
           </div>
 
           <div className="voting meme">
-            <img src={currentMeme.memeURL}></img>
+            <img src={currentMeme.memeURL} alt="current Meme URL"></img>
           </div>
 
         </div>

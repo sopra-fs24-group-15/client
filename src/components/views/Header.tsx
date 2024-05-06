@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { api } from "helpers/api";
-import PropTypes from "prop-types";
 import "../../styles/views/Header.scss";
 import { Spinner } from "components/ui/Spinner";
 
@@ -29,7 +28,7 @@ const Header = props => {
 
   const fetchLobbys = async () => {
     try {
-      const response = await api.get("/lobbys");
+      await api.get("/lobbys");
       // Handle the response here...
       setIsLoading(false);
 

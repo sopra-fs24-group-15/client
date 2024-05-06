@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { api, handleError } from "helpers/api";
+import { api } from "helpers/api";
 import User from "models/User";
 import Lobby from "models/Lobby";
 import {useNavigate} from "react-router-dom";
@@ -36,7 +36,6 @@ const FormField = (props) => {
 };
 
 FormField.propTypes = {
-  label: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
 };

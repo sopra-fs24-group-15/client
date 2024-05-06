@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { api, handleError } from "helpers/api";
-import { Spinner } from "components/ui/Spinner";
+import { api } from "helpers/api";
 import { Button } from "components/ui/Button";
 import {useNavigate} from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
-import PropTypes from "prop-types";
 import "styles/views/Lobby.scss";
 import { User } from "types";
 // @ts-ignore
@@ -32,7 +30,7 @@ const LobbyOwner = () => {
   const doHome = async () => {
     const ownUser = localStorage.getItem("ownUserId");
     localStorage.removeItem("ownUserId");
-    const removeUser = await api.delete(`/users/${ownUser}`);
+    await api.delete(`/users/${ownUser}`);
     navigate("/home");
   };
 
@@ -54,7 +52,7 @@ const LobbyOwner = () => {
     const standardRounds = 5
     const requestBody1 = JSON.stringify({totalRounds: `${standardRounds}`, timer: `${standardTime}`});
     await api.post(`lobbys/${localStorage.getItem("lobbyId")}/settings/${ownUser}`, requestBody1);
-    //TODO start game
+    // start game
     const requestBody2 = JSON.stringify({lobbyId: localStorage.getItem("lobbyId")});
     await api.put(`lobbys/${localStorage.getItem("lobbyId")}/start/${ownUser}`, requestBody2);
     await api.post(`lobbys/${localStorage.getItem("lobbyId")}/rounds/start`);
@@ -78,9 +76,9 @@ const LobbyOwner = () => {
       setLobbycode(response1.data.lobbyJoinCode);
       let userList = [];
       const response2 = await api.get("/users");
-      for (let i = 0; i < response2.data.length; i++) {
-        if (response1.data.players.includes(response2.data[i].userId)) {
-          userList.push(response2.data[i].username)
+      for (const element of response2.data) {
+        if (response1.data.players.includes(element.userId)) {
+          userList.push(element.username)
         }
       }
       setUsers(userList);

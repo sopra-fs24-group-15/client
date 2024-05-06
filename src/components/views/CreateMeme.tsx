@@ -1,8 +1,7 @@
 import React, { useState, useEffect} from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import { Spinner } from "components/ui/Spinner";
-import { api, handleError } from "helpers/api";
-import {json, useNavigate} from "react-router-dom";
+import { api } from "helpers/api";
+import { useNavigate} from "react-router-dom";
 import PropTypes from "prop-types";
 import { Button } from "components/ui/Button";
 import BaseContainer from "components/ui/BaseContainer";
@@ -30,26 +29,6 @@ const FormField1 = (props) => {
   );
 };
 FormField1.propTypes = {
-  label: PropTypes.string,
-  value: PropTypes.string,
-  onChange: PropTypes.func,
-};
-
-const FormField2 = (props) => {
-  return (
-    <div className="createMeme field">
-      <input
-        className="createMeme input"
-        placeholder="Write your caption here"
-        value={props.value}
-        onChange={(e) => props.onChange(e.target.value)}
-      />
-    </div>
-  );
-};
-
-FormField2.propTypes = {
-  label: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
 };
@@ -72,7 +51,7 @@ const LobbyPlayer = () => {
   const doHome = async () => {
     const ownUser = localStorage.getItem("ownUserId");
     localStorage.removeItem("ownUserId");
-    const removeUser = await api.delete(`/users/${ownUser}`);
+    await api.delete(`/users/${ownUser}`);
     navigate("/home");
   };
 
@@ -97,6 +76,7 @@ const LobbyPlayer = () => {
       const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
       if (!response.data.gameActive) {
         navigate("/lobby/player");
+        console.log(checkStatus)
       }
     };
   })
@@ -111,8 +91,6 @@ const LobbyPlayer = () => {
         // Do something
         clearInterval(intervalId); // Stop checking once the condition is true
         doTimeUp();
-
-        return
       }
     }, 1000); // Check for other users to finish
   });
@@ -140,7 +118,7 @@ const LobbyPlayer = () => {
       const data = await imgflip.json();
       const urlOnly = { MemeURL: data.data.url };
       setMeme(urlOnly.MemeURL, urlOnly);
-      const sendToServer = await api.post(`lobbys/${localStorage.getItem("lobbyId")}/memes/${ownUser}`, urlOnly);
+      await api.post(`lobbys/${localStorage.getItem("lobbyId")}/memes/${ownUser}`, urlOnly);
     }
     
   };
@@ -191,7 +169,7 @@ const LobbyPlayer = () => {
           </div>
 
           <div className="createMeme meme">
-            <img src={meme}></img>
+            <img src={meme} alt="meme template"></img>
           </div>
 
           <Button
