@@ -46,6 +46,8 @@ const LobbyPlayer = () => {
   const [bottomCaption, setBottomCaption] = useState<string>(" ");
   // Disable submit button
   const [submitted, setSubmitted] = useState(false);
+  // SettingsDuration
+  const [settingsDuration, setSettingsDuration] = useState(0);
 
   /* Home Button */
   const doHome = async () => {
@@ -59,6 +61,14 @@ const LobbyPlayer = () => {
   const doRule = async () => {
     setShowRules(!showRules);
   };
+
+  /* Creation Time */
+  const checkSettings = async () => {
+    const settings = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}/settings`);
+    setSettingsDuration(settings.data.timer);
+  }
+  checkSettings();
+
 
   /* Meme */
   const getMeme = async () => {
@@ -161,11 +171,11 @@ const LobbyPlayer = () => {
             <h1 className="createMeme timerTitle">countdown</h1>
             <CountdownCircleTimer
               isPlaying
-              duration={60}
+              duration={settingsDuration}
               strokeWidth={20}
               size={180}
               colors={["#adf7b6", "#fcf5c7", "#fce1e4"]}
-              colorsTime={[60, 30, 0]}
+              colorsTime={[settingsDuration, settingsDuration / 2, 0]}
               onComplete={() => { doTimeUp().then(() => {}); }}
             >
               {renderTime}
