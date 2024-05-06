@@ -25,6 +25,10 @@ const LobbyOwner = () => {
 
   const [lobbycode, setLobbycode] = useState<Lobby[]>([]);
 
+  const [settingsRounds, setSettingsRounds] = useState<number>(0);
+  const [settingsTime, setSettingsTime] = useState<number>(0);
+  const [settingsMode, setSettingsMode] = useState("mode");
+
   /* Home Button */
   const doHome = async () => {
     const ownUser = localStorage.getItem("ownUserId");
@@ -47,9 +51,7 @@ const LobbyOwner = () => {
   const startGame = async () => {
     const ownUser = Number(localStorage.getItem("ownUserId"));
     //TODO create game with settings
-    const standardTime = 60
-    const standardRounds = 5
-    const requestBody1 = JSON.stringify({totalRounds: `${standardRounds}`, timer: `${standardTime}`});
+    const requestBody1 = JSON.stringify({totalRounds: `${settingsRounds}`, timer: `${settingsTime}`});
     await api.post(`lobbys/${localStorage.getItem("lobbyId")}/settings/${ownUser}`, requestBody1);
     // start game
     const requestBody2 = JSON.stringify({lobbyId: localStorage.getItem("lobbyId")});
@@ -60,13 +62,6 @@ const LobbyOwner = () => {
       navigate("/createMeme");
     }, 3000); // Wait for 3 seconds
   };
-
-  /* Users DIV
-  let names = ["Gian", "Marc2", "Jana", "Christoph", "Marc1"];
-  const getUsers = async () => {
-    //add logic to change names
-  }
-  */
 
   const fetchUsers = async () => {
     try {
@@ -91,8 +86,26 @@ const LobbyOwner = () => {
     }
   };
 
-  useEffect(() => {
+  // setup with basic game, standard settings
+  const checkSettings = async () => {
+    try {
+      const settings = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}/settings`);
+      setSettingsRounds(settings.data.totalRounds);
+      setSettingsTime(settings.data.timer);
+      setSettingsMode(settings.data.gameMode);
+    } catch (error) {
+      const ownUser = Number(localStorage.getItem("ownUserId"));
+      setSettingsRounds(5)
+      setSettingsTime(60)
+      const standardTime = 60
+      const standardRounds = 5
+      const requestBody1 = JSON.stringify({totalRounds: `${standardRounds}`, timer: `${standardTime}`});
+      await api.post(`lobbys/${localStorage.getItem("lobbyId")}/settings/${ownUser}`, requestBody1);
+    }
+  }
 
+  useEffect(() => {
+    checkSettings();
     fetchUsers();
 
     const intervalId = setInterval(fetchUsers, 1000);
@@ -121,15 +134,15 @@ const LobbyOwner = () => {
           </tr>
           <tr>
             <td>GAMEMODE</td>
-            <td className="infoContent">standard</td>
+            <td className="infoContent">{settingsMode.toLowerCase()}</td>
           </tr>
           <tr>
             <td>CREATION TIME</td>
-            <td className="infoContent">60s</td>
+            <td className="infoContent">{settingsTime}s</td>
           </tr>
           <tr>
             <td>ROUNDS</td>
-            <td className="infoContent">5</td>
+            <td className="infoContent">{settingsRounds}</td>
           </tr>
         </table>
         <div className="lobby users">

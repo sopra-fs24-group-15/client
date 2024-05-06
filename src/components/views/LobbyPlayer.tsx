@@ -22,6 +22,10 @@ const LobbyPlayer = () => {
   const [users, setUsers] = useState<User[]>([]);
   // Rules
   const [showRules, setShowRules] = useState(false);
+  // Settings
+  const [settingsRounds, setSettingsRounds] = useState<number>(0);
+  const [settingsTime, setSettingsTime] = useState<number>(0);
+  const [settingsMode, setSettingsMode] = useState("mode");
 
   /* Home Button */
   const doHome = async () => {
@@ -65,12 +69,25 @@ const LobbyPlayer = () => {
       console.log(error);
     }
   };
-
   useEffect(() => {
-
     fetchUsers();
 
     const intervalId = setInterval(fetchUsers, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+  
+  // get settings
+  const checkSettings = async () => {
+    const settings = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}/settings`);
+    setSettingsRounds(settings.data.totalRounds);
+    setSettingsTime(settings.data.timer);
+    setSettingsMode(settings.data.gameMode);
+  }
+  useEffect(() => {
+    checkSettings();
+
+    const intervalId = setInterval(checkSettings, 1000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -98,15 +115,15 @@ const LobbyPlayer = () => {
           </tr>
           <tr>
             <td>GAMEMODE</td>
-            <td className="infoContent">standard</td>
+            <td className="infoContent">{settingsMode.toLowerCase()}</td>
           </tr>
           <tr>
             <td>CREATION TIME</td>
-            <td className="infoContent">60s</td>
+            <td className="infoContent">{settingsTime}s</td>
           </tr>
           <tr>
             <td>ROUNDS</td>
-            <td className="infoContent">5</td>
+            <td className="infoContent">{settingsRounds}</td>
           </tr>
         </table>
         <div className="lobby users">

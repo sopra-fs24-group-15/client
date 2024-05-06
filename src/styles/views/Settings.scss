@@ -1,0 +1,117 @@
+@import "../theme";
+
+/* The '&' is a shorthand for the containing element,
+  so for example a '&.user-list' inside .game will compile to
+  .game.user-list
+
+  for more information visit https://sass-lang.com/guide
+ */
+
+.settings {
+  &.container {
+    margin-top: 20px;
+    max-height: 100%;
+    max-width: 100%;
+    /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
+    @include center;
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+  }
+  .content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 40vw;
+    max-width: 80%;
+    font-size: 16px;
+    font-weight: 300;
+    padding: 1em;
+    border-radius: 0.75em;
+    background-color: var(--background);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    box-shadow: var(--dropShadow);
+    position: relative;
+  }
+  
+  .logo_small{
+    max-width: 100%;
+  }
+  .logo_small:hover {
+    transform: translateY(-2px);
+  }
+  .button_small.left{
+    max-width: 4em;
+    max-height: 4em;
+    width: 20%;
+    user-select: none;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    justify-self: end;
+    padding: 0;
+    margin:0;
+    position: absolute;
+    display: inline-block;
+    left: 0.5em;
+    top: 1em;
+  }
+  .logo_small_middle {
+    user-select: none;
+    margin: auto;
+    margin-bottom: 2em;
+    display: block;
+    justify-content: center;
+    max-width: 10em;
+    width: 50%;
+  }
+  .button_small.right{
+    max-width: 4em;
+    max-height: 4em;
+    width: 20%;
+    user-select: none;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    justify-self: end;
+    padding: 0;
+    margin:0;
+    position: absolute;
+    display: inline-block;
+    right: 0.5em;
+    top:1em;
+  }
+
+  .title {
+    font-size: 3em;
+    font-weight: 900;
+    margin-top: 0em;
+    margin-bottom: 0em;
+  }
+
+  .button-container {
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+  }
+  .selection {
+    margin-top: 1;
+    width: 15em;
+  }
+  .selectionButton4{
+    width: 24%;
+    margin: 0.5%;
+  }
+  .selectionButton2{
+    width: 49%;
+    margin: 0.5%;
+  }
+  h2 {
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .saveButton{
+    margin-top:2em;
+  }
+}
