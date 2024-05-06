@@ -51,8 +51,8 @@ const LobbyPlayer = () => {
       }
       setUsers(userList);
       const ownUser = Number(localStorage.getItem("ownUserId"));
-      if (response1.data.lobbyOwner !== ownUser) {
-        navigate("/lobby/player");
+      if (response1.data.lobbyOwner === ownUser) {
+        navigate("/lobby/owner");
       }
       if (response1.data.gameActive) {
         navigate("/loading")
