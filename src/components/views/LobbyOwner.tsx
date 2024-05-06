@@ -50,9 +50,11 @@ const LobbyOwner = () => {
   /* Start Game */
   const startGame = async () => {
     const ownUser = Number(localStorage.getItem("ownUserId"));
+    //TODO create game with settings
+    const requestBody1 = JSON.stringify({totalRounds: `${settingsRounds}`, timer: `${settingsTime}`});
+    await api.post(`lobbys/${localStorage.getItem("lobbyId")}/settings/${ownUser}`, requestBody1);
     // start game
-    const requestBody2 = JSON.stringify({lobbyId: localStorage.getItem("lobbyId")});
-    await api.put(`lobbys/${localStorage.getItem("lobbyId")}/start/${ownUser}`, requestBody2);
+    await api.put(`lobbys/${localStorage.getItem("lobbyId")}/start/${ownUser}`);
     await api.post(`lobbys/${localStorage.getItem("lobbyId")}/rounds/start`);
     navigate("/loading")
     setTimeout(() => {
@@ -100,9 +102,9 @@ const LobbyOwner = () => {
       await api.post(`lobbys/${localStorage.getItem("lobbyId")}/settings/${ownUser}`, requestBody1);
     }
   }
+  checkSettings();
 
   useEffect(() => {
-    checkSettings();
     fetchUsers();
 
     const intervalId = setInterval(fetchUsers, 1000);
