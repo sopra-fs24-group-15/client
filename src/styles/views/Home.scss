@@ -2,8 +2,11 @@
 
 .home {
   &.container {
-    margin-top: 2em;
-    min-height: 300px;
+    margin-top: 20px;
+    max-height: 100%;
+    max-width: 100%;
+    min-width: fit-content;
+    min-height: fit-content;
     /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
     @include center;
     flex-direction: column;
@@ -11,16 +14,14 @@
     justify-content: space-between;
   }
   &.form {
+    min-height: fit-content;
     display: block;
     flex-direction: column;
     justify-content: center;
-    width: 60%;
-    min-width: 34em;
-    max-width: 60em;
+    min-width: 40vw;
     font-size: 16px;
     font-weight: 300;
-    padding-left: 37px;
-    padding-right: 37px;
+    padding: 1em;
     border-radius: 0.75em;
     background-color: var(--background);
     transition: opacity 0.5s ease, transform 0.5s ease;
@@ -30,39 +31,40 @@
   &.logo_large {
     user-select: none;
     margin: 0 auto;
-    margin-top: 5em;
+    margin-top: 2em;
     margin-bottom: 2em;
     display: block;
     justify-content: center;
-    width: 25em;
+    width: 20em;
   }
   .logo_small.left {
-    width: 4.5em;
+    max-width: 4em;
+    width: 20%;
     user-select: none;
     justify-self: end;
     position: absolute;
-    top: 2em;
-    left: 5%;
+    left: 0.5em;
   }
   .logo_small.left:hover {
     transform: translateY(-2px);
   }
   .logo_small.middle {
     user-select: none;
-    margin: 0 auto;
-    margin-top: 1em;
+    margin: auto;
     margin-bottom: 2em;
     display: block;
     justify-content: center;
-    width: 10em;
+    max-width: 10em;
+    width: 50%;
   }
   .logo_small.right {
-    width: 4.5em;
+    max-width: 4em;
+    width: 20%;
     user-select: none;
     justify-self: end;
     position: absolute;
-    top: 2em;
-    right: 5%;
+    right: 1em;
+    top: 1em;
   }
   .logo_small.right:hover {
     transform: translateY(-2px);
@@ -98,8 +100,7 @@
   &.button-container {
     display: flex;
     justify-content: center;
-    margin-top: 2em;
-    margin-bottom: 2em;
+    margin-top: 1em;
   }
   .error {
     text-align: center;

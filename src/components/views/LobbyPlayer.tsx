@@ -112,7 +112,7 @@ const LobbyPlayer = () => {
             <span key={index}>{user}</span>
           ))}
         </div>
-        <p>waiting for lobby owner to start the game</p>
+        <p style={{ textAlign: "center" }}>waiting for lobby owner to start the game</p>
         <Spinner />
         <br></br>
       </div>
