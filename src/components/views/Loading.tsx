@@ -39,9 +39,13 @@ const Loading = () => {
         {showRules && <Rules close={() => setShowRules(false)} />}
       </div>
       <div className="loading content">
-        <img src={home} draggable="false" alt="Back" className="loading logo_small left" onClick={() => doHome()}/>
-        <img src={logo} draggable="false" alt="Logo" className="loading logo_small middle"/>
-        <img src={rules} draggable="false" alt="Rules" className="loading logo_small right" onClick={() => doRule()}/>
+        <button className="home button_small left" onClick={() => doHome()}>
+          <img src={home} alt="Theme" className="home logo_small" />
+        </button>
+        <img src={logo} draggable="false" alt="Logo" className="home logo_small_middle"/>
+        <button className="home button_small right" onClick={() => doRule()}>
+          <img src={rules} alt="Theme" className="home logo_small" />
+        </button>
         <h1 className="loading title">LOADING</h1>
         <Spinner />
 

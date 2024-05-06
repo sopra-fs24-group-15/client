@@ -38,35 +38,52 @@
     position: relative;
   }
   
-  .logo_small.left {
-    width: 4.5em;
-    user-select: none;
-    justify-self: end;
-    position: absolute;
-    top: 2em;
-    left: 5%;
+  .logo_small{
+    max-width: 100%;
   }
-  .logo_small.left:hover {
+  .logo_small:hover {
     transform: translateY(-2px);
   }
-  .logo_small.middle {
+  .button_small.left{
+    max-width: 4em;
+    max-height: 4em;
+    width: 20%;
     user-select: none;
-    margin: 0 auto;
-    margin-top: 1em;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    justify-self: end;
+    padding: 0;
+    margin:0;
+    position: absolute;
+    display: inline-block;
+    left: 0.5em;
+    top: 1em;
+  }
+  .logo_small_middle {
+    user-select: none;
+    margin: auto;
     margin-bottom: 2em;
+    margin-top:1em;
     display: block;
     justify-content: center;
-    width: 10em;
+    max-width: 10em;
+    width: 50%;
   }
-  .logo_small.right {
-    width: 4.5em;
+  .button_small.right{
+    max-width: 4em;
+    max-height: 4em;
+    width: 20%;
     user-select: none;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
     justify-self: end;
+    padding: 0;
+    margin:0;
     position: absolute;
-    top: 2em;
-    right: 5%;
-  }
-  .logo_small.right:hover {
-    transform: translateY(-2px);
+    display: inline-block;
+    right: 0.5em;
+    top:1em;
   }
 }

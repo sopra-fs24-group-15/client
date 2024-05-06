@@ -69,8 +69,12 @@ const Home = () => {
       </div>
       <div className="home container">
         <div className="home form">
-          <img src={theme} draggable="false" alt="Theme" className="home logo_small left" onClick={() => doTheme()}/>
-          <img src={rules} draggable="false" alt="Rules" className="home logo_small right" onClick={() => doRule()}/>
+          <button className="home button_small left" onClick={() => doTheme()}>
+            <img src={theme} alt="Theme" className="home logo_small" />
+          </button>
+          <button className="home button_small right" onClick={() => doRule()}>
+            <img src={rules} alt="Theme" className="home logo_small" />
+          </button>
           <img src={logo} draggable="false" alt="Logo" className="home logo_large"/>
           <div className="home button-container">
             <Button

@@ -35,19 +35,29 @@
     position: relative;
   }
   
-  .logo_small.left {
-    max-width: 4em;
-    width: 20%;
-    user-select: none;
-    justify-self: end;
-    position: absolute;
-    top: 1.5em;
-    left: 1em;
+  .logo_small{
+    max-width: 100%;
   }
-  .logo_small.left:hover {
+  .logo_small:hover {
     transform: translateY(-2px);
   }
-  .logo_small.middle {
+  .button_small.left{
+    max-width: 4em;
+    max-height: 4em;
+    width: 20%;
+    user-select: none;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    justify-self: end;
+    padding: 0;
+    margin:0;
+    position: absolute;
+    display: inline-block;
+    left: 0.5em;
+    top: 1em;
+  }
+  .logo_small_middle {
     user-select: none;
     margin: auto;
     margin-bottom: 2em;
@@ -56,17 +66,21 @@
     max-width: 10em;
     width: 50%;
   }
-  .logo_small.right {
+  .button_small.right{
     max-width: 4em;
+    max-height: 4em;
     width: 20%;
     user-select: none;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
     justify-self: end;
+    padding: 0;
+    margin:0;
     position: absolute;
-    right: 1em;
-    top: 1.5em;
-  }
-  .logo_small.right:hover {
-    transform: translateY(-2px);
+    display: inline-block;
+    right: 0.5em;
+    top:1em;
   }
 
   .title {

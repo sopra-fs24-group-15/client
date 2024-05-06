@@ -85,9 +85,13 @@ const CreateLobby = () => {
       </div>
       <div className="home container">
         <div className="home form">
-          <img src={back} draggable="false" alt="Back" className="home logo_small left" onClick={() => doBack()}/>
-          <img src={logo} draggable="false" alt="Logo" className="home logo_small middle"/>
-          <img src={rules} draggable="false" alt="Rules" className="home logo_small right" onClick={() => doRule()}/>
+          <button className="home button_small left" onClick={() => doBack()}>
+            <img src={back} alt="Theme" className="home logo_small" />
+          </button>
+          <img src={logo} draggable="false" alt="Logo" className="home logo_small_middle"/>
+          <button className="home button_small right" onClick={() => doRule()}>
+            <img src={rules} alt="Theme" className="home logo_small" />
+          </button>
           {errorUsername && <div className="home error">Username already taken</div>}
           <FormField
             value={username}

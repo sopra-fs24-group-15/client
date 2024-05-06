@@ -40,9 +40,13 @@ const Settings = () => {
         {showRules && <Rules close={() => setShowRules(false)} />}
       </div>
       <div className="lobby content">
-        <img src={back} draggable="false" alt="Back" className="lobby logo_small left" onClick={() => doBack()}/>
-        <img src={logo} draggable="false" alt="Logo" className="lobby logo_small middle"/>
-        <img src={rules} draggable="false" alt="Rules" className="lobby logo_small right" onClick={() => doRule()}/>
+        <button className="home button_small left" onClick={() => doBack()}>
+          <img src={back} alt="Theme" className="home logo_small" />
+        </button>
+        <img src={logo} draggable="false" alt="Logo" className="home logo_small_middle"/>
+        <button className="home button_small right" onClick={() => doRule()}>
+          <img src={rules} alt="Theme" className="home logo_small" />
+        </button>
         <h1>SETTINGS</h1>
         
         <div className="settings button-container">

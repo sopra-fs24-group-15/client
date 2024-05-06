@@ -2,7 +2,7 @@ import "styles/views/Scoreboard.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import React, { useState, useEffect} from "react";
-import { api, handleError } from "helpers/api";
+import { api } from "helpers/api";
 import {useNavigate} from "react-router-dom";
 
 // @ts-ignore
@@ -27,7 +27,7 @@ const ScoreboardFinal = () => {
   const doHome = async () => {
     const ownUser = localStorage.getItem("ownUserId");
     localStorage.removeItem("ownUserId");
-    const removeUser = await api.delete(`/users/${ownUser}`);
+    await api.delete(`/users/${ownUser}`);
     navigate("/home");
   };
 
@@ -109,9 +109,13 @@ const ScoreboardFinal = () => {
         {showRules && <Rules close={() => setShowRules(false)} />}
       </div>
       <div className="scoreboard content">
-        <img src={home} draggable="false" alt="Back" className="lobby logo_small left" onClick={() => doHome()}/>
-        <img src={logo} draggable="false" alt="Logo" className="lobby logo_small middle"/>
-        <img src={rules} draggable="false" alt="Rules" className="lobby logo_small right" onClick={() => doRule()}/>
+        <button className="home button_small left" onClick={() => doHome()}>
+          <img src={home} alt="Theme" className="home logo_small" />
+        </button>
+        <img src={logo} draggable="false" alt="Logo" className="home logo_small_middle"/>
+        <button className="home button_small right" onClick={() => doRule()}>
+          <img src={rules} alt="Theme" className="home logo_small" />
+        </button>
         <h1 className="scoreboard title">Ranking</h1>
         <div className="scoreboard rankingContainer">
           <div className="scoreboard timer-wrapper">

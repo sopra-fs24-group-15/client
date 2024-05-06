@@ -22,7 +22,6 @@ const LobbyOwner = () => {
   const [showRules, setShowRules] = useState(false);
 
   const [users, setUsers] = useState<User[]>([]);
-  //const [users, setUsers] = useState([]);
 
   const [lobbycode, setLobbycode] = useState<Lobby[]>([]);
 
@@ -107,9 +106,13 @@ const LobbyOwner = () => {
         {showRules && <Rules close={() => setShowRules(false)} />}
       </div>
       <div className="lobby content">
-        <img src={home} draggable="false" alt="Back" className="lobby logo_small left" onClick={() => doHome()}/>
-        <img src={logo} draggable="false" alt="Logo" className="lobby logo_small middle"/>
-        <img src={rules} draggable="false" alt="Rules" className="lobby logo_small right" onClick={() => doRule()}/>
+        <button className="home button_small left" onClick={() => doHome()}>
+          <img src={home} alt="Theme" className="home logo_small" />
+        </button>
+        <img src={logo} draggable="false" alt="Logo" className="home logo_small_middle"/>
+        <button className="home button_small right" onClick={() => doRule()}>
+          <img src={rules} alt="Theme" className="home logo_small" />
+        </button>
 
         <table className="lobby infoContainer">
           <tr className="infoLobbyCode">
