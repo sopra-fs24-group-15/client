@@ -46,6 +46,7 @@ const LobbyPlayer = () => {
   const [topCaption, setTopCaption] = useState<string>(" ");
   const [bottomCaption, setBottomCaption] = useState<string>(" ");
   const [thirdCaption, setThirdCaption] = useState<string>(" ");
+  const [fourthCaption, setFourthCaption] = useState<string>(" ");
   // Disable submit button
   const [submitted, setSubmitted] = useState(false);
 
@@ -117,9 +118,10 @@ const LobbyPlayer = () => {
       let text0 = topCaption.replace(/ /g, "%20");
       let text1 = bottomCaption.replace(/ /g, "%20");
       let text2 = thirdCaption.replace(/ /g, "%20");
+      let text3 = fourthCaption.replace(/ /g, "%20"); //TODO: zu imgflip dazu tun
       const username = "MemeBattleFrontend"
       const password = "dysryw-Nepjen-6gudha"
-      const imgflip = await fetch(`https://api.imgflip.com/caption_image?template_id=${memeId}&username=${username}&password=${password}&text0=${text0}&text1=${text1}&text2=${text2}`)
+      const imgflip = await fetch(`https://api.imgflip.com/caption_image?template_id=${memeId}&username=${username}&password=${password}&text0=${text0}&text1=${text1}`)
       const data = await imgflip.json();
       const urlOnly = { MemeURL: data.data.url };
       setMeme(urlOnly.MemeURL, urlOnly);
@@ -201,6 +203,10 @@ const LobbyPlayer = () => {
         {boxCount === 3 && (<FormField1
           value = {thirdCaption}
           onChange={(n) => setThirdCaption(n)}
+        />)}
+        {boxCount === 4 && (<FormField1
+          value = {fourthCaption}
+          onChange={(n) => setFourthCaption(n)}
         />)}
       </div>
     </BaseContainer>
