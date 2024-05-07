@@ -39,11 +39,13 @@ const LobbyPlayer = () => {
   // meme
   const [meme, setMeme] = useState("https://i.imgflip.com/22bdq6.jpg");
   const [memeId, setMemeId] = useState(1);
+  const [boxCount, setBoxCount] = useState(0);
   // Rules
   const [showRules, setShowRules] = useState(false);
   // Captions
   const [topCaption, setTopCaption] = useState<string>(" ");
   const [bottomCaption, setBottomCaption] = useState<string>(" ");
+  const [thirdCaption, setThirdCaption] = useState<string>(" ");
   // Disable submit button
   const [submitted, setSubmitted] = useState(false);
 
@@ -64,7 +66,9 @@ const LobbyPlayer = () => {
   const getMeme = async () => {
     const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/templates`);
     setMeme(response.data.url);
-    setMemeId(response.data.templateId)
+    setMemeId(response.data.templateId);
+    setBoxCount(response.data.boxCount);
+    console.log("BoxCount " + response.data.boxCount);
   };
   useEffect(() => {
     getMeme();
@@ -112,9 +116,10 @@ const LobbyPlayer = () => {
       setSubmitted(true);
       let text0 = topCaption.replace(/ /g, "%20");
       let text1 = bottomCaption.replace(/ /g, "%20");
+      let text2 = thirdCaption.replace(/ /g, "%20");
       const username = "MemeBattleFrontend"
       const password = "dysryw-Nepjen-6gudha"
-      const imgflip = await fetch(`https://api.imgflip.com/caption_image?template_id=${memeId}&username=${username}&password=${password}&text0=${text0}&text1=${text1}`)
+      const imgflip = await fetch(`https://api.imgflip.com/caption_image?template_id=${memeId}&username=${username}&password=${password}&text0=${text0}&text1=${text1}&text2=${text2}`)
       const data = await imgflip.json();
       const urlOnly = { MemeURL: data.data.url };
       setMeme(urlOnly.MemeURL, urlOnly);
@@ -193,6 +198,10 @@ const LobbyPlayer = () => {
             onChange={(n) => setBottomCaption(n)}
           />
         )}
+        {boxCount === 3 && (<FormField1
+          value = {thirdCaption}
+          onChange={(n) => setThirdCaption(n)}
+        />)}
       </div>
     </BaseContainer>
   );
