@@ -12,6 +12,7 @@ import CreateMeme from "../../views/CreateMeme";
 import Voting from "../../views/Voting";
 import Scoreboard from "../../views/Scoreboard";
 import Loading from "../../views/Loading";
+import Finalscreen from "../../views/FinalScreen";
 
 
 /**
@@ -62,6 +63,10 @@ const AppRouter = () => {
 
         <Route path="/scoreboard" element={<GameGuard />}>
           <Route path="/scoreboard" element={<Scoreboard/>} />
+        </Route>
+
+        <Route path="/finalscreen" element={<GameGuard />}>
+          <Route path="/finalscreen" element={<Finalscreen/>} />
         </Route>
 
         <Route path="/loading" element={<GameGuard />}>

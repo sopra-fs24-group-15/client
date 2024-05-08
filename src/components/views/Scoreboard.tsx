@@ -57,22 +57,11 @@ const ScoreboardFinal = () => {
       if (roundPlayed !== newRound) {
         clearInterval(intervalId);
         setTimeout(async () => {
-          const ownUser = Number(localStorage.getItem("ownUserId"))
-          const responseIsOwner = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
-          if (responseIsOwner.data.lobbyOwner === ownUser){
-            const gameActive = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}`);
-            if (!gameActive.data.gameActive) {
-              navigate("/lobby/owner");
-            } else {
-              navigate("/createMeme");
-            }
+          const gameActive = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}`);
+          if (!gameActive.data.gameActive) {
+            navigate("/finalscreen");
           } else {
-            const gameActive = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}`);
-            if (!gameActive.data.gameActive) {
-              navigate("/lobby/player");
-            } else {
-              navigate("/createMeme");
-            }
+            navigate("/createMeme");
           }
         }, 3000);
       }
