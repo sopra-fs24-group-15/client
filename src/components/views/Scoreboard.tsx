@@ -38,13 +38,16 @@ const ScoreboardFinal = () => {
 
   /* Next Round */
   const doNextRound = async () => {
-    const ownUser = Number(localStorage.getItem("ownUserId"))
-    const responseIsOwner = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
-    if (responseIsOwner.data.lobbyOwner === ownUser) {
-      api.post(`lobbys/${localStorage.getItem("lobbyId")}/rounds/start`);
-    }
+    const gameActive = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}`);
+    if (gameActive.data.gameActive) {
+      const ownUser = Number(localStorage.getItem("ownUserId"))
+      const responseIsOwner = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
+      if (responseIsOwner.data.lobbyOwner === ownUser) {
+        api.post(`lobbys/${localStorage.getItem("lobbyId")}/rounds/start`);
+      }
+    };
     checkNextRound();
-  };
+  }
 
   /* new round funciton seperate not necesarly owner */
   const checkNextRound = async () => {
