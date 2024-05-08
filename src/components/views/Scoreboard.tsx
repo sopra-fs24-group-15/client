@@ -82,7 +82,9 @@ const ScoreboardFinal = () => {
   /* Ranking */
   useEffect(() => {
     const fetchScores = async () => {
-      const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/ranks`);
+      console.log("test")
+      const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/scores`);
+      console.log(response.data)
       const sortedData = response.data.sort((a, b) => b.score - a.score);
       setScores(sortedData);
     };
