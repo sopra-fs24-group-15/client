@@ -132,10 +132,10 @@ const LobbyPlayer = () => {
           {users.map((user, index) => (
             <div key={index} className="user-profile">
               <span> 
-              <img src={mike} alt="Mike" className="user-profile-picture"/>
-              <div className="user-profile-name">
-                {user}
-              </div>
+                <img src={mike} alt="Mike" className="user-profile-picture"/>
+                <div className="user-profile-name">
+                  {user}
+                </div>
               </span>
             </div>
           ))}
