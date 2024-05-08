@@ -23,30 +23,6 @@ const Home = () => {
   const navigate = useNavigate();
   // Rules
   const [showRules, setShowRules] = useState(false);
-  const [name, setName] = useState<string>(null);
-  const [username, setUsername] = useState<string>(null);
-
-  /*
-  const doLogin = async () => {
-    try {
-      const requestBody = JSON.stringify({ username, name });
-      const response = await api.post("/users", requestBody);
-
-      // Get the returned user and update a new object.
-      const user = new User(response.data);
-
-      // Store the token into the local storage.
-      localStorage.setItem("token", user.token);
-
-      // Login successfully worked --> navigate to the route /game in the GameRouter
-      navigate("/game");
-    } catch (error) {
-      alert(
-        `Something went wrong during the login: \n${handleError(error)}`
-      );
-    }
-  };
-  */
 
   const doCreate = async () => {
     navigate("/CreateLobby");
@@ -75,7 +51,6 @@ const Home = () => {
     let normalTextColor = themes[activeTheme][3];
     let background = themes[activeTheme][4];
 
-
     document.documentElement.style.setProperty("--accent", accent);
     document.documentElement.style.setProperty("--accentDark", accentDark);
     document.documentElement.style.setProperty("--buttonTextColor", buttonTextColor);
@@ -94,8 +69,12 @@ const Home = () => {
       </div>
       <div className="home container">
         <div className="home form">
-          <img src={theme} draggable="false" alt="Theme" className="home logo_small left" onClick={() => doTheme()}/>
-          <img src={rules} draggable="false" alt="Rules" className="home logo_small right" onClick={() => doRule()}/>
+          <button className="home button_small left" onClick={() => doTheme()}>
+            <img src={theme} alt="Theme" className="home logo_small" />
+          </button>
+          <button className="home button_small right" onClick={() => doRule()}>
+            <img src={rules} alt="Theme" className="home logo_small" />
+          </button>
           <img src={logo} draggable="false" alt="Logo" className="home logo_large"/>
           <div className="home button-container">
             <Button

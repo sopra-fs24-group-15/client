@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import { Spinner } from "components/ui/Spinner";
 import {useNavigate} from "react-router-dom";
+import { api } from "helpers/api";
 import { Button } from "components/ui/Button";
 import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Voting.scss";
 
 // @ts-ignore
-import logo from "../img/logo.png";
+import logo from "../img/logo.png"
 // @ts-ignore
 import rules from "../img/rules.png";
 // @ts-ignore
@@ -15,20 +15,27 @@ import home from "../img/home.png";
 //Rules
 import { Rules } from "../ui/Rules";
 
-
-const LobbyPlayer = () => {
+const Votingscreen = () => {
   // use react-router-dom's hook to access navigation, more info: https://reactrouter.com/en/main/hooks/use-navigate 
   const navigate = useNavigate();
   // Rules
   const [showRules, setShowRules] = useState(false);
   // Captions
-  const [previousMeme, setPreviousMeme] = useState<string>(null);
-  const [nextMeme, setNextMeme] = useState<string>(null);
+  const [memeData, setMemeData] = useState([]);
+  const [currentMemeIndex, setCurrentMemeIndex] = useState(0);
   // Disable submit button
-  const [submitted, setSubmitted] = useState(false);
+  const [voting, setVoting] = useState(false);
+
+  useEffect(() => {
+    getMemes();
+  }, []);
 
   /* Home Button */
   const doHome = async () => {
+    const ownUser = localStorage.getItem("ownUserId");
+    localStorage.removeItem("ownUserId");
+    console.log(ownUser);
+    await api.delete(`/users/${ownUser}`);
     navigate("/home");
   };
 
@@ -38,25 +45,69 @@ const LobbyPlayer = () => {
   };
 
   /* Meme */
-  let meme = "https://i.imgflip.com/22bdq6.jpg";
-  const getMeme = async () => {
-    //add logic to change names
-  }
+  const getMemes = async () => {
+    try {
+      const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/memes/${localStorage.getItem("ownUserId")}`);
+      const data = response.data.map(item => ({
+        ...item,
+        memeURL: JSON.parse(item.memeURL).MemeURL
+      }));
+      console.log(data);
+      setMemeData(data);
+    } catch (error) {
+      console.error("Error while fetching memes: ", error);
+    }
+  };
   
   // previous Meme
   const doPreviousMeme = async () => {
-    //add logic to change names
-  }
+    setCurrentMemeIndex((prevIndex) =>
+      prevIndex > 0 ? prevIndex -1 : memeData.length - 1);
+  };
 
   //next Meme
   const doNextMeme = async () => {
-    //add logic to change names
-  }
+    setCurrentMemeIndex((prevIndex) =>
+      prevIndex < memeData.length - 1 ? prevIndex + 1 : 0);
+  };
+
+  /* check if everyone submitted */
+  useEffect(() => {
+    if (voting === false) return; // Don't start checking if shouldCheck is false
+    const intervalId = setInterval(async () => {
+      const response1 = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/votes`);
+      const response2 = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
+      if (response1.data === response2.data.players.length) {
+        // Do something
+        clearInterval(intervalId); // Stop checking once the condition is true
+        doTimeUp();
+      }
+    }, 1000); // Check for other users to finish
+  });
+
+  /* Time Up */
+  const doTimeUp = async () => {
+    navigate("/loading")
+    const ownUser = Number(localStorage.getItem("ownUserId"))
+    const responseIsOwner = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
+    if (responseIsOwner.data.lobbyOwner === ownUser) {
+      //end round as owner
+      api.put(`lobbys/${localStorage.getItem("lobbyId")}/rounds/end`);
+    }
+    setTimeout(() => {
+      navigate("/scoreboard");
+    }, 3000);
+  };
 
   /* Submit Button */
-  const doSubmit = async () => {
-    setSubmitted(true);
-    //TODO add submit
+  const doVoting = async () => {
+    if (voting === false) {
+      setVoting(true);
+      //TODO add submit
+      const requestBody = JSON.stringify(currentMeme.userId);
+      console.log(requestBody);
+      await api.post(`/lobbys/${localStorage.getItem("lobbyId")}/votes`, requestBody);
+    }
   };
 
   const renderTime = ({ remainingTime }) => {
@@ -70,6 +121,10 @@ const LobbyPlayer = () => {
       </div>
     );
   };
+
+  const currentMeme = memeData[currentMemeIndex] || "";
+  console.log(currentMeme); 
+  console.log(currentMeme.memeurl)
     
   return (
     <BaseContainer className="voting container">
@@ -77,9 +132,13 @@ const LobbyPlayer = () => {
         {showRules && <Rules close={() => setShowRules(false)} />}
       </div>
       <div className="voting content">
-        <img src={home} draggable="false" alt="Back" className="lobby logo_small left" onClick={() => doHome()}/>
-        <img src={logo} draggable="false" alt="Logo" className="lobby logo_small middle"/>
-        <img src={rules} draggable="false" alt="Rules" className="lobby logo_small right" onClick={() => doRule()}/>
+        <button className="home button_small left" onClick={() => doHome()}>
+          <img src={home} alt="Theme" className="home logo_small" />
+        </button>
+        <img src={logo} draggable="false" alt="Logo" className="home logo_small_middle"/>
+        <button className="home button_small right" onClick={() => doRule()}>
+          <img src={rules} alt="Theme" className="home logo_small" />
+        </button>
         
         <div className="voting memeContainer">
           
@@ -92,46 +151,46 @@ const LobbyPlayer = () => {
               size={180}
               colors={["#adf7b6", "#fcf5c7", "#fce1e4"]}
               colorsTime={[60, 30, 0]}
-              onComplete={() => { doSubmit().then(() => {}); }}
+              onComplete={() => { doTimeUp().then(() => {}); }}
             >
               {renderTime}
             </CountdownCircleTimer>
           </div>
 
           <div className="voting meme">
-            <img src={meme}></img>
+            <img src={currentMeme.memeURL} alt="current Meme URL"></img>
           </div>
 
+        </div>
+        <div className="voting button-container">
           <Button 
-            className="voting button-container"
-            width = "100%"
+            width = "30%"
             onClick={() => doPreviousMeme()}
           >
-            Previous Meme
+              Previous Meme
           </Button>
 
           <Button
-            className="voting button-container"
-            width="100%"
-            onClick={() => doSubmit()}
-            disabled={submitted}
+            width="30%"
+            onClick={() => doVoting()}
+            disabled={voting}
           >
-            Submit
+            Vote for this meme
           </Button>
 
           <Button 
-            className="voting button-container"
-            width = "100%"
+            width = "30%"
             onClick={() => doNextMeme()}
           >
             Next Meme
           </Button>
-
         </div>
+
 
       </div>
     </BaseContainer>
   );
 };
 
-export default LobbyPlayer;
+
+export default Votingscreen;

@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { api, handleError } from "helpers/api";
+import { api } from "helpers/api";
 import { Spinner } from "components/ui/Spinner";
-import { Button } from "components/ui/Button";
 import {useNavigate} from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
-import PropTypes from "prop-types";
 import Lobby from "models/Lobby";
 import "styles/views/Lobby.scss";
 import { User } from "types";
@@ -14,6 +12,8 @@ import logo from "../img/logo.png";
 import rules from "../img/rules.png";
 // @ts-ignore
 import home from "../img/home.png";
+// @ts-ignore
+import mike from "../img/profilePictures/mike.png";
 //Rules
 import { Rules } from "../ui/Rules";
 
@@ -24,12 +24,16 @@ const LobbyPlayer = () => {
   const [users, setUsers] = useState<User[]>([]);
   // Rules
   const [showRules, setShowRules] = useState(false);
+  // Settings
+  const [settingsRounds, setSettingsRounds] = useState<number>(0);
+  const [settingsTime, setSettingsTime] = useState<number>(0);
+  const [settingsMode, setSettingsMode] = useState("mode");
 
   /* Home Button */
   const doHome = async () => {
     const ownUser = localStorage.getItem("ownUserId");
     localStorage.removeItem("ownUserId");
-    const removeUser = await api.delete(`/users/${ownUser}`);
+    await api.delete(`/users/${ownUser}`);
     navigate("/home");
   };
 
@@ -46,30 +50,46 @@ const LobbyPlayer = () => {
       setLobbycode(response1.data.lobbyJoinCode);
       let userList = [];
       const response2 = await api.get("/users");
-      for (let i = 0; i < response2.data.length; i++) {
-        if (response1.data.players.includes(response2.data[i].userId)) {
-          userList.push(response2.data[i].username)
+      for (const element of response2.data) {
+        if (response1.data.players.includes(element.userId)) {
+          userList.push(element.username)
         }
       }
       setUsers(userList);
       const ownUser = Number(localStorage.getItem("ownUserId"));
-      if (response1.data.lobbyOwner !== ownUser) {
-        navigate("/lobby/player");
+      if (response1.data.lobbyOwner === ownUser) {
+        navigate("/lobby/owner");
       }
       if (response1.data.gameActive) {
-        navigate("/createMeme");
+        navigate("/loading")
+        setTimeout(() => {
+          navigate("/createMeme");
+        }, 3000); // Wait for 3 seconds
       }
     }
     catch (error) {
       console.log(error);
     }
   };
-
   useEffect(() => {
-
     fetchUsers();
 
     const intervalId = setInterval(fetchUsers, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+  
+  // get settings
+  const checkSettings = async () => {
+    const settings = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}/settings`);
+    setSettingsRounds(settings.data.totalRounds);
+    setSettingsTime(settings.data.timer);
+    setSettingsMode(settings.data.gameMode);
+  }
+  useEffect(() => {
+    checkSettings();
+
+    const intervalId = setInterval(checkSettings, 1000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -80,9 +100,13 @@ const LobbyPlayer = () => {
         {showRules && <Rules close={() => setShowRules(false)} />}
       </div>
       <div className="lobby content">
-        <img src={home} draggable="false" alt="Back" className="lobby logo_small left" onClick={() => doHome()}/>
-        <img src={logo} draggable="false" alt="Logo" className="lobby logo_small middle"/>
-        <img src={rules} draggable="false" alt="Rules" className="lobby logo_small right" onClick={() => doRule()}/>
+        <button className="home button_small left" onClick={() => doHome()}>
+          <img src={home} alt="Theme" className="home logo_small" />
+        </button>
+        <img src={logo} draggable="false" alt="Logo" className="home logo_small_middle"/>
+        <button className="home button_small right" onClick={() => doRule()}>
+          <img src={rules} alt="Theme" className="home logo_small" />
+        </button>
 
         <p className="lobby title"> WAITING </p>
 
@@ -93,23 +117,30 @@ const LobbyPlayer = () => {
           </tr>
           <tr>
             <td>GAMEMODE</td>
-            <td className="infoContent">standard</td>
+            <td className="infoContent">{settingsMode.toLowerCase()}</td>
           </tr>
           <tr>
             <td>CREATION TIME</td>
-            <td className="infoContent">60s</td>
+            <td className="infoContent">{settingsTime}s</td>
           </tr>
           <tr>
             <td>ROUNDS</td>
-            <td className="infoContent">5</td>
+            <td className="infoContent">{settingsRounds}</td>
           </tr>
         </table>
-        <div className="lobby users">
+        <div className="lobby users-container">
           {users.map((user, index) => (
-            <span key={index}>{user}</span>
+            <div key={index} className="user-profile">
+              <span> 
+                <img src={mike} alt="Mike" className="user-profile-picture"/>
+                <div className="user-profile-name">
+                  {user}
+                </div>
+              </span>
+            </div>
           ))}
         </div>
-        <p>waiting for lobby owner to start the game</p>
+        <p style={{ textAlign: "center" }}>waiting for lobby owner to start the game</p>
         <Spinner />
         <br></br>
       </div>

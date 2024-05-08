@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { api, handleError } from "helpers/api";
+import { api } from "helpers/api";
 import User from "models/User";
 import Lobby from "models/Lobby";
 import {useNavigate} from "react-router-dom";
@@ -36,7 +36,6 @@ const FormField = (props) => {
 };
 
 FormField.propTypes = {
-  label: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
 };
@@ -67,10 +66,7 @@ const CreateLobby = () => {
       const createUserResponse = await api.post("/users", requestBody);
       const user = new User(createUserResponse.data)
       localStorage.setItem("ownUserId", user.userId);
-      console.log("Server response: ", createUserResponse.data);
       const requestBody2 = JSON.stringify({lobbyOwner: user.userId });
-      console.log(requestBody2)
-      console.log(requestBody2);
       const createLobbyResponse = await api.post("/lobbys", requestBody2);
       console.log(createLobbyResponse.data);
       const lobby = new Lobby(createLobbyResponse.data);
@@ -89,9 +85,13 @@ const CreateLobby = () => {
       </div>
       <div className="home container">
         <div className="home form">
-          <img src={back} draggable="false" alt="Back" className="home logo_small left" onClick={() => doBack()}/>
-          <img src={logo} draggable="false" alt="Logo" className="home logo_small middle"/>
-          <img src={rules} draggable="false" alt="Rules" className="home logo_small right" onClick={() => doRule()}/>
+          <button className="home button_small left" onClick={() => doBack()}>
+            <img src={back} alt="Theme" className="home logo_small" />
+          </button>
+          <img src={logo} draggable="false" alt="Logo" className="home logo_small_middle"/>
+          <button className="home button_small right" onClick={() => doRule()}>
+            <img src={rules} alt="Theme" className="home logo_small" />
+          </button>
           {errorUsername && <div className="home error">Username already taken</div>}
           <FormField
             value={username}
