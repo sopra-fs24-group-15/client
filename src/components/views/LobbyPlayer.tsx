@@ -12,6 +12,8 @@ import logo from "../img/logo.png";
 import rules from "../img/rules.png";
 // @ts-ignore
 import home from "../img/home.png";
+// @ts-ignore
+import mike from "../img/profilePictures/mike.png";
 //Rules
 import { Rules } from "../ui/Rules";
 
@@ -126,9 +128,16 @@ const LobbyPlayer = () => {
             <td className="infoContent">{settingsRounds}</td>
           </tr>
         </table>
-        <div className="lobby users">
+        <div className="lobby users-container">
           {users.map((user, index) => (
-            <span key={index}>{user}</span>
+            <div key={index} className="user-profile">
+              <span> 
+              <img src={mike} alt="Mike" className="user-profile-picture"/>
+              <div className="user-profile-name">
+                {user}
+              </div>
+              </span>
+            </div>
           ))}
         </div>
         <p style={{ textAlign: "center" }}>waiting for lobby owner to start the game</p>
