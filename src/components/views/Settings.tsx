@@ -21,7 +21,7 @@ const Settings = () => {
   // Settings
   const [settingsRounds, setSettingsRounds] = useState<number>(0);
   const [settingsTime, setSettingsTime] = useState<number>(0);
-  const [settingsMode, setSettingsMode] = useState("mode");
+  const [settingsMode, setSettingsMode] = useState<string>("BASIC");
 
   /* Back Button */
   const doBack = async () => {
@@ -37,7 +37,7 @@ const Settings = () => {
   // TODO add mode to save settings
   const doSaveSettings = async () => {
     const ownUser = Number(localStorage.getItem("ownUserId"));
-    const requestBody1 = JSON.stringify({totalRounds: `${settingsRounds}`, timer: `${settingsTime}`});
+    const requestBody1 = JSON.stringify({totalRounds: `${settingsRounds}`, gameMode: `${settingsMode}`, timer: `${settingsTime}`});
     await api.post(`lobbys/${localStorage.getItem("lobbyId")}/settings/${ownUser}`, requestBody1);
     navigate("/lobby/owner");
   };
@@ -79,10 +79,10 @@ const Settings = () => {
               </Button>
               <Button 
                 className="settings selectionButton2"
-                disabled={settingsMode === "TOPIC"}
-                onClick={() => setSettingsMode("TOPIC")}
+                disabled={settingsMode === "THEMED"}
+                onClick={() => setSettingsMode("THEMED")}
               >
-                topic
+                themed
               </Button>
             </div>
             <div className="settings selection">

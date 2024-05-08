@@ -29,7 +29,7 @@ const LobbyOwner = () => {
 
   const [settingsRounds, setSettingsRounds] = useState<number>(0);
   const [settingsTime, setSettingsTime] = useState<number>(0);
-  const [settingsMode, setSettingsMode] = useState("mode");
+  const [settingsMode, setSettingsMode] = useState("BASIC");
 
   /* Home Button */
   const doHome = async () => {
@@ -53,7 +53,7 @@ const LobbyOwner = () => {
   const startGame = async () => {
     const ownUser = Number(localStorage.getItem("ownUserId"));
     //TODO create game with settings
-    const requestBody1 = JSON.stringify({totalRounds: `${settingsRounds}`, timer: `${settingsTime}`});
+    const requestBody1 = JSON.stringify({totalRounds: `${settingsRounds}`, gameMode: `${settingsMode}`, timer: `${settingsTime}`});
     await api.post(`lobbys/${localStorage.getItem("lobbyId")}/settings/${ownUser}`, requestBody1);
     // start game
     await api.put(`lobbys/${localStorage.getItem("lobbyId")}/start/${ownUser}`);
@@ -98,9 +98,8 @@ const LobbyOwner = () => {
       const ownUser = Number(localStorage.getItem("ownUserId"));
       setSettingsRounds(5)
       setSettingsTime(60)
-      const standardTime = 60
-      const standardRounds = 5
-      const requestBody1 = JSON.stringify({totalRounds: `${standardRounds}`, timer: `${standardTime}`});
+      setSettingsMode("BASIC")
+      const requestBody1 = JSON.stringify({totalRounds: `${settingsRounds}`, gameMode: `${settingsMode}`, timer: `${settingsTime}`});
       await api.post(`lobbys/${localStorage.getItem("lobbyId")}/settings/${ownUser}`, requestBody1);
     }
   }
