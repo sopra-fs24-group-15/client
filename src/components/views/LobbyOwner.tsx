@@ -27,8 +27,8 @@ const LobbyOwner = () => {
 
   const [lobbycode, setLobbycode] = useState<Lobby[]>([]);
 
-  const [settingsRounds, setSettingsRounds] = useState<number>(0);
-  const [settingsTime, setSettingsTime] = useState<number>(0);
+  const [settingsRounds, setSettingsRounds] = useState<number>(5);
+  const [settingsTime, setSettingsTime] = useState<number>(60);
   const [settingsMode, setSettingsMode] = useState("BASIC");
 
   /* Home Button */
