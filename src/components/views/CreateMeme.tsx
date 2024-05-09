@@ -21,7 +21,7 @@ const FormField1 = (props) => {
     <div className="createMeme field">
       <input
         className="createMeme input"
-        placeholder="Write your caption here"
+        placeholder={props.placeholder}
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
       />
@@ -29,6 +29,7 @@ const FormField1 = (props) => {
   );
 };
 FormField1.propTypes = {
+  placeholder: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
 };
@@ -37,7 +38,7 @@ const LobbyPlayer = () => {
   // use react-router-dom's hook to access navigation, more info: https://reactrouter.com/en/main/hooks/use-navigate 
   const navigate = useNavigate();
   // meme
-  const [meme, setMeme] = useState("https://i.imgflip.com/22bdq6.jpg");
+  const [meme, setMeme] = useState(" ");
   const [memeId, setMemeId] = useState(1);
   const [boxCount, setBoxCount] = useState(0);
   // Rules
@@ -78,13 +79,94 @@ const LobbyPlayer = () => {
   /* Meme */
   const getMeme = async () => {
     const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/templates`);
-    setMeme(response.data.url);
-    setMemeId(response.data.templateId);
-    setBoxCount(response.data.boxCount);
+    // setTopic
     if (response.data.topic) {
       setTopic(response.data.topic);
     }
-    console.log("BoxCount " + response.data.boxCount);
+    setMeme(response.data.url);
+    console.log(response.data.url);
+    console.log(boxCount);
+    console.log(response.data.templateId);
+    if (response.data.boxCount === 2) {
+      let text0 = "Text%201";
+      let text1 = "Text%202";
+      const username = "MemeBattleFrontend"
+      const password = "dysryw-Nepjen-6gudha"
+      setMemeId(response.data.templateId);
+      setBoxCount(response.data.boxCount);
+      console.log(memeId);
+      const imgflip = await fetch(`https://api.imgflip.com/caption_image?template_id=${response.data.templateId}&username=${username}&password=${password}&text0=${text0}&text1=${text1}`)
+      const data = await imgflip.json();
+      const urlOnly = { MemeURL: data.data.url };
+      setMeme(urlOnly.MemeURL, urlOnly);
+    } 
+    else if (response.data.boxCount === 3) {
+      const boxes = [
+        {
+          "text": "Text 1",
+          "color": "#ffffff",
+          "outline_color": "#000000"
+        },
+        {
+          "text": "Text 2",
+          "color": "#ffffff",
+          "outline_color": "#000000"
+        },
+        {
+          "text": "Text 3",
+          "color": "#ffffff",
+          "outline_color": "#000000"
+        }
+      ]
+      const username = "MemeBattleFrontend"
+      const password = "dysryw-Nepjen-6gudha"
+      console.log(boxes);
+      setMemeId(response.data.templateId);
+      setBoxCount(response.data.boxCount);
+      const url = `https://api.imgflip.com/caption_image?template_id=${response.data.templateId}&username=${username}&password=${password}&boxes[0][text]=${boxes[0]["text"]}&boxes[1][text]=${boxes[1]["text"]}&boxes[2][text]=${boxes[2]["text"]}`;
+      const imgflip = await fetch(url);
+      const data = await imgflip.json();
+      console.log(data.data.url)
+      const urlOnly = { MemeURL: data.data.url };
+      setMeme(urlOnly.MemeURL, urlOnly);
+    }
+    else if (response.data.boxCount === 4) {
+      const boxes = [
+        {
+          "text": "Text 1",
+          "color": "#ffffff",
+          "outline_color": "#000000"
+        },
+        {
+          "text": "Text 2",
+          "color": "#ffffff",
+          "outline_color": "#000000"
+        },
+        {
+          "text": "Text 3",
+          "color": "#ffffff",
+          "outline_color": "#000000"
+        },
+        {
+          "text": "Text 4",
+          "color": "#ffffff",
+          "outline_color": "#000000"
+        }
+      ]
+      const username = "MemeBattleFrontend"
+      const password = "dysryw-Nepjen-6gudha"
+      console.log(boxes);
+      setMemeId(response.data.templateId);
+      setBoxCount(response.data.boxCount);
+      const url = `https://api.imgflip.com/caption_image?template_id=${response.data.templateId}&username=${username}&password=${password}&boxes[0][text]=${boxes[0]["text"]}&boxes[1][text]=${boxes[1]["text"]}&boxes[2][text]=${boxes[2]["text"]}&boxes[3][text]=${boxes[3]["text"]}`;
+      const imgflip = await fetch(url);
+      const data = await imgflip.json();
+      console.log(data.data.url)
+      const urlOnly = { MemeURL: data.data.url };
+      setMeme(urlOnly.MemeURL, urlOnly);
+    }
+        
+    console.log("BoxCount " + boxCount);
   };
   useEffect(() => {
     getMeme();
@@ -145,28 +227,16 @@ const LobbyPlayer = () => {
         const boxes = [
           {
             "text": topCaption,
-            "x": 10,
-            "y": 10,
-            "width": 548,
-            "height": 100,
             "color": "#ffffff",
             "outline_color": "#000000"
           },
           {
             "text": bottomCaption,
-            "x": 10,
-            "y": 10,
-            "width": 548,
-            "height": 100,
             "color": "#ffffff",
             "outline_color": "#000000"
           },
           {
             "text": thirdCaption,
-            "x": 10,
-            "y": 10,
-            "width": 548,
-            "height": 100,
             "color": "#ffffff",
             "outline_color": "#000000"
           }
@@ -185,37 +255,21 @@ const LobbyPlayer = () => {
         const boxes = [
           {
             "text": topCaption,
-            "x": 10,
-            "y": 10,
-            "width": 548,
-            "height": 100,
-            "color": "#ffffff",
-            "outline_color": "#000000"
-          },
-          {
-            "text": bottomCaption,
-            "x": 10,
-            "y": 10,
-            "width": 548,
-            "height": 100,
-            "color": "#ffffff",
-            "outline_color": "#000000"
-          },
-          {
-            "text": thirdCaption,
-            "x": 10,
-            "y": 10,
-            "width": 548,
-            "height": 100,
             "color": "#ffffff",
             "outline_color": "#000000"
           },
           {
             "text": fourthCaption,
-            "x": 10,
-            "y": 10,
-            "width": 548,
-            "height": 100,
+            "color": "#ffffff",
+            "outline_color": "#000000"
+          },
+          {
+            "text": bottomCaption,
+            "color": "#ffffff",
+            "outline_color": "#000000"
+          },
+          {
+            "text": thirdCaption,
             "color": "#ffffff",
             "outline_color": "#000000"
           }
@@ -261,10 +315,16 @@ const LobbyPlayer = () => {
         {topic !== "" && <h2>TOPIC: {topic}</h2>}
         {!submitted && (
           <FormField1
+            placeholder= "Text 1"
             value={topCaption}
             onChange={(n) => setTopCaption(n)}
           />
         )}
+        {!submitted && boxCount ===4  && (<FormField1
+          placeholder= "Text 2"
+          value = {fourthCaption}
+          onChange={(n) => setFourthCaption(n)}
+        />)}
 
         <div className="createMeme memeContainer">
           
@@ -300,17 +360,15 @@ const LobbyPlayer = () => {
 
         {!submitted && (
           <FormField1
+            placeholder= "Text 3"
             value={bottomCaption}
             onChange={(n) => setBottomCaption(n)}
           />
         )}
-        {!submitted && boxCount === 3 && (<FormField1
+        {!submitted && boxCount <= 4 && 2 < boxCount &&(<FormField1
+          placeholder= "Text 4"
           value = {thirdCaption}
           onChange={(n) => setThirdCaption(n)}
-        />)}
-        {!submitted && boxCount === 4 && (<FormField1
-          value = {fourthCaption}
-          onChange={(n) => setFourthCaption(n)}
         />)}
       </div>
     </BaseContainer>
