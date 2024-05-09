@@ -38,7 +38,7 @@ const LobbyPlayer = () => {
   // use react-router-dom's hook to access navigation, more info: https://reactrouter.com/en/main/hooks/use-navigate 
   const navigate = useNavigate();
   // meme
-  const [meme, setMeme] = useState("https://i.imgflip.com/22bdq6.jpg");
+  const [meme, setMeme] = useState(" ");
   const [memeId, setMemeId] = useState(1);
   const [boxCount, setBoxCount] = useState(0);
   // Rules
@@ -79,8 +79,6 @@ const LobbyPlayer = () => {
     const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/templates`);
     //setMeme(response.data.url);
     console.log(response.data.url);
-    setMemeId(response.data.templateId);
-    setBoxCount(response.data.boxCount);
     console.log(boxCount);
     console.log(response.data.templateId);
     if (response.data.boxCount === 2) {
@@ -88,6 +86,8 @@ const LobbyPlayer = () => {
       let text1 = "Text%202";
       const username = "MemeBattleFrontend"
       const password = "dysryw-Nepjen-6gudha"
+      setMemeId(response.data.templateId);
+      setBoxCount(response.data.boxCount);
       console.log(memeId);
       const imgflip = await fetch(`https://api.imgflip.com/caption_image?template_id=${response.data.templateId}&username=${username}&password=${password}&text0=${text0}&text1=${text1}`)
       const data = await imgflip.json();
@@ -127,6 +127,8 @@ const LobbyPlayer = () => {
       const username = "MemeBattleFrontend"
       const password = "dysryw-Nepjen-6gudha"
       console.log(boxes);
+      setMemeId(response.data.templateId);
+      setBoxCount(response.data.boxCount);
       const url = `https://api.imgflip.com/caption_image?template_id=${response.data.templateId}&username=${username}&password=${password}&boxes[0][text]=${boxes[0]["text"]}&boxes[1][text]=${boxes[1]["text"]}&boxes[2][text]=${boxes[2]["text"]}`;
       const imgflip = await fetch(url);
       const data = await imgflip.json();
@@ -176,6 +178,8 @@ const LobbyPlayer = () => {
       const username = "MemeBattleFrontend"
       const password = "dysryw-Nepjen-6gudha"
       console.log(boxes);
+      setMemeId(response.data.templateId);
+      setBoxCount(response.data.boxCount);
       const url = `https://api.imgflip.com/caption_image?template_id=${response.data.templateId}&username=${username}&password=${password}&boxes[0][text]=${boxes[0]["text"]}&boxes[1][text]=${boxes[1]["text"]}&boxes[2][text]=${boxes[2]["text"]}&boxes[3][text]=${boxes[3]["text"]}`;
       const imgflip = await fetch(url);
       const data = await imgflip.json();
