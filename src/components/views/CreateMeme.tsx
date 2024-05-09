@@ -39,11 +39,14 @@ const LobbyPlayer = () => {
   // meme
   const [meme, setMeme] = useState("https://i.imgflip.com/22bdq6.jpg");
   const [memeId, setMemeId] = useState(1);
+  const [boxCount, setBoxCount] = useState(0);
   // Rules
   const [showRules, setShowRules] = useState(false);
   // Captions
   const [topCaption, setTopCaption] = useState<string>(" ");
   const [bottomCaption, setBottomCaption] = useState<string>(" ");
+  const [thirdCaption, setThirdCaption] = useState<string>(" ");
+  const [fourthCaption, setFourthCaption] = useState<string>(" ");
   // Disable submit button
   const [submitted, setSubmitted] = useState(false);
   // SettingsDuration
@@ -74,7 +77,9 @@ const LobbyPlayer = () => {
   const getMeme = async () => {
     const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/templates`);
     setMeme(response.data.url);
-    setMemeId(response.data.templateId)
+    setMemeId(response.data.templateId);
+    setBoxCount(response.data.boxCount);
+    console.log("BoxCount " + response.data.boxCount);
   };
   useEffect(() => {
     getMeme();
@@ -120,17 +125,107 @@ const LobbyPlayer = () => {
     if (submitted === false) {
       const ownUser = Number(localStorage.getItem("ownUserId"))
       setSubmitted(true);
-      let text0 = topCaption.replace(/ /g, "%20");
-      let text1 = bottomCaption.replace(/ /g, "%20");
-      const username = "MemeBattleFrontend"
-      const password = "dysryw-Nepjen-6gudha"
-      const imgflip = await fetch(`https://api.imgflip.com/caption_image?template_id=${memeId}&username=${username}&password=${password}&text0=${text0}&text1=${text1}`)
-      const data = await imgflip.json();
-      const urlOnly = { MemeURL: data.data.url };
-      setMeme(urlOnly.MemeURL, urlOnly);
-      await api.post(`lobbys/${localStorage.getItem("lobbyId")}/memes/${ownUser}`, urlOnly);
+      if (boxCount === 2) {
+        let text0 = topCaption.replace(/ /g, "%20");
+        let text1 = bottomCaption.replace(/ /g, "%20");
+        const username = "MemeBattleFrontend"
+        const password = "dysryw-Nepjen-6gudha"
+        const imgflip = await fetch(`https://api.imgflip.com/caption_image?template_id=${memeId}&username=${username}&password=${password}&text0=${text0}&text1=${text1}`)
+        const data = await imgflip.json();
+        const urlOnly = { MemeURL: data.data.url };
+        setMeme(urlOnly.MemeURL, urlOnly);
+        await api.post(`lobbys/${localStorage.getItem("lobbyId")}/memes/${ownUser}`, urlOnly);
+      } 
+      else if (boxCount === 3) {
+        const boxes = [
+          {
+            "text": topCaption,
+            "x": 10,
+            "y": 10,
+            "width": 548,
+            "height": 100,
+            "color": "#ffffff",
+            "outline_color": "#000000"
+          },
+          {
+            "text": bottomCaption,
+            "x": 10,
+            "y": 10,
+            "width": 548,
+            "height": 100,
+            "color": "#ffffff",
+            "outline_color": "#000000"
+          },
+          {
+            "text": thirdCaption,
+            "x": 10,
+            "y": 10,
+            "width": 548,
+            "height": 100,
+            "color": "#ffffff",
+            "outline_color": "#000000"
+          }
+        ]
+        const username = "MemeBattleFrontend"
+        const password = "dysryw-Nepjen-6gudha"
+        console.log(boxes);
+        const url = `https://api.imgflip.com/caption_image?template_id=${memeId}&username=${username}&password=${password}&boxes[0][text]=${boxes[0]["text"]}&boxes[1][text]=${boxes[1]["text"]}&boxes[2][text]=${boxes[2]["text"]}`;
+        const imgflip = await fetch(url);
+        const data = await imgflip.json();
+        const urlOnly = { MemeURL: data.data.url };
+        setMeme(urlOnly.MemeURL, urlOnly);
+        await api.post(`lobbys/${localStorage.getItem("lobbyId")}/memes/${ownUser}`, urlOnly);
+      }
+      else if (boxCount === 4) {
+        const boxes = [
+          {
+            "text": topCaption,
+            "x": 10,
+            "y": 10,
+            "width": 548,
+            "height": 100,
+            "color": "#ffffff",
+            "outline_color": "#000000"
+          },
+          {
+            "text": bottomCaption,
+            "x": 10,
+            "y": 10,
+            "width": 548,
+            "height": 100,
+            "color": "#ffffff",
+            "outline_color": "#000000"
+          },
+          {
+            "text": thirdCaption,
+            "x": 10,
+            "y": 10,
+            "width": 548,
+            "height": 100,
+            "color": "#ffffff",
+            "outline_color": "#000000"
+          },
+          {
+            "text": fourthCaption,
+            "x": 10,
+            "y": 10,
+            "width": 548,
+            "height": 100,
+            "color": "#ffffff",
+            "outline_color": "#000000"
+          }
+        ]
+        const username = "MemeBattleFrontend"
+        const password = "dysryw-Nepjen-6gudha"
+        console.log(boxes);
+        const url = `https://api.imgflip.com/caption_image?template_id=${memeId}&username=${username}&password=${password}&boxes[0][text]=${boxes[0]["text"]}&boxes[1][text]=${boxes[1]["text"]}&boxes[2][text]=${boxes[2]["text"]}&boxes[3][text]=${boxes[3]["text"]}`;
+        const imgflip = await fetch(url);
+        const data = await imgflip.json();
+        const urlOnly = { MemeURL: data.data.url };
+        setMeme(urlOnly.MemeURL, urlOnly);
+        await api.post(`lobbys/${localStorage.getItem("lobbyId")}/memes/${ownUser}`, urlOnly);
+      }
     }
-    
   };
 
   const renderTime = ({ remainingTime }) => {
@@ -203,6 +298,14 @@ const LobbyPlayer = () => {
             onChange={(n) => setBottomCaption(n)}
           />
         )}
+        {!submitted && boxCount === 3 && (<FormField1
+          value = {thirdCaption}
+          onChange={(n) => setThirdCaption(n)}
+        />)}
+        {!submitted && boxCount === 4 && (<FormField1
+          value = {fourthCaption}
+          onChange={(n) => setFourthCaption(n)}
+        />)}
       </div>
     </BaseContainer>
   );
