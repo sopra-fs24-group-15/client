@@ -14,21 +14,29 @@ import rules from "../img/rules.png";
 import home from "../img/home.png";
 //Rules
 import { Rules } from "../ui/Rules";
+import { LeavePopUp } from "components/ui/LeavePopUp";
 
 const TopicChoice = () => {
   // use react-router-dom's hook to access navigation, more info: https://reactrouter.com/en/main/hooks/use-navigate 
   const navigate = useNavigate();
   // Rules
   const [showRules, setShowRules] = useState(false);
+  const [showLeavePopUp, setShowLeavePopUp] = useState(false);
   /* Home Button */
   const [doSelect, setDoSelect] = useState(false);
   const [selectableTopics, setSelectableTopics] = useState([]);
-  const doHome = async () => {
+
+  const handleLeave = async () => {
     const ownUser = localStorage.getItem("ownUserId");
     localStorage.removeItem("ownUserId");
     await api.delete(`/users/${ownUser}`);
     navigate("/home");
   };
+
+  /* Leave Button */
+  const toggleLeavePopUp = async () => {
+    setShowLeavePopUp(!showLeavePopUp);
+  };  
 
   const checkSelected = async () => {
     const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/templates`);
@@ -87,9 +95,10 @@ const TopicChoice = () => {
     <BaseContainer className="loading container">
       <div>
         {showRules && <Rules close={() => setShowRules(false)} />}
+        {showLeavePopUp && <LeavePopUp close={() => setShowLeavePopUp(false)} leave={() => handleLeave()} />}
       </div>
       <div className="loading content">
-        <button className="home button_small left" onClick={() => doHome()}>
+        <button className="home button_small left" onClick={handleLeave}>
           <img src={home} alt="Theme" className="home logo_small" />
         </button>
         <img src={logo} draggable="false" alt="Logo" className="home logo_small_middle"/>
