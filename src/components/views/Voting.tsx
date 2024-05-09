@@ -55,8 +55,8 @@ const Votingscreen = () => {
         memeURL: JSON.parse(item.memeURL).MemeURL
       }));
       const response2 = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/templates`);
-      if (response2.data.topic) {
-        setTopic(response.data.topic);
+      if (response2.data.topic !== null) {
+        setTopic(response2.data.topic);
       }
       console.log(data);
       setMemeData(data);
