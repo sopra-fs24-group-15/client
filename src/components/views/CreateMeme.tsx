@@ -297,6 +297,15 @@ const LobbyPlayer = () => {
             "outline_color": "#000000"
           },
           {
+            "text": fourthCaption,
+            "x": 10,
+            "y": 10,
+            "width": 548,
+            "height": 100,
+            "color": "#ffffff",
+            "outline_color": "#000000"
+          },
+          {
             "text": bottomCaption,
             "x": 10,
             "y": 10,
@@ -307,15 +316,6 @@ const LobbyPlayer = () => {
           },
           {
             "text": thirdCaption,
-            "x": 10,
-            "y": 10,
-            "width": 548,
-            "height": 100,
-            "color": "#ffffff",
-            "outline_color": "#000000"
-          },
-          {
-            "text": fourthCaption,
             "x": 10,
             "y": 10,
             "width": 548,
