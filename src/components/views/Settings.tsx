@@ -79,10 +79,10 @@ const Settings = () => {
               </Button>
               <Button 
                 className="settings selectionButton2"
-                disabled={settingsMode === "THEMED"}
-                onClick={() => setSettingsMode("THEMED")}
+                disabled={settingsMode === "TOPIC"}
+                onClick={() => setSettingsMode("TOPIC")}
               >
-                themed
+                topic
               </Button>
             </div>
             <div className="settings selection">
