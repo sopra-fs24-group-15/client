@@ -15,6 +15,7 @@ import rules from "../img/rules.png";
 import home from "../img/home.png";
 //Rules
 import { Rules } from "../ui/Rules";
+import { LeavePopUp } from "../ui/LeavePopUp";
 
 const FormField1 = (props) => {
   return (
@@ -43,6 +44,7 @@ const LobbyPlayer = () => {
   const [boxCount, setBoxCount] = useState(0);
   // Rules
   const [showRules, setShowRules] = useState(false);
+  const [showLeavePopUp, setShowLeavePopUp] = useState(false);
   // Topic
   const [topic, setTopic] = useState("");
   // Captions
@@ -56,11 +58,16 @@ const LobbyPlayer = () => {
   const [settingsDuration, setSettingsDuration] = useState(0);
 
   /* Home Button */
-  const doHome = async () => {
+  const handleLeave = async () => {
     const ownUser = localStorage.getItem("ownUserId");
     localStorage.removeItem("ownUserId");
     await api.delete(`/users/${ownUser}`);
     navigate("/home");
+  };
+
+  /* Leave Button */
+  const toggleLeavePopUp = async () => {
+    setShowLeavePopUp(!showLeavePopUp);
   };
 
   /* Rule Button */
@@ -303,9 +310,10 @@ const LobbyPlayer = () => {
     <BaseContainer className="createMeme container">
       <div>
         {showRules && <Rules close={() => setShowRules(false)} />}
+        {showLeavePopUp && <LeavePopUp close={() => setShowLeavePopUp(false)} leave={() => handleLeave()} />}
       </div>
       <div className="createMeme content">
-        <button className="home button_small left" onClick={() => doHome()}>
+        <button className="home button_small left" onClick={toggleLeavePopUp}>
           <img src={home} alt="Theme" className="home logo_small" />
         </button>
         <img src={logo} draggable="false" alt="Logo" className="home logo_small_middle"/>
