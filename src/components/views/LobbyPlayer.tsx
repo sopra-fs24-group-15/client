@@ -12,6 +12,8 @@ import logo from "../img/logo.png";
 import rules from "../img/rules.png";
 // @ts-ignore
 import home from "../img/home.png";
+// @ts-ignore
+import refresh from "../img/refresh.png";
 //Rules
 import { Rules } from "../ui/Rules";
 
@@ -56,6 +58,7 @@ const LobbyPlayer = () => {
       const userResponse = await api.get("/users");
       const userList = userResponse.data.map(user => ({
         username: user.username,
+        userId: user.userId,
         profilePicture: user.profilePicture
       }));
       setUsers(userList);
@@ -87,6 +90,18 @@ const LobbyPlayer = () => {
 
     return () => clearInterval(intervalId);
   }, []);
+
+  const UpdateProfilePicture = async () => {
+    try {
+      const userId = localStorage.getItem("ownUserId");
+      console.log(userId);
+      api.put(`/users/${userId}/profilepictures`);
+      fetchUsers();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
   
   // get settings
   const checkSettings = async () => {
@@ -140,10 +155,22 @@ const LobbyPlayer = () => {
         <div className="lobby users-container">
           {users.map((user, index) => (
             <div key={index} className="user-profile">
-              <span> 
-                <img src={1} alt="1" className="user-profile-picture"/>
+              <img
+                  src={require(`../img/profilePictures/${profileImages[user.profilePicture]}`)} 
+                  alt={user.username}
+                  className="user-profile-picture"/>
+                {Number(user.userId) === Number(localStorage.getItem("ownUserId")) && (
+                <button 
+                className="user refresh-button" 
+                onClick={() => UpdateProfilePicture()}>
+                  <img 
+                  src={refresh} 
+                  alt="Refresh"/>
+                </button>
+                )}
+              <span>  
                 <div className="user-profile-name">
-                  {user}
+                  {user.username}
                 </div>
               </span>
             </div>

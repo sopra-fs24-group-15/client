@@ -126,6 +126,7 @@
     align-items: center;
   
     .user-profile {
+      position: relative;
       display: flex;
       align-items: center;
       margin-bottom: 1em;
@@ -136,6 +137,26 @@
         display: flex;
         justify-content: center;
       }
+
+      .refresh-button {
+        position: absolute;
+        bottom: 35%;
+        width: 1em;
+        height: 1em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background-color: #ddd8d8;
+        opacity: 0.8;
+        padding: 0;
+        cursor: pointer;
+        border-radius: 50%;
+        img {
+          width: 70%;
+          height: auto;
+        }
+      }
     
       .user-profile-picture {
         width: 4em;
@@ -143,8 +164,8 @@
         border-radius: 50%;
         display: flex;
         justify-self: center;
-        margin-bottom: 0.5em;
-        margin: 0.5em;
+        margin-right: 0.5em;
+        margin-left: 0.5em;
       }
     }
   }
@@ -159,7 +180,9 @@
     background-color: var(--accent);
     color: var(--buttonTextColor);
     border-radius: 10em;
-    margin: 0.1em;
+    margin-left: 0.1em;
+    margin-right: 0.1em;
+    margin-top: 0.5em;
     min-width: 4em;
   }
 

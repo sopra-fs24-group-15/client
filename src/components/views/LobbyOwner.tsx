@@ -11,6 +11,8 @@ import logo from "../img/logo.png";
 import rules from "../img/rules.png";
 // @ts-ignore
 import home from "../img/home.png";
+// @ts-ignore
+import refresh from "../img/refresh.png";
 //Rules
 import { Rules } from "../ui/Rules";
 import Lobby from "models/Lobby";
@@ -78,6 +80,7 @@ const LobbyOwner = () => {
       console.log(userResponse.data);
       const userList = userResponse.data.map(user => ({
         username: user.username,
+        userId: user.userId,
         profilePicture: user.profilePicture
       }));
       setUsers(userList);
@@ -90,6 +93,18 @@ const LobbyOwner = () => {
       console.log(error);
     }
   };
+
+  const UpdateProfilePicture = async () => {
+    try {
+      const userId = localStorage.getItem("ownUserId");
+      console.log(userId);
+      api.put(`/users/${userId}/profilepictures`);
+      fetchUsers();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
 
   // setup with basic game, standard settings
   const checkSettings = async () => {
@@ -156,6 +171,15 @@ const LobbyOwner = () => {
                   src={require(`../img/profilePictures/${profileImages[user.profilePicture]}`)} 
                   alt={user.username}
                   className="user-profile-picture"/>
+                {Number(user.userId) === Number(localStorage.getItem("ownUserId")) && (
+                <button 
+                className="user refresh-button" 
+                onClick={() => UpdateProfilePicture()}>
+                  <img 
+                  src={refresh} 
+                  alt="Refresh"/>
+                </button>
+                )}
               <span>  
                 <div className="user-profile-name">
                   {user.username}
