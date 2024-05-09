@@ -67,9 +67,107 @@ const LobbyPlayer = () => {
   /* Meme */
   const getMeme = async () => {
     const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/templates`);
-    setMeme(response.data.url);
+    const memetemp = response.data.url;
     setMemeId(response.data.templateId);
     setBoxCount(response.data.boxCount);
+    if (boxCount === 2) {
+      let text0 = "Text 1".replace(/ /g, "%20");
+      let text1 = "Text 2".replace(/ /g, "%20");
+      const username = "MemeBattleFrontend"
+      const password = "dysryw-Nepjen-6gudha"
+      const imgflip = await fetch(`https://api.imgflip.com/caption_image?template_id=${memeId}&username=${username}&password=${password}&text0=${text0}&text1=${text1}`)
+      const data = await imgflip.json();
+      const urlOnly = { MemeURL: data.data.url };
+      setMeme(urlOnly);
+    }
+    else if (boxCount === 3) { 
+      const boxes = [
+      {
+        "text": "Text 1",
+        "x": 10,
+        "y": 10,
+        "width": 548,
+        "height": 100,
+        "color": "#ffffff",
+        "outline_color": "#000000"
+      },
+      {
+        "text": "Text 2",
+        "x": 10,
+        "y": 10,
+        "width": 548,
+        "height": 100,
+        "color": "#ffffff",
+        "outline_color": "#000000"
+      },
+      {
+        "text": "Text 3",
+        "x": 10,
+        "y": 10,
+        "width": 548,
+        "height": 100,
+        "color": "#ffffff",
+        "outline_color": "#000000"
+      }
+    ]
+    const username = "MemeBattleFrontend"
+    const password = "dysryw-Nepjen-6gudha"
+    console.log(boxes);
+    const url = `https://api.imgflip.com/caption_image?template_id=${memeId}&username=${username}&password=${password}&boxes[0][text]=${boxes[0]["text"]}&boxes[1][text]=${boxes[1]["text"]}&boxes[2][text]=${boxes[2]["text"]}`;
+    const imgflip = await fetch(url);
+    const data = await imgflip.json();
+    const urlOnly = { MemeURL: data.data.url };
+    setMeme(urlOnly.MemeURL, urlOnly);
+  }
+  else if (boxCount === 4) { 
+    const boxes = [
+    {
+      "text": "Text 1",
+      "x": 10,
+      "y": 10,
+      "width": 548,
+      "height": 100,
+      "color": "#ffffff",
+      "outline_color": "#000000"
+    },
+    {
+      "text": "Text 2",
+      "x": 10,
+      "y": 10,
+      "width": 548,
+      "height": 100,
+      "color": "#ffffff",
+      "outline_color": "#000000"
+    },
+    {
+      "text": "Text 3",
+      "x": 10,
+      "y": 10,
+      "width": 548,
+      "height": 100,
+      "color": "#ffffff",
+      "outline_color": "#000000"
+    },
+    {
+      "text": "Text 4",
+      "x": 10,
+      "y": 10,
+      "width": 548,
+      "height": 100,
+      "color": "#ffffff",
+      "outline_color": "#000000"
+    }
+  ]
+  const username = "MemeBattleFrontend"
+  const password = "dysryw-Nepjen-6gudha"
+  console.log(boxes);
+  const url = `https://api.imgflip.com/caption_image?template_id=${memeId}&username=${username}&password=${password}&boxes[0][text]=${boxes[0]["text"]}&boxes[1][text]=${boxes[1]["text"]}&boxes[2][text]=${boxes[2]["text"]}&boxes[2][text]=${boxes[3]["text"]}`;
+  const imgflip = await fetch(url);
+  const data = await imgflip.json();
+  const urlOnly = { MemeURL: data.data.url };
+  setMeme(urlOnly.MemeURL, urlOnly);
+}
+    
     console.log("BoxCount " + response.data.boxCount);
   };
   useEffect(() => {
@@ -296,7 +394,7 @@ const LobbyPlayer = () => {
             onChange={(n) => setBottomCaption(n)}
           />
         )}
-        {!submitted && boxCount <= 4 && (<FormField1
+        {!submitted && boxCount <= 4 && 2 < boxCount &&(<FormField1
           placeholder= "Text 4"
           value = {thirdCaption}
           onChange={(n) => setThirdCaption(n)}
