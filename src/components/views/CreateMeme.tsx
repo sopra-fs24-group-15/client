@@ -21,7 +21,7 @@ const FormField1 = (props) => {
     <div className="createMeme field">
       <input
         className="createMeme input"
-        placeholder="Write your caption here"
+        placeholder={props.placeholder}
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
       />
@@ -29,6 +29,7 @@ const FormField1 = (props) => {
   );
 };
 FormField1.propTypes = {
+  placeholder: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
 };
@@ -245,10 +246,16 @@ const LobbyPlayer = () => {
         </button>
         {!submitted && (
           <FormField1
+            placeholder= "Text 1"
             value={topCaption}
             onChange={(n) => setTopCaption(n)}
           />
         )}
+        {!submitted && boxCount ===4  && (<FormField1
+          placeholder= "Text 2"
+          value = {fourthCaption}
+          onChange={(n) => setFourthCaption(n)}
+        />)}
 
         <div className="createMeme memeContainer">
           
@@ -284,17 +291,15 @@ const LobbyPlayer = () => {
 
         {!submitted && (
           <FormField1
+            placeholder= "Text 3"
             value={bottomCaption}
             onChange={(n) => setBottomCaption(n)}
           />
         )}
-        {!submitted && boxCount === 3 && (<FormField1
+        {!submitted && boxCount <= 4 && (<FormField1
+          placeholder= "Text 4"
           value = {thirdCaption}
           onChange={(n) => setThirdCaption(n)}
-        />)}
-        {!submitted && boxCount === 4 && (<FormField1
-          value = {fourthCaption}
-          onChange={(n) => setFourthCaption(n)}
         />)}
       </div>
     </BaseContainer>
