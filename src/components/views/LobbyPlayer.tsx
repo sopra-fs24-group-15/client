@@ -13,7 +13,7 @@ import rules from "../img/rules.png";
 // @ts-ignore
 import home from "../img/home.png";
 // @ts-ignore
-import mike from "../img/profilePictures/mike.png";
+import refresh from "../img/refresh.png";
 //Rules
 import { Rules } from "../ui/Rules";
 
@@ -28,6 +28,13 @@ const LobbyPlayer = () => {
   const [settingsRounds, setSettingsRounds] = useState<number>(0);
   const [settingsTime, setSettingsTime] = useState<number>(0);
   const [settingsMode, setSettingsMode] = useState("mode");
+
+  const profileImages = {}
+  const totalImages = 15;
+
+  for (let i = 1; i <= totalImages; i++) {
+    profileImages[i] = `${i}.png`;
+  }
 
   /* Home Button */
   const doHome = async () => {
@@ -46,21 +53,20 @@ const LobbyPlayer = () => {
   const fetchUsers = async () => {
     try {
       const lobbyId = localStorage.getItem("lobbyId");
-      const response1 = await api.get(`/lobbys/${lobbyId}`);
-      setLobbycode(response1.data.lobbyJoinCode);
-      let userList = [];
-      const response2 = await api.get("/users");
-      for (const element of response2.data) {
-        if (response1.data.players.includes(element.userId)) {
-          userList.push(element.username)
-        }
-      }
+      const response = await api.get(`/lobbys/${lobbyId}`);
+      setLobbycode(response.data.lobbyJoinCode);
+      const userResponse = await api.get("/users");
+      const userList = userResponse.data.map(user => ({
+        username: user.username,
+        userId: user.userId,
+        profilePicture: user.profilePicture
+      }));
       setUsers(userList);
       const ownUser = Number(localStorage.getItem("ownUserId"));
-      if (response1.data.lobbyOwner === ownUser) {
+      if (response.data.lobbyOwner === ownUser) {
         navigate("/lobby/owner");
       }
-      if (response1.data.gameActive) {
+      if (response.data.gameActive) {
         navigate("/loading")
         console.log(settingsMode)
         const settings = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}/settings`);
@@ -84,6 +90,18 @@ const LobbyPlayer = () => {
 
     return () => clearInterval(intervalId);
   }, []);
+
+  const UpdateProfilePicture = async () => {
+    try {
+      const userId = localStorage.getItem("ownUserId");
+      console.log(userId);
+      api.put(`/users/${userId}/profilepictures`);
+      fetchUsers();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
   
   // get settings
   const checkSettings = async () => {
@@ -137,10 +155,22 @@ const LobbyPlayer = () => {
         <div className="lobby users-container">
           {users.map((user, index) => (
             <div key={index} className="user-profile">
-              <span> 
-                <img src={mike} alt="Mike" className="user-profile-picture"/>
+              <img
+                  src={require(`../img/profilePictures/${profileImages[user.profilePicture]}`)} 
+                  alt={user.username}
+                  className="user-profile-picture"/>
+                {Number(user.userId) === Number(localStorage.getItem("ownUserId")) && (
+                <button 
+                className="user refresh-button" 
+                onClick={() => UpdateProfilePicture()}>
+                  <img 
+                  src={refresh} 
+                  alt="Refresh"/>
+                </button>
+                )}
+              <span>  
                 <div className="user-profile-name">
-                  {user}
+                  {user.username}
                 </div>
               </span>
             </div>

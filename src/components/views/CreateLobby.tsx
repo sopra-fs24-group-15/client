@@ -60,11 +60,12 @@ const CreateLobby = () => {
   /* Create Lobby Button */
   const doCreate = async () => {
     setErrorUsername(null);
-    const requestBody = JSON.stringify({username: username, isOwner: true});
+    const requestBody = JSON.stringify({username: username, isOwner: true, profilePicture: 1});
     console.log("Request to create user: " , requestBody);
     try{
       const createUserResponse = await api.post("/users", requestBody);
       const user = new User(createUserResponse.data)
+      console.log("User created: ", user);
       localStorage.setItem("ownUserId", user.userId);
       const requestBody2 = JSON.stringify({lobbyOwner: user.userId });
       const createLobbyResponse = await api.post("/lobbys", requestBody2);
