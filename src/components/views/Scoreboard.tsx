@@ -56,12 +56,18 @@ const ScoreboardFinal = () => {
       const newRound = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}/rounds`);
       if (roundPlayed !== newRound) {
         clearInterval(intervalId);
+        const settings = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}/settings`);
         setTimeout(async () => {
           const gameActive = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}`);
           if (!gameActive.data.gameActive) {
             navigate("/finalscreen");
           } else {
-            navigate("/createMeme");
+            console.log(settings.gameMode)
+            if (settings.data.gameMode === "TOPIC"){
+              navigate("/topicChoice");
+            } else {
+              navigate("/createMeme");
+            }
           }
         }, 3000);
       }

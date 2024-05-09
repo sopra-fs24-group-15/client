@@ -8,6 +8,7 @@ import JoinLobby from "../../views/JoinLobby";
 import LobbyOwner from "../../views/LobbyOwner";
 import Settings from "../../views/Settings";
 import LobbyPlayer from "../../views/LobbyPlayer";
+import TopicChoice from "../../views/TopicChoice";
 import CreateMeme from "../../views/CreateMeme";
 import Voting from "../../views/Voting";
 import Scoreboard from "../../views/Scoreboard";
@@ -51,6 +52,10 @@ const AppRouter = () => {
 
         <Route path="/joinLobby" element={<LoginGuard />}>
           <Route path="/joinLobby" element={<JoinLobby/>} />
+        </Route>
+
+        <Route path="/topicChoice" element={<GameGuard />}>
+          <Route path="/topicChoice" element={<TopicChoice/>} />
         </Route>
 
         <Route path="/createMeme" element={<GameGuard />}>

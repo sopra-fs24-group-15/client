@@ -62,8 +62,14 @@ const LobbyPlayer = () => {
       }
       if (response1.data.gameActive) {
         navigate("/loading")
+        console.log(settingsMode)
+        const settings = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}/settings`);
         setTimeout(() => {
-          navigate("/createMeme");
+          if (settings.data.gameMode === "TOPIC"){
+            navigate("/topicChoice")
+          } else {
+            navigate("/createMeme");
+          }
         }, 3000); // Wait for 3 seconds
       }
     }

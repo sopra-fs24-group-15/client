@@ -42,6 +42,8 @@ const LobbyPlayer = () => {
   const [boxCount, setBoxCount] = useState(0);
   // Rules
   const [showRules, setShowRules] = useState(false);
+  // Topic
+  const [topic, setTopic] = useState("");
   // Captions
   const [topCaption, setTopCaption] = useState<string>(" ");
   const [bottomCaption, setBottomCaption] = useState<string>(" ");
@@ -79,6 +81,9 @@ const LobbyPlayer = () => {
     setMeme(response.data.url);
     setMemeId(response.data.templateId);
     setBoxCount(response.data.boxCount);
+    if (response.data.topic) {
+      setTopic(response.data.topic);
+    }
     console.log("BoxCount " + response.data.boxCount);
   };
   useEffect(() => {
@@ -253,6 +258,7 @@ const LobbyPlayer = () => {
         <button className="home button_small right" onClick={() => doRule()}>
           <img src={rules} alt="Theme" className="home logo_small" />
         </button>
+        {topic !== "" && <h2>TOPIC: {topic}</h2>}
         {!submitted && (
           <FormField1
             value={topCaption}

@@ -34,7 +34,6 @@ const Settings = () => {
   };
 
   /* Save Settings Button */
-  // TODO add mode to save settings
   const doSaveSettings = async () => {
     const ownUser = Number(localStorage.getItem("ownUserId"));
     const requestBody1 = JSON.stringify({totalRounds: `${settingsRounds}`, gameMode: `${settingsMode}`, timer: `${settingsTime}`});

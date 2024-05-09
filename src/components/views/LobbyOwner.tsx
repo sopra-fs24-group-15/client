@@ -60,7 +60,11 @@ const LobbyOwner = () => {
     await api.post(`lobbys/${localStorage.getItem("lobbyId")}/rounds/start`);
     navigate("/loading")
     setTimeout(() => {
-      navigate("/createMeme");
+      if (settingsMode === "TOPIC"){
+        navigate("/topicChoice")
+      } else {
+        navigate("/createMeme");
+      }
     }, 3000); // Wait for 3 seconds
   };
 

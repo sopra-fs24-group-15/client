@@ -20,6 +20,8 @@ const Votingscreen = () => {
   const navigate = useNavigate();
   // Rules
   const [showRules, setShowRules] = useState(false);
+  // Topic
+  const [topic, setTopic] = useState("")
   // Captions
   const [memeData, setMemeData] = useState([]);
   const [currentMemeIndex, setCurrentMemeIndex] = useState(0);
@@ -52,6 +54,10 @@ const Votingscreen = () => {
         ...item,
         memeURL: JSON.parse(item.memeURL).MemeURL
       }));
+      const response2 = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/templates`);
+      if (response2.data.topic) {
+        setTopic(response.data.topic);
+      }
       console.log(data);
       setMemeData(data);
     } catch (error) {
@@ -103,7 +109,6 @@ const Votingscreen = () => {
   const doVoting = async () => {
     if (voting === false) {
       setVoting(true);
-      //TODO add submit
       const requestBody = JSON.stringify(currentMeme.userId);
       console.log(requestBody);
       await api.post(`/lobbys/${localStorage.getItem("lobbyId")}/votes`, requestBody);
@@ -139,7 +144,7 @@ const Votingscreen = () => {
         <button className="home button_small right" onClick={() => doRule()}>
           <img src={rules} alt="Theme" className="home logo_small" />
         </button>
-        
+        {topic !== "" && <h2>TOPIC: {topic}</h2>}
         <div className="voting memeContainer">
           
           <div className="voting timer-wrapper">
