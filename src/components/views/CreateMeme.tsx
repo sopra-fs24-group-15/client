@@ -56,6 +56,9 @@ const LobbyPlayer = () => {
   const [submitted, setSubmitted] = useState(false);
   // SettingsDuration
   const [settingsDuration, setSettingsDuration] = useState(0);
+  // RoundCounter
+  const [currentRound, setCurrentRound] = useState(1);
+  const [totalRounds, setTotalRounds] = useState(5);
 
   /* Home Button */
   const handleLeave = async () => {
@@ -79,9 +82,9 @@ const LobbyPlayer = () => {
   const checkSettings = async () => {
     const settings = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}/settings`);
     setSettingsDuration(settings.data.timer);
+    setTotalRounds(settings.data.totalRounds);
   }
   checkSettings();
-
 
   /* Meme */
   const getMeme = async () => {
@@ -189,6 +192,14 @@ const LobbyPlayer = () => {
       }
     };
   })
+
+  useEffect (() => {
+    const checkRound = async () =>{
+      const round = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}/rounds`);
+      setCurrentRound(round.data);
+    }
+    checkRound();
+  });
 
   /* check if everyone submitted */
   useEffect(() => {
@@ -312,6 +323,7 @@ const LobbyPlayer = () => {
         {showRules && <Rules close={() => setShowRules(false)} />}
         {showLeavePopUp && <LeavePopUp close={() => setShowLeavePopUp(false)} leave={() => handleLeave()} />}
       </div>
+
       <div className="createMeme content">
         <button className="home button_small left" onClick={toggleLeavePopUp}>
           <img src={home} alt="Theme" className="home logo_small" />
@@ -320,6 +332,7 @@ const LobbyPlayer = () => {
         <button className="home button_small right" onClick={() => doRule()}>
           <img src={rules} alt="Theme" className="home logo_small" />
         </button>
+        <h1 className = "CreateMeme roundCounter">Round {currentRound}/{totalRounds}</h1>
         {topic !== "" && <h2>TOPIC: {topic}</h2>}
         {!submitted && (
           <FormField1

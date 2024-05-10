@@ -116,6 +116,22 @@
     width: 100%;
     padding-bottom: 1em;
   }
+
+  .roundCounter {
+    display: flex;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    margin-top: 0em;
+  }
+  .timer-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    }
+
   h1 {
     text-align: center;
   }
