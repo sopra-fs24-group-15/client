@@ -88,12 +88,13 @@ const LobbyOwner = () => {
       const response = await api.get(`/lobbys/${lobbyId}`);
       setLobbycode(response.data.lobbyJoinCode);
       const userResponse = await api.get("/users");
-      console.log(userResponse.data);
-      const userList = userResponse.data.map(user => ({
-        username: user.username,
-        userId: user.userId,
-        profilePicture: user.profilePicture
-      }));
+      const userList = userResponse.data
+        .filter(user => response.data.players.includes(user.userId))
+        .map(user => ({
+          username: user.username,
+          userId: user.userId,
+          profilePicture: user.profilePicture
+        }));
       setUsers(userList);
       const ownUser = Number(localStorage.getItem("ownUserId"));
       if (response.data.lobbyOwner !== ownUser) {
