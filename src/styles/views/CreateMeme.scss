@@ -17,6 +17,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @media (max-width: 950px) {
+      transform: scale(0.4);
+      transform-origin: center center;
+      margin-top: -40vw;
+      @media (orientation: landscape) {
+        transform: scale(0.6); // Adjust this to the desired scale for landscape mode
+        margin-top: -10vw; // Adjust this to the desired margin for landscape mode
+      }
+    }
   }
   .content{
     display: flex;
