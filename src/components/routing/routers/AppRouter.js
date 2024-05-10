@@ -8,10 +8,12 @@ import JoinLobby from "../../views/JoinLobby";
 import LobbyOwner from "../../views/LobbyOwner";
 import Settings from "../../views/Settings";
 import LobbyPlayer from "../../views/LobbyPlayer";
+import TopicChoice from "../../views/TopicChoice";
 import CreateMeme from "../../views/CreateMeme";
 import Voting from "../../views/Voting";
 import Scoreboard from "../../views/Scoreboard";
 import Loading from "../../views/Loading";
+import Finalscreen from "../../views/FinalScreen";
 
 
 /**
@@ -52,6 +54,10 @@ const AppRouter = () => {
           <Route path="/joinLobby" element={<JoinLobby/>} />
         </Route>
 
+        <Route path="/topicChoice" element={<GameGuard />}>
+          <Route path="/topicChoice" element={<TopicChoice/>} />
+        </Route>
+
         <Route path="/createMeme" element={<GameGuard />}>
           <Route path="/createMeme" element={<CreateMeme/>} />
         </Route>
@@ -62,6 +68,10 @@ const AppRouter = () => {
 
         <Route path="/scoreboard" element={<GameGuard />}>
           <Route path="/scoreboard" element={<Scoreboard/>} />
+        </Route>
+
+        <Route path="/finalscreen" element={<GameGuard />}>
+          <Route path="/finalscreen" element={<Finalscreen/>} />
         </Route>
 
         <Route path="/loading" element={<GameGuard />}>

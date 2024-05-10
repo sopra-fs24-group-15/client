@@ -102,11 +102,11 @@
     border: none;
     border-radius: 0.75em;
     margin-bottom: 20px;
-    background: transparentize(white, 0.85);
+    background: transparentize(rgb(246, 246, 246), 0.85);
     color: var(--normalTextColor);
   }
   &.input::placeholder {
-    color: var(--accent);
+    color: var(--normalTextColor);
   }
 
   .memeContainer {
@@ -116,6 +116,22 @@
     width: 100%;
     padding-bottom: 1em;
   }
+
+  .roundCounter {
+    display: flex;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    margin-top: 0em;
+  }
+  .timer-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    }
+
   h1 {
     text-align: center;
   }

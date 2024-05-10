@@ -65,6 +65,7 @@ const CreateLobby = () => {
     try{
       const createUserResponse = await api.post("/users", requestBody);
       const user = new User(createUserResponse.data)
+      console.log("User created: ", user);
       localStorage.setItem("ownUserId", user.userId);
       const requestBody2 = JSON.stringify({lobbyOwner: user.userId });
       const createLobbyResponse = await api.post("/lobbys", requestBody2);

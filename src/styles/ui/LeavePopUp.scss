@@ -1,4 +1,4 @@
-.rules {
+.popUp {
     &.container {
         display: flex;
         justify-content: center;
@@ -16,26 +16,26 @@
         border-radius: 10px;
         box-shadow: 0px 0px 5px var(--accent);
     }
-    .text {
-        text-align: left;
-    }
-    h3 {
-        margin-top: -0.5em;
-    }
     h1 {
         text-align: center;
+    }
+    .buttonContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
     }
     .button {
         &:hover {
             transform: translateY(-2px);
           }
           padding: 6px;
+          margin: 10px;
           font-weight: 700;
           text-transform: uppercase;
           font-size: 14px;
           text-align: center;
-          height: 30px;
-          width: 100px;
+          height: 50px;
+          width: 20vw;
           border: none;
           border-radius: var(--borderRadius);
           cursor: pointer;

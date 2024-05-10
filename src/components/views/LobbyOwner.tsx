@@ -12,8 +12,9 @@ import rules from "../img/rules.png";
 // @ts-ignore
 import home from "../img/home.png";
 // @ts-ignore
-import mike from "../img/profilePictures/mike.png";
+import refresh from "../img/refresh.png";
 //Rules
+import { LeavePopUp } from "../ui/LeavePopUp";
 import { Rules } from "../ui/Rules";
 import Lobby from "models/Lobby";
 
@@ -22,21 +23,34 @@ const LobbyOwner = () => {
   const navigate = useNavigate();
   // Rules
   const [showRules, setShowRules] = useState(false);
+  const [showLeavePopUp, setShowLeavePopUp] = useState(false);
 
   const [users, setUsers] = useState<User[]>([]);
 
   const [lobbycode, setLobbycode] = useState<Lobby[]>([]);
 
-  const [settingsRounds, setSettingsRounds] = useState<number>(0);
-  const [settingsTime, setSettingsTime] = useState<number>(0);
+  const [settingsRounds, setSettingsRounds] = useState<number>(5);
+  const [settingsTime, setSettingsTime] = useState<number>(60);
   const [settingsMode, setSettingsMode] = useState("BASIC");
 
+  const profileImages = {}
+  const totalImages = 15;
+
+  for (let i = 1; i <= totalImages; i++) {
+    profileImages[i] = `${i}.png`;
+  }
+
   /* Home Button */
-  const doHome = async () => {
+  const handleLeave = async () => {
     const ownUser = localStorage.getItem("ownUserId");
     localStorage.removeItem("ownUserId");
     await api.delete(`/users/${ownUser}`);
     navigate("/home");
+  };
+
+  /* Leave Button */
+  const toggleLeavePopUp = async () => {
+    setShowLeavePopUp(!showLeavePopUp);
   };
 
   /* Rule Button */
@@ -52,7 +66,7 @@ const LobbyOwner = () => {
   /* Start Game */
   const startGame = async () => {
     const ownUser = Number(localStorage.getItem("ownUserId"));
-    //TODO create game with settings
+    // create game with settings
     const requestBody1 = JSON.stringify({totalRounds: `${settingsRounds}`, gameMode: `${settingsMode}`, timer: `${settingsTime}`});
     await api.post(`lobbys/${localStorage.getItem("lobbyId")}/settings/${ownUser}`, requestBody1);
     // start game
@@ -60,25 +74,30 @@ const LobbyOwner = () => {
     await api.post(`lobbys/${localStorage.getItem("lobbyId")}/rounds/start`);
     navigate("/loading")
     setTimeout(() => {
-      navigate("/createMeme");
+      if (settingsMode === "TOPIC"){
+        navigate("/topicChoice");
+      } else {
+        navigate("/createMeme");
+      }
     }, 3000); // Wait for 3 seconds
   };
 
   const fetchUsers = async () => {
     try {
       const lobbyId = localStorage.getItem("lobbyId");
-      const response1 = await api.get(`/lobbys/${lobbyId}`);
-      setLobbycode(response1.data.lobbyJoinCode);
-      let userList = [];
-      const response2 = await api.get("/users");
-      for (const element of response2.data) {
-        if (response1.data.players.includes(element.userId)) {
-          userList.push(element.username)
-        }
-      }
+      const response = await api.get(`/lobbys/${lobbyId}`);
+      setLobbycode(response.data.lobbyJoinCode);
+      const userResponse = await api.get("/users");
+      const userList = userResponse.data
+        .filter(user => response.data.players.includes(user.userId))
+        .map(user => ({
+          username: user.username,
+          userId: user.userId,
+          profilePicture: user.profilePicture
+        }));
       setUsers(userList);
       const ownUser = Number(localStorage.getItem("ownUserId"));
-      if (response1.data.lobbyOwner !== ownUser) {
+      if (response.data.lobbyOwner !== ownUser) {
         navigate("/lobby/player");
       }
     }
@@ -86,6 +105,18 @@ const LobbyOwner = () => {
       console.log(error);
     }
   };
+
+  const UpdateProfilePicture = async () => {
+    try {
+      const userId = localStorage.getItem("ownUserId");
+      console.log(userId);
+      api.put(`/users/${userId}/profilepictures`);
+      fetchUsers();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
 
   // setup with basic game, standard settings
   const checkSettings = async () => {
@@ -117,9 +148,10 @@ const LobbyOwner = () => {
     <BaseContainer className="lobby container">
       <div>
         {showRules && <Rules close={() => setShowRules(false)} />}
+        {showLeavePopUp && <LeavePopUp close={() => toggleLeavePopUp()} leave={() => handleLeave()}/>}
       </div>
       <div className="lobby content">
-        <button className="home button_small left" onClick={() => doHome()}>
+        <button className="home button_small left" onClick={toggleLeavePopUp}>
           <img src={home} alt="Theme" className="home logo_small" />
         </button>
         <img src={logo} draggable="false" alt="Logo" className="home logo_small_middle"/>
@@ -147,11 +179,23 @@ const LobbyOwner = () => {
         </table>
         <div className="lobby users-container">
           {users.map((user, index) => (
-            <div key={index} className="user-profile">
-              <span> 
-                <img src={mike} alt="Mike" className="user-profile-picture"/>
+            <div key={index} className="user-profile"> 
+              <img
+                src={require(`../img/profilePictures/${profileImages[user.profilePicture]}`)} 
+                alt={user.username}
+                className="user-profile-picture"/>
+              {Number(user.userId) === Number(localStorage.getItem("ownUserId")) && (
+                <button 
+                  className="user refresh-button" 
+                  onClick={() => UpdateProfilePicture()}>
+                  <img 
+                    src={refresh} 
+                    alt="Refresh"/>
+                </button>
+              )}
+              <span>  
                 <div className="user-profile-name">
-                  {user}
+                  {user.username}
                 </div>
               </span>
             </div>

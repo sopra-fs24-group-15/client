@@ -34,7 +34,6 @@ const Settings = () => {
   };
 
   /* Save Settings Button */
-  // TODO add mode to save settings
   const doSaveSettings = async () => {
     const ownUser = Number(localStorage.getItem("ownUserId"));
     const requestBody1 = JSON.stringify({totalRounds: `${settingsRounds}`, gameMode: `${settingsMode}`, timer: `${settingsTime}`});
@@ -79,10 +78,10 @@ const Settings = () => {
               </Button>
               <Button 
                 className="settings selectionButton2"
-                disabled={settingsMode === "THEMED"}
-                onClick={() => setSettingsMode("THEMED")}
+                disabled={settingsMode === "TOPIC"}
+                onClick={() => setSettingsMode("TOPIC")}
               >
-                themed
+                topic
               </Button>
             </div>
             <div className="settings selection">

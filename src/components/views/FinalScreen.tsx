@@ -1,7 +1,7 @@
-import "styles/views/Loading.scss";
+import "styles/views/FinalScreen.scss";
 import BaseContainer from "components/ui/BaseContainer";
-import { Spinner } from "components/ui/Spinner";
-import React, { useState} from "react";
+import React, { useState, useEffect} from "react";
+import { Button } from "components/ui/Button";
 import { api } from "helpers/api";
 import {useNavigate} from "react-router-dom";
 
@@ -15,9 +15,11 @@ import home from "../img/home.png";
 import { Rules } from "../ui/Rules";
 import { LeavePopUp } from "components/ui/LeavePopUp";
 
-const Loading = () => {
+const FinalScreen = () => {
   // use react-router-dom's hook to access navigation, more info: https://reactrouter.com/en/main/hooks/use-navigate 
   const navigate = useNavigate();
+  // scores
+  const [scores, setScores] = useState([]);
   // Rules
   const [showRules, setShowRules] = useState(false);
   const [showLeavePopUp, setShowLeavePopUp] = useState(false);
@@ -39,14 +41,39 @@ const Loading = () => {
     setShowRules(!showRules);
   };
 
-    
+  const doLobby = async () => {
+    const ownUser = Number(localStorage.getItem("ownUserId"))
+    const responseIsOwner = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
+    if (responseIsOwner.data.lobbyOwner === ownUser){
+      navigate("/lobby/owner");
+    } else {
+      navigate("/lobby/player");
+    }
+  }
+
+  /* Ranking */
+  useEffect(() => {
+    const fetchScores = async () => {
+      console.log("test")
+      const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/scores`);
+      console.log(response.data)
+      const sortedData = response.data.sort((a, b) => b.score - a.score);
+      setScores(sortedData[0]);
+      console.log("HI")
+      console.log(scores.username)
+      console.log(sortedData[0])
+    };
+
+    fetchScores();
+  }, []);
+
   return (
-    <BaseContainer className="loading container">
+    <BaseContainer className="finalscreen container">
       <div>
         {showRules && <Rules close={() => setShowRules(false)} />}
         {showLeavePopUp && <LeavePopUp close={() => setShowLeavePopUp(false)} leave={() => handleLeave()} />}
       </div>
-      <div className="loading content">
+      <div className="finalscreen content">
         <button className="home button_small left" onClick={toggleLeavePopUp}>
           <img src={home} alt="Theme" className="home logo_small" />
         </button>
@@ -54,12 +81,25 @@ const Loading = () => {
         <button className="home button_small right" onClick={() => doRule()}>
           <img src={rules} alt="Theme" className="home logo_small" />
         </button>
-        <h1 className="loading title">LOADING</h1>
-        <Spinner />
 
+        <h1 className="finalscreen title">WINNER</h1>
+        <div className="finalscreen winner">
+          <div className="finalscreen usernameBox">
+            <h1 className="finalscreen username">{scores.username} | {scores.score}p</h1>
+          </div>
+          <img src="https://i.imgflip.com/22bdq6.jpg" alt="best meme of winner" className="finalscreen meme"></img>
+          
+        </div>
+        <Button
+          className="createMeme button-container"
+          width="100%"
+          onClick={() => doLobby()}
+        >
+        Back to Lobby
+        </Button>
       </div>
     </BaseContainer>
   );
 };
 
-export default Loading;
+export default FinalScreen;

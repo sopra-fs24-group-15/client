@@ -15,13 +15,14 @@ import rules from "../img/rules.png";
 import home from "../img/home.png";
 //Rules
 import { Rules } from "../ui/Rules";
+import { LeavePopUp } from "../ui/LeavePopUp";
 
 const FormField1 = (props) => {
   return (
     <div className="createMeme field">
       <input
         className="createMeme input"
-        placeholder="Write your caption here"
+        placeholder={props.placeholder}
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
       />
@@ -29,6 +30,7 @@ const FormField1 = (props) => {
   );
 };
 FormField1.propTypes = {
+  placeholder: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
 };
@@ -37,24 +39,38 @@ const LobbyPlayer = () => {
   // use react-router-dom's hook to access navigation, more info: https://reactrouter.com/en/main/hooks/use-navigate 
   const navigate = useNavigate();
   // meme
-  const [meme, setMeme] = useState("https://i.imgflip.com/22bdq6.jpg");
+  const [meme, setMeme] = useState(" ");
   const [memeId, setMemeId] = useState(1);
+  const [boxCount, setBoxCount] = useState(0);
   // Rules
   const [showRules, setShowRules] = useState(false);
+  const [showLeavePopUp, setShowLeavePopUp] = useState(false);
+  // Topic
+  const [topic, setTopic] = useState("");
   // Captions
   const [topCaption, setTopCaption] = useState<string>(" ");
   const [bottomCaption, setBottomCaption] = useState<string>(" ");
+  const [thirdCaption, setThirdCaption] = useState<string>(" ");
+  const [fourthCaption, setFourthCaption] = useState<string>(" ");
   // Disable submit button
   const [submitted, setSubmitted] = useState(false);
   // SettingsDuration
   const [settingsDuration, setSettingsDuration] = useState(0);
+  // RoundCounter
+  const [currentRound, setCurrentRound] = useState(1);
+  const [totalRounds, setTotalRounds] = useState(5);
 
   /* Home Button */
-  const doHome = async () => {
+  const handleLeave = async () => {
     const ownUser = localStorage.getItem("ownUserId");
     localStorage.removeItem("ownUserId");
     await api.delete(`/users/${ownUser}`);
     navigate("/home");
+  };
+
+  /* Leave Button */
+  const toggleLeavePopUp = async () => {
+    setShowLeavePopUp(!showLeavePopUp);
   };
 
   /* Rule Button */
@@ -66,15 +82,103 @@ const LobbyPlayer = () => {
   const checkSettings = async () => {
     const settings = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}/settings`);
     setSettingsDuration(settings.data.timer);
+    setTotalRounds(settings.data.totalRounds);
+    const round = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}/rounds`);
+    setCurrentRound(round.data);
   }
   checkSettings();
-
 
   /* Meme */
   const getMeme = async () => {
     const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/templates`);
+    // setTopic
+    if (response.data.topic) {
+      setTopic(response.data.topic);
+    }
     setMeme(response.data.url);
-    setMemeId(response.data.templateId)
+    console.log(response.data.url);
+    console.log(boxCount);
+    console.log(response.data.templateId);
+    if (response.data.boxCount === 2) {
+      let text0 = "Text%201";
+      let text1 = "Text%202";
+      const username = "MemeBattleFrontend"
+      const password = "dysryw-Nepjen-6gudha"
+      setMemeId(response.data.templateId);
+      setBoxCount(response.data.boxCount);
+      console.log(memeId);
+      const imgflip = await fetch(`https://api.imgflip.com/caption_image?template_id=${response.data.templateId}&username=${username}&password=${password}&text0=${text0}&text1=${text1}`)
+      const data = await imgflip.json();
+      const urlOnly = { MemeURL: data.data.url };
+      setMeme(urlOnly.MemeURL, urlOnly);
+    } 
+    else if (response.data.boxCount === 3) {
+      const boxes = [
+        {
+          "text": "Text 1",
+          "color": "#ffffff",
+          "outline_color": "#000000"
+        },
+        {
+          "text": "Text 2",
+          "color": "#ffffff",
+          "outline_color": "#000000"
+        },
+        {
+          "text": "Text 3",
+          "color": "#ffffff",
+          "outline_color": "#000000"
+        }
+      ]
+      const username = "MemeBattleFrontend"
+      const password = "dysryw-Nepjen-6gudha"
+      console.log(boxes);
+      setMemeId(response.data.templateId);
+      setBoxCount(response.data.boxCount);
+      const url = `https://api.imgflip.com/caption_image?template_id=${response.data.templateId}&username=${username}&password=${password}&boxes[0][text]=${boxes[0]["text"]}&boxes[1][text]=${boxes[1]["text"]}&boxes[2][text]=${boxes[2]["text"]}`;
+      const imgflip = await fetch(url);
+      const data = await imgflip.json();
+      console.log(data.data.url)
+      const urlOnly = { MemeURL: data.data.url };
+      setMeme(urlOnly.MemeURL, urlOnly);
+    }
+    else if (response.data.boxCount === 4) {
+      const boxes = [
+        {
+          "text": "Text 1",
+          "color": "#ffffff",
+          "outline_color": "#000000"
+        },
+        {
+          "text": "Text 2",
+          "color": "#ffffff",
+          "outline_color": "#000000"
+        },
+        {
+          "text": "Text 3",
+          "color": "#ffffff",
+          "outline_color": "#000000"
+        },
+        {
+          "text": "Text 4",
+          "color": "#ffffff",
+          "outline_color": "#000000"
+        }
+      ]
+      const username = "MemeBattleFrontend"
+      const password = "dysryw-Nepjen-6gudha"
+      console.log(boxes);
+      setMemeId(response.data.templateId);
+      setBoxCount(response.data.boxCount);
+      const url = `https://api.imgflip.com/caption_image?template_id=${response.data.templateId}&username=${username}&password=${password}&boxes[0][text]=${boxes[0]["text"]}&boxes[1][text]=${boxes[1]["text"]}&boxes[2][text]=${boxes[2]["text"]}&boxes[3][text]=${boxes[3]["text"]}`;
+      const imgflip = await fetch(url);
+      const data = await imgflip.json();
+      console.log(data.data.url)
+      const urlOnly = { MemeURL: data.data.url };
+      setMeme(urlOnly.MemeURL, urlOnly);
+    }
+        
+    console.log("BoxCount " + boxCount);
   };
   useEffect(() => {
     getMeme();
@@ -90,6 +194,7 @@ const LobbyPlayer = () => {
       }
     };
   })
+
 
   /* check if everyone submitted */
   useEffect(() => {
@@ -120,17 +225,79 @@ const LobbyPlayer = () => {
     if (submitted === false) {
       const ownUser = Number(localStorage.getItem("ownUserId"))
       setSubmitted(true);
-      let text0 = topCaption.replace(/ /g, "%20");
-      let text1 = bottomCaption.replace(/ /g, "%20");
-      const username = "MemeBattleFrontend"
-      const password = "dysryw-Nepjen-6gudha"
-      const imgflip = await fetch(`https://api.imgflip.com/caption_image?template_id=${memeId}&username=${username}&password=${password}&text0=${text0}&text1=${text1}`)
-      const data = await imgflip.json();
-      const urlOnly = { MemeURL: data.data.url };
-      setMeme(urlOnly.MemeURL, urlOnly);
-      await api.post(`lobbys/${localStorage.getItem("lobbyId")}/memes/${ownUser}`, urlOnly);
+      if (boxCount === 2) {
+        let text0 = topCaption.replace(/ /g, "%20");
+        let text1 = bottomCaption.replace(/ /g, "%20");
+        const username = "MemeBattleFrontend"
+        const password = "dysryw-Nepjen-6gudha"
+        const imgflip = await fetch(`https://api.imgflip.com/caption_image?template_id=${memeId}&username=${username}&password=${password}&text0=${text0}&text1=${text1}`)
+        const data = await imgflip.json();
+        const urlOnly = { MemeURL: data.data.url };
+        setMeme(urlOnly.MemeURL, urlOnly);
+        await api.post(`lobbys/${localStorage.getItem("lobbyId")}/memes/${ownUser}`, urlOnly);
+      } 
+      else if (boxCount === 3) {
+        const boxes = [
+          {
+            "text": topCaption,
+            "color": "#ffffff",
+            "outline_color": "#000000"
+          },
+          {
+            "text": bottomCaption,
+            "color": "#ffffff",
+            "outline_color": "#000000"
+          },
+          {
+            "text": thirdCaption,
+            "color": "#ffffff",
+            "outline_color": "#000000"
+          }
+        ]
+        const username = "MemeBattleFrontend"
+        const password = "dysryw-Nepjen-6gudha"
+        console.log(boxes);
+        const url = `https://api.imgflip.com/caption_image?template_id=${memeId}&username=${username}&password=${password}&boxes[0][text]=${boxes[0]["text"]}&boxes[1][text]=${boxes[1]["text"]}&boxes[2][text]=${boxes[2]["text"]}`;
+        const imgflip = await fetch(url);
+        const data = await imgflip.json();
+        const urlOnly = { MemeURL: data.data.url };
+        setMeme(urlOnly.MemeURL, urlOnly);
+        await api.post(`lobbys/${localStorage.getItem("lobbyId")}/memes/${ownUser}`, urlOnly);
+      }
+      else if (boxCount === 4) {
+        const boxes = [
+          {
+            "text": topCaption,
+            "color": "#ffffff",
+            "outline_color": "#000000"
+          },
+          {
+            "text": fourthCaption,
+            "color": "#ffffff",
+            "outline_color": "#000000"
+          },
+          {
+            "text": bottomCaption,
+            "color": "#ffffff",
+            "outline_color": "#000000"
+          },
+          {
+            "text": thirdCaption,
+            "color": "#ffffff",
+            "outline_color": "#000000"
+          }
+        ]
+        const username = "MemeBattleFrontend"
+        const password = "dysryw-Nepjen-6gudha"
+        console.log(boxes);
+        const url = `https://api.imgflip.com/caption_image?template_id=${memeId}&username=${username}&password=${password}&boxes[0][text]=${boxes[0]["text"]}&boxes[1][text]=${boxes[1]["text"]}&boxes[2][text]=${boxes[2]["text"]}&boxes[3][text]=${boxes[3]["text"]}`;
+        const imgflip = await fetch(url);
+        const data = await imgflip.json();
+        const urlOnly = { MemeURL: data.data.url };
+        setMeme(urlOnly.MemeURL, urlOnly);
+        await api.post(`lobbys/${localStorage.getItem("lobbyId")}/memes/${ownUser}`, urlOnly);
+      }
     }
-    
   };
 
   const renderTime = ({ remainingTime }) => {
@@ -149,21 +316,31 @@ const LobbyPlayer = () => {
     <BaseContainer className="createMeme container">
       <div>
         {showRules && <Rules close={() => setShowRules(false)} />}
+        {showLeavePopUp && <LeavePopUp close={() => setShowLeavePopUp(false)} leave={() => handleLeave()} />}
       </div>
+
       <div className="createMeme content">
-        <button className="home button_small left" onClick={() => doHome()}>
+        <button className="home button_small left" onClick={toggleLeavePopUp}>
           <img src={home} alt="Theme" className="home logo_small" />
         </button>
         <img src={logo} draggable="false" alt="Logo" className="home logo_small_middle"/>
         <button className="home button_small right" onClick={() => doRule()}>
           <img src={rules} alt="Theme" className="home logo_small" />
         </button>
+        <h1 className = "CreateMeme roundCounter">Round {currentRound}/{totalRounds}</h1>
+        {topic !== "" && <h2>TOPIC: {topic}</h2>}
         {!submitted && (
           <FormField1
+            placeholder= "Text 1"
             value={topCaption}
             onChange={(n) => setTopCaption(n)}
           />
         )}
+        {!submitted && boxCount ===4  && (<FormField1
+          placeholder= "Text 2"
+          value = {fourthCaption}
+          onChange={(n) => setFourthCaption(n)}
+        />)}
 
         <div className="createMeme memeContainer">
           
@@ -199,10 +376,16 @@ const LobbyPlayer = () => {
 
         {!submitted && (
           <FormField1
+            placeholder= "Text 3"
             value={bottomCaption}
             onChange={(n) => setBottomCaption(n)}
           />
         )}
+        {!submitted && boxCount <= 4 && 2 < boxCount &&(<FormField1
+          placeholder= "Text 4"
+          value = {thirdCaption}
+          onChange={(n) => setThirdCaption(n)}
+        />)}
       </div>
     </BaseContainer>
   );
