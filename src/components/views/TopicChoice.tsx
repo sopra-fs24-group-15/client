@@ -98,7 +98,7 @@ const TopicChoice = () => {
         {showLeavePopUp && <LeavePopUp close={() => setShowLeavePopUp(false)} leave={() => handleLeave()} />}
       </div>
       <div className="loading content">
-        <button className="home button_small left" onClick={handleLeave}>
+        <button className="home button_small left" onClick={toggleLeavePopUp}>
           <img src={home} alt="Theme" className="home logo_small" />
         </button>
         <img src={logo} draggable="false" alt="Logo" className="home logo_small_middle"/>

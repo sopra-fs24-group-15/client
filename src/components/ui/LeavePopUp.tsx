@@ -8,8 +8,8 @@ export const LeavePopUp = ({ close, leave }) => (
       <h1>Are you sure that you want to leave?</h1>
     </div>
     <div className="popUp buttonContainer">
-    <button onClick={close} className="popUp button">No</button>
-    <button onClick={leave} className="popUp button">Yes</button>
+      <button onClick={close} className="popUp button">No</button>
+      <button onClick={leave} className="popUp button">Yes</button>
     </div>
   </div>
 );

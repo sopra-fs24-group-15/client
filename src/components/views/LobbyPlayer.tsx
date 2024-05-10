@@ -165,18 +165,18 @@ const LobbyPlayer = () => {
           {users.map((user, index) => (
             <div key={index} className="user-profile">
               <img
-                  src={require(`../img/profilePictures/${profileImages[user.profilePicture]}`)} 
-                  alt={user.username}
-                  className="user-profile-picture"/>
-                {Number(user.userId) === Number(localStorage.getItem("ownUserId")) && (
+                src={require(`../img/profilePictures/${profileImages[user.profilePicture]}`)} 
+                alt={user.username}
+                className="user-profile-picture"/>
+              {Number(user.userId) === Number(localStorage.getItem("ownUserId")) && (
                 <button 
-                className="user refresh-button" 
-                onClick={() => UpdateProfilePicture()}>
+                  className="user refresh-button" 
+                  onClick={() => UpdateProfilePicture()}>
                   <img 
-                  src={refresh} 
-                  alt="Refresh"/>
+                    src={refresh} 
+                    alt="Refresh"/>
                 </button>
-                )}
+              )}
               <span>  
                 <div className="user-profile-name">
                   {user.username}
