@@ -29,11 +29,15 @@ const Votingscreen = () => {
   const [currentMemeIndex, setCurrentMemeIndex] = useState(0);
   // Disable submit button
   const [voting, setVoting] = useState(false);
+  // RoundCounter
+  const [currentRound, setCurrentRound] = useState(1);
+  const [totalRounds, setTotalRounds] = useState(5);
 
   useEffect(() => {
     getMemes();
   }, []);
 
+  
   /* Home Button */
   const handleLeave = async () => {
     const ownUser = localStorage.getItem("ownUserId");
@@ -52,6 +56,15 @@ const Votingscreen = () => {
   const doRule = async () => {
     setShowRules(!showRules);
   };
+
+  const checkRounds = async () => {
+    const settings = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/settings`);
+    setTotalRounds(settings.data.totalRounds);
+    const round = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/rounds`);
+    setCurrentRound(round.data);
+  }
+  checkRounds();
+
 
   /* Meme */
   const getMemes = async () => {
@@ -152,6 +165,7 @@ const Votingscreen = () => {
         <button className="home button_small right" onClick={() => doRule()}>
           <img src={rules} alt="Theme" className="home logo_small" />
         </button>
+        <h1 className = "voting roundCounter">Round {currentRound}/{totalRounds}</h1>
         {topic !== "" && <h2>TOPIC: {topic}</h2>}
         <div className="voting memeContainer">
           

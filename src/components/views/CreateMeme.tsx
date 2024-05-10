@@ -83,6 +83,8 @@ const LobbyPlayer = () => {
     const settings = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}/settings`);
     setSettingsDuration(settings.data.timer);
     setTotalRounds(settings.data.totalRounds);
+    const round = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}/rounds`);
+    setCurrentRound(round.data);
   }
   checkSettings();
 
@@ -193,13 +195,6 @@ const LobbyPlayer = () => {
     };
   })
 
-  useEffect (() => {
-    const checkRound = async () =>{
-      const round = await api.get(`/lobbys/${localStorage.getItem("lobbyId")}/rounds`);
-      setCurrentRound(round.data);
-    }
-    checkRound();
-  });
 
   /* check if everyone submitted */
   useEffect(() => {
