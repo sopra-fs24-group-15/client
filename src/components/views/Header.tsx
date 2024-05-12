@@ -49,12 +49,15 @@ const Header = props => {
   }, []);
 
   return (
-    isLoading ? (
-      <div className="header title">
-        <h1>connecting to server</h1>
-        <Spinner />
-      </div>
-    ) : null
+    <div>
+      <div className="background_img"></div>
+      {isLoading ? (
+        <div className="header title">
+          <h1>connecting to server</h1>
+          <Spinner />
+        </div>
+      ) : null}
+    </div>
   );
 };
 
