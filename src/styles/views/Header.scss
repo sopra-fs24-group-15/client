@@ -9,5 +9,6 @@
     font-weight: bold;
     text-align: center;
     color: var(--buttonTextColor);
+    text-shadow: -1px -1px 0 var(--normalTextColor), 1px -1px 0 var(--normalTextColor), -1px 1px 0 var(--normalTextColor), 1px 1px 0 var(--normalTextColor);
   }
 }

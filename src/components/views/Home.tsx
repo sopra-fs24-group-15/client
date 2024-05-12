@@ -34,8 +34,8 @@ const Home = () => {
 
   /* define themes here!*/
   const themes = [
-    ["#575757", "#000000", "#ffffff", "#1d1d1d", "#c3c3c3"],
-    ["#d0d0d0", "#313131", "#000000", "#ffffff", "#575757" ]
+    ["#575757", "#000000", "#ffffff", "#1d1d1d", "#c3c3c3", "rgba(214, 214, 214, 0.5)"],
+    ["#d0d0d0", "#313131", "#000000", "#ffffff", "#575757", "rgba(44, 44, 44, 0.5)"],
   ]
   let activeTheme = 0;
   
@@ -50,12 +50,14 @@ const Home = () => {
     let buttonTextColor = themes[activeTheme][2];
     let normalTextColor = themes[activeTheme][3];
     let background = themes[activeTheme][4];
+    let background_blur = themes[activeTheme][5];
 
     document.documentElement.style.setProperty("--accent", accent);
     document.documentElement.style.setProperty("--accentDark", accentDark);
     document.documentElement.style.setProperty("--buttonTextColor", buttonTextColor);
     document.documentElement.style.setProperty("--normalTextColor", normalTextColor);
     document.documentElement.style.setProperty("--background", background);
+    document.documentElement.style.setProperty("--background_blur", background_blur);
   };
 
   const doRule = () => {
