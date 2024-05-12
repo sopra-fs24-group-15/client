@@ -23,6 +23,7 @@ const FinalScreen = () => {
   // Rules
   const [showRules, setShowRules] = useState(false);
   const [showLeavePopUp, setShowLeavePopUp] = useState(false);
+  const [winnerMeme, setWinnerMeme] = useState("https://img.com");
   /* Home Button */
   const handleLeave = async () => {
     const ownUser = localStorage.getItem("ownUserId");
@@ -56,12 +57,10 @@ const FinalScreen = () => {
     const fetchScores = async () => {
       console.log("test")
       const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/scores`);
-      console.log(response.data)
       const sortedData = response.data.sort((a, b) => b.score - a.score);
       setScores(sortedData[0]);
-      console.log("HI")
-      console.log(scores.username)
-      console.log(sortedData[0])
+      const responseMeme = await api.get(`users/${sortedData[0].userId}/memes`);
+      setWinnerMeme(responseMeme.data.MemeURL);
     };
 
     fetchScores();
@@ -87,7 +86,7 @@ const FinalScreen = () => {
           <div className="finalscreen usernameBox">
             <h1 className="finalscreen username">{scores.username} | {scores.score}p</h1>
           </div>
-          <img src="https://i.imgflip.com/22bdq6.jpg" alt="best meme of winner" className="finalscreen meme"></img>
+          <img src={winnerMeme} alt="best meme of winner" className="finalscreen meme"></img>
           
         </div>
         <Button
