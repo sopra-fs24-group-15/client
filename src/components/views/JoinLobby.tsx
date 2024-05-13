@@ -157,7 +157,7 @@ const JoinLobby = () => {
           />
           <div className="home button-container">
             <Button
-              disabled={!username || !joinLobby || username.length > 15}
+              disabled={!username || !joinLobby || username.length > 15 || errorUsername}
               width="100%"
               onClick={() => doJoin()}
             >

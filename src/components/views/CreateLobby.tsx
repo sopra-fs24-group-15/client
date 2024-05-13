@@ -46,6 +46,7 @@ const CreateLobby = () => {
   const [showRules, setShowRules] = useState(false);
   const [username, setUsername] = useState<string>(null);
   const [errorUsername, setErrorUsername] = useState(null);
+  const [errorUsernameLength, setErrorUsernameLength] = useState(null);
 
   /* Back Button */
   const doBack = async () => {
@@ -57,11 +58,30 @@ const CreateLobby = () => {
     setShowRules(!showRules);
   };
 
+  const validateUsername = (username: string) => {
+    setUsername(username);
+    setErrorUsername(null);
+    if (username.length > 15) {
+      setErrorUsernameLength("Username must bew 15 characters or less");
+    } else {
+      setErrorUsernameLength(null);
+    }
+  };
+
   /* Create Lobby Button */
   const doCreate = async () => {
     setErrorUsername(null);
+    setErrorUsernameLength(null);
+
+    if (username && username.length > 15) {
+      setErrorUsernameLength("Username must be 15 characters or less");
+
+      return;
+    }
+
     const requestBody = JSON.stringify({username: username, isOwner: true});
     console.log("Request to create user: " , requestBody);
+
     try{
       const createUserResponse = await api.post("/users", requestBody);
       const user = new User(createUserResponse.data)
@@ -94,13 +114,14 @@ const CreateLobby = () => {
             <img src={rules} alt="Theme" className="home logo_small" />
           </button>
           {errorUsername && <div className="home error">Username already taken</div>}
+          {errorUsernameLength && <div className="home error">{errorUsernameLength}</div>}
           <FormField
             value={username}
-            onChange={(un: string) => setUsername(un)}
+            onChange={validateUsername}
           />
           <div className="home button-container">
             <Button
-              disabled={!username}
+              disabled={!username || username.length > 15 || errorUsername}
               width="100%"
               onClick={() => doCreate()}
             >
