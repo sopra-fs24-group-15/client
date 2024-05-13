@@ -6,7 +6,10 @@
         flex-direction: column;
         position: fixed;
         margin-top: 19em;
-        width: 80%;
+        @media (max-width: 768px) {
+            margin-top: 5em;
+        }
+        width: 70%;
         padding: 1em;
         left: 50.4%;
         transform: translate(-50%, -50%);

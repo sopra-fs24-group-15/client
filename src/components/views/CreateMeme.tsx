@@ -48,10 +48,10 @@ const LobbyPlayer = () => {
   // Topic
   const [topic, setTopic] = useState("");
   // Captions
-  const [topCaption, setTopCaption] = useState<string>(" ");
-  const [bottomCaption, setBottomCaption] = useState<string>(" ");
-  const [thirdCaption, setThirdCaption] = useState<string>(" ");
-  const [fourthCaption, setFourthCaption] = useState<string>(" ");
+  const [topCaption, setTopCaption] = useState<string>("");
+  const [secondCaption, setSecondCaption] = useState<string>("");
+  const [thirdCaption, setThirdCaption] = useState<string>("");
+  const [fourthCaption, setFourthCaption] = useState<string>("");
   // Disable submit button
   const [submitted, setSubmitted] = useState(false);
   // SettingsDuration
@@ -226,10 +226,19 @@ const LobbyPlayer = () => {
       const ownUser = Number(localStorage.getItem("ownUserId"))
       setSubmitted(true);
       if (boxCount === 2) {
-        let text0 = topCaption.replace(/ /g, "%20");
-        let text1 = bottomCaption.replace(/ /g, "%20");
+        let newTopCaption = topCaption;
+        let newSecondCaption = secondCaption;
+        if (newTopCaption === "") {
+          newTopCaption = " ";
+        }
+        if (newSecondCaption === "") {
+          newSecondCaption = " ";
+        } 
+        let text0 = newTopCaption.replace(/ /g, "%20");
+        let text1 = newSecondCaption.replace(/ /g, "%20");
         const username = "MemeBattleFrontend"
         const password = "dysryw-Nepjen-6gudha"
+        console.log(text0, text1);
         const imgflip = await fetch(`https://api.imgflip.com/caption_image?template_id=${memeId}&username=${username}&password=${password}&text0=${text0}&text1=${text1}`)
         const data = await imgflip.json();
         const urlOnly = { MemeURL: data.data.url };
@@ -244,7 +253,7 @@ const LobbyPlayer = () => {
             "outline_color": "#000000"
           },
           {
-            "text": bottomCaption,
+            "text": secondCaption,
             "color": "#ffffff",
             "outline_color": "#000000"
           },
@@ -256,6 +265,12 @@ const LobbyPlayer = () => {
         ]
         const username = "MemeBattleFrontend"
         const password = "dysryw-Nepjen-6gudha"
+        console.log(boxes);
+        for (let i = 0; i<3; i++) {
+          if (boxes[i]["text"]=== "") {
+            boxes[i]["text"]= " ";
+          }
+        }
         console.log(boxes);
         const url = `https://api.imgflip.com/caption_image?template_id=${memeId}&username=${username}&password=${password}&boxes[0][text]=${boxes[0]["text"]}&boxes[1][text]=${boxes[1]["text"]}&boxes[2][text]=${boxes[2]["text"]}`;
         const imgflip = await fetch(url);
@@ -272,12 +287,7 @@ const LobbyPlayer = () => {
             "outline_color": "#000000"
           },
           {
-            "text": fourthCaption,
-            "color": "#ffffff",
-            "outline_color": "#000000"
-          },
-          {
-            "text": bottomCaption,
+            "text": secondCaption,
             "color": "#ffffff",
             "outline_color": "#000000"
           },
@@ -285,10 +295,21 @@ const LobbyPlayer = () => {
             "text": thirdCaption,
             "color": "#ffffff",
             "outline_color": "#000000"
+          },
+          {
+            "text": fourthCaption,
+            "color": "#ffffff",
+            "outline_color": "#000000"
           }
         ]
         const username = "MemeBattleFrontend"
         const password = "dysryw-Nepjen-6gudha"
+        console.log(boxes);
+        for (let i = 0; i<4; i++) {
+          if (boxes[i]["text"]=== "") {
+            boxes[i]["text"] = " ";
+          }
+        }
         console.log(boxes);
         const url = `https://api.imgflip.com/caption_image?template_id=${memeId}&username=${username}&password=${password}&boxes[0][text]=${boxes[0]["text"]}&boxes[1][text]=${boxes[1]["text"]}&boxes[2][text]=${boxes[2]["text"]}&boxes[3][text]=${boxes[3]["text"]}`;
         const imgflip = await fetch(url);
@@ -336,10 +357,10 @@ const LobbyPlayer = () => {
             onChange={(n) => setTopCaption(n)}
           />
         )}
-        {!submitted && boxCount ===4  && (<FormField1
+        {!submitted  && (<FormField1
           placeholder= "Text 2"
-          value = {fourthCaption}
-          onChange={(n) => setFourthCaption(n)}
+          value = {secondCaption}
+          onChange={(n) => setSecondCaption(n)}
         />)}
 
         <div className="createMeme memeContainer">
@@ -374,17 +395,17 @@ const LobbyPlayer = () => {
 
         </div>
 
-        {!submitted && (
+        {!submitted && boxCount >= 3 && (
           <FormField1
             placeholder= "Text 3"
-            value={bottomCaption}
-            onChange={(n) => setBottomCaption(n)}
+            value={thirdCaption}
+            onChange={(n) => setThirdCaption(n)}
           />
         )}
-        {!submitted && boxCount <= 4 && 2 < boxCount &&(<FormField1
+        {!submitted && boxCount === 4 && 2 < boxCount &&(<FormField1
           placeholder= "Text 4"
-          value = {thirdCaption}
-          onChange={(n) => setThirdCaption(n)}
+          value = {fourthCaption}
+          onChange={(n) => setFourthCaption(n)}
         />)}
       </div>
     </BaseContainer>

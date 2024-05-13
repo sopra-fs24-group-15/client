@@ -161,7 +161,7 @@ const LobbyOwner = () => {
 
         <table className="lobby infoContainer">
           <tr className="infoLobbyCode">
-            <td>LOBBY CODE</td>
+            <td>JOIN CODE</td>
             <td className="infoContent">{lobbycode}</td>
           </tr>
           <tr>
