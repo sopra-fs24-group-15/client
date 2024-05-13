@@ -122,6 +122,10 @@
     color: red;
     font-size: large;
   }
-
-  
+  .rulediv {
+    @media (max-width: 940px) {
+      font-size: x-small;
+      top: 50%
+    }
+  }
 }

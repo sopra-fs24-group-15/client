@@ -130,7 +130,7 @@ const LobbyPlayer = () => {
 
   return (
     <BaseContainer className="lobby container">
-      <div>
+      <div className="home rule">
         {showRules && <Rules close={() => setShowRules(false)} />}
         {showLeavePopUp && <LeavePopUp close={() => toggleLeavePopUp()} leave={() => handleLeave()}/>}
       </div>
