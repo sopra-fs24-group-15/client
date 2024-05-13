@@ -27,7 +27,7 @@ const FormField = (props) => {
     <div className="home field">
       <input
         className="home input"
-        placeholder="username"
+        placeholder="Username"
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
       />
@@ -101,7 +101,7 @@ const CreateLobby = () => {
 
   return (
     <BaseContainer>
-      <div>
+      <div className="home rulediv">
         {showRules && <Rules close={() => setShowRules(false)} />}
       </div>
       <div className="home container">

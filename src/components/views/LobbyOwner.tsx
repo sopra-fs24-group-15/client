@@ -146,7 +146,7 @@ const LobbyOwner = () => {
 
   return (
     <BaseContainer className="lobby container">
-      <div>
+      <div className="home rulediv">
         {showRules && <Rules close={() => setShowRules(false)} />}
         {showLeavePopUp && <LeavePopUp close={() => toggleLeavePopUp()} leave={() => handleLeave()}/>}
       </div>

@@ -168,6 +168,13 @@
         margin-left: 0.5em;
       }
     }
+
+    .rulediv {
+      @media (max-width: 940px) {
+        font-size: x-small;
+        top: 30%
+      }
+    }
   }
 
   span {

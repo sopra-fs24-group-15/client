@@ -132,7 +132,7 @@ const JoinLobby = () => {
 
   return (
     <BaseContainer>
-      <div>
+      <div className="home rulediv">
         {showRules && <Rules close={() => setShowRules(false)} />}
       </div>
       <div className="home container">

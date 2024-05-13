@@ -9,7 +9,7 @@
 
 .voting {
   &.container {
-    margin-top: 2em;
+    margin-top: 50px;
     min-height: 300px;
     /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
     @include center;
@@ -17,10 +17,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    @media (max-width: 950px) {
+    @media (max-width: 940px) {
       transform: scale(0.4);
       transform-origin: center center;
-      margin-top: -40vw;
+      margin-top: -200px;
       @media (orientation: landscape) {
         transform: scale(0.6); // Adjust this to the desired scale for landscape mode
         margin-top: -10vw; // Adjust this to the desired margin for landscape mode
@@ -154,10 +154,8 @@
     box-sizing: border-box;
     width: 100%;
     overflow: hidden; 
-    padding-left: 1em;
     justify-content: space-around;
     align-items:center;
     padding: 1em;
-    
   }
 }

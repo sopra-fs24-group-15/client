@@ -36,6 +36,10 @@ const Home = () => {
   const themes = [
     ["#575757", "#000000", "#ffffff", "#1d1d1d", "#c3c3c3", "rgba(214, 214, 214, 0.5)"],
     ["#d0d0d0", "#313131", "#000000", "#ffffff", "#575757", "rgba(44, 44, 44, 0.5)"],
+    ["#052a0c", "#001e06", "#f4fff5", "#0f160f", "#586e5c", "rgba(53, 71, 56, 0.5)"],
+    ["#573c69", "#16001e", "#fef4ff", "#130f16", "#ab8fae", "rgba(71, 53, 68, 0.5)"],
+    ["#693c3c", "#1e0000", "#fff4f4", "#160f0f", "#ae8f8f", "rgba(71, 53, 53, 0.5)"],
+    ["#3c4169", "#02001e", "#f4f4ff", "#0f0f16", "#928fae", "rgba(56, 53, 71, 0.5)"],
   ]
   let activeTheme = 0;
   
@@ -66,7 +70,7 @@ const Home = () => {
 
   return (
     <BaseContainer>
-      <div>
+      <div className="home rulediv">
         {showRules && <Rules close={() => setShowRules(false)} />}
       </div>
       <div className="home container">
