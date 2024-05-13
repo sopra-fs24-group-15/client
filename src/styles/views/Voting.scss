@@ -155,7 +155,9 @@
     width: 100%;
     overflow: hidden; 
     padding-left: 1em;
-    justify-content: space-between;
+    justify-content: space-around;
+    align-items:center;
+    padding: 1em;
     
   }
 }

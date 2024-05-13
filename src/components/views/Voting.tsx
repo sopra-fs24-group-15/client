@@ -190,15 +190,15 @@ const Votingscreen = () => {
 
         </div>
         <div className="voting button-container">
-          <Button 
-            width = "30%"
+          <Button
+            width = "25%"
             onClick={() => doPreviousMeme()}
           >
               Previous Meme
           </Button>
 
           <Button
-            width="30%"
+            width="35%"
             onClick={() => doVoting()}
             disabled={voting}
           >
@@ -206,7 +206,7 @@ const Votingscreen = () => {
           </Button>
 
           <Button 
-            width = "30%"
+            width = "25%"
             onClick={() => doNextMeme()}
           >
             Next Meme
