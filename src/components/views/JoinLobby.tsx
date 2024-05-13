@@ -67,6 +67,7 @@ const JoinLobby = () => {
   const [joinLobby, setJoinLobby] = useState<string>(null);
   const [errorUsername, setErrorUsername] = useState(null);
   const [errorJoincode, setErrorJoincode] = useState(null);
+  const [errorUsernameLength, setErrorUsernameLength] = useState(null);
 
   /* Back Button */
   const doBack = async () => {
@@ -78,10 +79,28 @@ const JoinLobby = () => {
     setShowRules(!showRules);
   };
 
+  const validateUsername = (username: string) => {
+    setUsername(username);
+    setErrorUsername(null);
+    if (username.length > 15) {
+      setErrorUsernameLength("Username must be 15 characters or less");
+    } else {
+      setErrorUsernameLength(null);
+    }
+  };
+
   /* Create Lobby Button */
   const doJoin = async () => {
     setErrorUsername(null);
     setErrorJoincode(null);
+    setErrorUsernameLength(null);
+
+    if (username && username.length > 15) {
+      setErrorUsernameLength("Username must be 15 characters or less");
+      
+      return;
+    }
+
     // Lobby logic, go to lobby
     const requestBody = JSON.stringify({username: username, isOwner: false});
     console.log("Request to create user: " , requestBody);
@@ -126,9 +145,10 @@ const JoinLobby = () => {
             <img src={rules} alt="Theme" className="home logo_small" />
           </button>
           {errorUsername && <div className="home error">Username already taken</div>}
+          {errorUsernameLength && <div className="home error">{errorUsernameLength}</div>}
           <FormField1
             value={username}
-            onChange={(un: string) => setUsername(un)}
+            onChange={validateUsername}
           />
           {errorJoincode && <div className="home error">Invalid Join Code</div>}
           <FormField2
@@ -137,7 +157,7 @@ const JoinLobby = () => {
           />
           <div className="home button-container">
             <Button
-              disabled={!username || !joinLobby}
+              disabled={!username || !joinLobby || username.length > 15}
               width="100%"
               onClick={() => doJoin()}
             >
