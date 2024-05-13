@@ -9,17 +9,26 @@
 */
 
 
+
 // <uniquifier>: Use a unique and descriptive class name
 // <weight>: Use a value from 300 to 700
 
 :root {
   /* Theme Colors */
+  /*
   --accent: #575757;
   --accentDark: #000000;
   --buttonTextColor: #ffffff;
   --normalTextColor: #1d1d1d;
   --background: #c3c3c3;
   --background_blur: rgba(214, 214, 214, 0.5);
+  */
+  --accent: #3c4169;
+  --accentDark: #02001e;
+  --buttonTextColor: #f4f4ff;
+  --normalTextColor: #0f0f16;
+  --background: #928fae;
+  --background_blur: rgba(56, 53, 71, 0.5);
 
   /*some constants*/
   --DESKTOP_WIDTH: 1160px;
