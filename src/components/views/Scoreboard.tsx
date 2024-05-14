@@ -4,6 +4,7 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import React, { useState, useEffect} from "react";
 import { api } from "helpers/api";
 import {useNavigate} from "react-router-dom";
+import { User } from "types";
 
 // @ts-ignore
 import logo from "../img/logo.png";
@@ -18,11 +19,21 @@ import { LeavePopUp } from "components/ui/LeavePopUp";
 const ScoreboardFinal = () => {
   // use react-router-dom's hook to access navigation, more info: https://reactrouter.com/en/main/hooks/use-navigate 
   const navigate = useNavigate();
+
+  // profile images
+  const profileImages = {}
+  const totalImages = 15;
+
+  for (let i = 1; i <= totalImages; i++) {
+    profileImages[i] = `${i}.png`;
+  }
+
   // scores
   const [scores, setScores] = useState([]);
   // Rules
   const [showRules, setShowRules] = useState(false);
   const [showLeavePopUp, setShowLeavePopUp] = useState(false);
+  
   //round played
   const roundPlayed = api.get(`/lobbys/${localStorage.getItem("lobbyId")}/rounds`);
   /* Home Button */
@@ -144,7 +155,14 @@ const ScoreboardFinal = () => {
           <div className="ranking">
             {scores.map((user, index) => (
               <div key={index} className="scoreboard rankedUsers">
-                <div>{index + 1}. {user.username}</div><div>{user.score} Points</div>
+                <div className="user-info">
+                  <img 
+                    src={require(`../img/profilePictures/${profileImages[user.profilePicture]}`)} 
+                    alt={user.username}
+                    className="user-profile-picture"/>
+                  <div className="user-name">{index + 1}. {user.username}</div>
+                </div>
+                <div className="user-score">{user.score} Points</div>
               </div>
             ))}
           </div>
