@@ -9,8 +9,8 @@
 
 .createMeme {
   &.container {
-    margin-top: 50px;
-    min-height: 300px;
+    margin-top: 3vh;
+
     /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
     @include center;
     flex-direction: column;
@@ -20,11 +20,9 @@
 
     @media (max-width: 940px) {
       transform: scale(0.4);
-      transform-origin: center center;
-      margin-top: -200px;
+      transform-origin: top center;
       @media (orientation: landscape) {
-        transform: scale(0.6); // Adjust this to the desired scale for landscape mode
-        margin-top: -10vw; // Adjust this to the desired margin for landscape mode
+        transform: scale(0.5); // Adjust this to the desired scale for landscape mode
       }
     }
   }
