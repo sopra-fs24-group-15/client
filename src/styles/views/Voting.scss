@@ -9,7 +9,7 @@
 
 .voting {
   &.container {
-    margin-top: 50px;
+    margin-top: 3vh;
     min-height: 300px;
     /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
     @include center;
