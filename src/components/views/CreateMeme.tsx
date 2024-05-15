@@ -363,7 +363,7 @@ const LobbyPlayer = () => {
           onChange={(n) => setSecondCaption(n)}
         />)}
 
-{!submitted && boxCount >= 3 && (
+        {!submitted && boxCount >= 3 && (
           <FormField1
             placeholder= "Text 3"
             value={thirdCaption}
@@ -382,7 +382,7 @@ const LobbyPlayer = () => {
             <h1 className="createMeme timerTitle">countdown</h1>
             <CountdownCircleTimer
               isPlaying
-              duration={435678654}
+              duration={settingsDuration}
               strokeWidth={20}
               size={180}
               colors={["#adf7b6", "#fcf5c7", "#fce1e4"]}
