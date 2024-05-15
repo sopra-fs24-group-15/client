@@ -11,20 +11,29 @@ body {
   min-height: 100vh;
   font-family: var(--fontDefault);
   background-size: cover;
+  user-select: text;
+  background-color: #ffffff;
 }
 .background_img {
-  position: absolute;
+  position: fixed;
+  user-select: none;
   top: 0;
   right: 0;
   bottom: 0;
+  width: 100vw;
+  height: 100vh;
   left: 0;
   background-image: url('../components/img/background/background_white.png');
   background-size: cover;
+  background-attachment: fixed;
   z-index: -1;
 }
 .background_img::after {
   content: "";
-  position: absolute;
+  position: fixed;
+  user-select: none;
+  width: 100vw;
+  height: 100vh;
   top: 0;
   right: 0;
   bottom: 0;

@@ -132,7 +132,7 @@ const JoinLobby = () => {
 
   return (
     <BaseContainer>
-      <div>
+      <div className="home rulediv">
         {showRules && <Rules close={() => setShowRules(false)} />}
       </div>
       <div className="home container">
@@ -157,7 +157,7 @@ const JoinLobby = () => {
           />
           <div className="home button-container">
             <Button
-              disabled={!username || !joinLobby || username.length > 15}
+              disabled={!username || !joinLobby || username.length > 15 || errorUsername}
               width="100%"
               onClick={() => doJoin()}
             >

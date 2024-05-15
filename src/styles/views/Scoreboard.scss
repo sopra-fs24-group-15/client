@@ -15,9 +15,9 @@
     @include center;
     flex-direction: column;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    @media (max-width: 950px) {
+    @media (max-width: 940px) {
       transform: scale(0.4);
       transform-origin: center center;
       margin-top: -40vw;
@@ -98,7 +98,7 @@
 
   .rankingContainer {
     display: flex;
-    align-items:center;
+    align-items:flex-start;
     width: 100%;
     padding-bottom: 1em;
   }
@@ -135,7 +135,33 @@
     width: 30em;
     border-radius: 0.75em;
     margin: 10px;
-    padding: 15px;
+    padding: 10px;
+
+    .user-info {
+      display: flex;
+      align-items:center;
+    }
+
+    .user-profile-picture {
+      width: 3em;
+      height: 3em;
+      border-radius: 50%;
+      display: flex;
+      justify-self: center;
+      margin-right: 0.5em;
+      margin-left: 0.5em;
+    }
+
+    .user-name {
+      display: flex;
+      align-items: center;
+    }
+
+    .user-score {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
     &:first-child {
       border-color: gold;

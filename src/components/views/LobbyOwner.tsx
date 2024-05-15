@@ -146,7 +146,7 @@ const LobbyOwner = () => {
 
   return (
     <BaseContainer className="lobby container">
-      <div>
+      <div className="home rulediv">
         {showRules && <Rules close={() => setShowRules(false)} />}
         {showLeavePopUp && <LeavePopUp close={() => toggleLeavePopUp()} leave={() => handleLeave()}/>}
       </div>
@@ -161,7 +161,7 @@ const LobbyOwner = () => {
 
         <table className="lobby infoContainer">
           <tr className="infoLobbyCode">
-            <td>LOBBY CODE</td>
+            <td>JOIN CODE</td>
             <td className="infoContent">{lobbycode}</td>
           </tr>
           <tr>
