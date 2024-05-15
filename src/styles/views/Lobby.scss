@@ -120,10 +120,13 @@
     width: 10em;
   }
   .users-container{
+    max-width: 100%;
     margin-bottom: 2em;
     display:flex;
     flex-direction: row;
+    justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
   
     .user-profile {
       position: relative;

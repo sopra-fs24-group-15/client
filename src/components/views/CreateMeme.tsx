@@ -363,6 +363,19 @@ const LobbyPlayer = () => {
           onChange={(n) => setSecondCaption(n)}
         />)}
 
+        {!submitted && boxCount >= 3 && (
+          <FormField1
+            placeholder= "Text 3"
+            value={thirdCaption}
+            onChange={(n) => setThirdCaption(n)}
+          />
+        )}
+        {!submitted && boxCount === 4 && 2 < boxCount &&(<FormField1
+          placeholder= "Text 4"
+          value = {fourthCaption}
+          onChange={(n) => setFourthCaption(n)}
+        />)}
+
         <div className="createMeme memeContainer">
           
           <div className="CreateMeme timer-wrapper">
@@ -394,19 +407,6 @@ const LobbyPlayer = () => {
           </Button>
 
         </div>
-
-        {!submitted && boxCount >= 3 && (
-          <FormField1
-            placeholder= "Text 3"
-            value={thirdCaption}
-            onChange={(n) => setThirdCaption(n)}
-          />
-        )}
-        {!submitted && boxCount === 4 && 2 < boxCount &&(<FormField1
-          placeholder= "Text 4"
-          value = {fourthCaption}
-          onChange={(n) => setFourthCaption(n)}
-        />)}
       </div>
     </BaseContainer>
   );
