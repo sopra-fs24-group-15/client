@@ -2,6 +2,8 @@ import "styles/views/FinalScreen.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import React, { useState, useEffect} from "react";
 import { Button } from "components/ui/Button";
+import User from "models/User";
+import Lobby from "models/Lobby";
 import { api } from "helpers/api";
 import {useNavigate} from "react-router-dom";
 
@@ -20,6 +22,9 @@ const FinalScreen = () => {
   const navigate = useNavigate();
   // scores
   const [scores, setScores] = useState([]);
+  // join again
+  const [joincode, setJoincode] = useState("");
+  const [username, setUsername] = useState("");
   // Rules
   const [showRules, setShowRules] = useState(false);
   const [showLeavePopUp, setShowLeavePopUp] = useState(false);
@@ -48,8 +53,34 @@ const FinalScreen = () => {
     if (responseIsOwner.data.lobbyOwner === ownUser){
       navigate("/lobby/owner");
     } else {
-      navigate("/lobby/player");
-    }
+      localStorage.removeItem("ownUserId");
+      const requestBody = JSON.stringify({username: localStorage.getItem("username"), isOwner: false});
+      console.log("Request to create user: " , requestBody);
+      try{
+        const createUserResponse = await api.post("/users", requestBody);
+        const user = new User(createUserResponse.data);
+        localStorage.setItem("ownUserId", user.userId);
+        console.log("Server response: ", createUserResponse.data);
+        const requestBody2 = JSON.stringify({lobbyJoinCode: joincode});
+        console.log(requestBody2);
+        try{
+          const createLobbyResponse = await api.put(`/lobbys/${user.userId}`, requestBody2);
+          console.log(createLobbyResponse.data);
+          const lobby = new Lobby(createLobbyResponse.data);
+          localStorage.setItem("lobbyId", lobby.lobbyId);
+          navigate("/lobby/player");
+        }
+        catch (err) {
+          const ownUser = localStorage.getItem("ownUserId");
+          localStorage.removeItem("ownUserId");
+          await api.delete(`/users/${ownUser}`);
+          navigate("/home");
+        }
+      }
+      catch (err) {
+        navigate("/home");
+      }
+    };
   }
 
   /* Ranking */
@@ -61,6 +92,15 @@ const FinalScreen = () => {
       setScores(sortedData[0]);
       const responseMeme = await api.get(`users/${sortedData[0].userId}/memes`);
       setWinnerMeme(responseMeme.data.MemeURL);
+      
+      /* Check if owner, leave if not*/
+      const ownUser = Number(localStorage.getItem("ownUserId"))
+      const responseIsOwner = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
+      setJoincode(responseIsOwner.data.lobbyJoinCode);
+      if (responseIsOwner.data.lobbyOwner !== ownUser){
+        const ownUser = localStorage.getItem("ownUserId");
+        await api.delete(`/users/${ownUser}`);
+      }
     };
 
     fetchScores();
