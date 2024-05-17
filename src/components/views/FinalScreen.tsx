@@ -1,6 +1,6 @@
 import "styles/views/FinalScreen.scss";
 import BaseContainer from "components/ui/BaseContainer";
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "components/ui/Button";
 import User from "models/User";
 import Lobby from "models/Lobby";
@@ -49,7 +49,15 @@ const FinalScreen = () => {
 
   const doLobby = async () => {
     const ownUser = Number(localStorage.getItem("ownUserId"))
-    const responseIsOwner = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
+    let responseIsOwner;
+    try {
+      responseIsOwner = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
+    } catch (err) {
+      navigate("/home");
+      localStorage.clear();
+      
+      return
+    }
     if (responseIsOwner.data.lobbyOwner === ownUser){
       navigate("/lobby/owner");
     } else {
@@ -63,14 +71,13 @@ const FinalScreen = () => {
         console.log("Server response: ", createUserResponse.data);
         const requestBody2 = JSON.stringify({lobbyJoinCode: joincode});
         console.log(requestBody2);
-        try{
+        try {
           const createLobbyResponse = await api.put(`/lobbys/${user.userId}`, requestBody2);
           console.log(createLobbyResponse.data);
           const lobby = new Lobby(createLobbyResponse.data);
           localStorage.setItem("lobbyId", lobby.lobbyId);
           navigate("/lobby/player");
-        }
-        catch (err) {
+        } catch (err) {
           const ownUser = localStorage.getItem("ownUserId");
           localStorage.removeItem("ownUserId");
           await api.delete(`/users/${ownUser}`);
