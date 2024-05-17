@@ -24,7 +24,6 @@ const FinalScreen = () => {
   const [scores, setScores] = useState([]);
   // join again
   const [joincode, setJoincode] = useState("");
-  const [username, setUsername] = useState("");
   // Rules
   const [showRules, setShowRules] = useState(false);
   const [showLeavePopUp, setShowLeavePopUp] = useState(false);
