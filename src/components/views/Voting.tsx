@@ -148,6 +148,8 @@ const Votingscreen = () => {
   };
 
   const currentMeme = memeData[currentMemeIndex] || "";
+  const currentMemeDisplayIndex = currentMemeIndex + 1;
+  const totalMemes = memeData.length;
   console.log(currentMeme); 
   console.log(currentMeme.memeurl)
     
@@ -186,8 +188,10 @@ const Votingscreen = () => {
 
           <div className="voting meme">
             <img src={currentMeme.memeURL} alt="current Meme URL"></img>
+            <div className="voting memeIndex">
+              <p>{currentMemeDisplayIndex}/{totalMemes}</p>
+            </div>
           </div>
-
         </div>
         <div className="voting button-container">
           <Button
