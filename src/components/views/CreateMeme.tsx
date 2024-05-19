@@ -217,7 +217,7 @@ const LobbyPlayer = () => {
     setTimeout(() => {
       setSubmitted(false);
       navigate("/voting")
-    }, 5000); // let server work
+    }, 8000); // let server work
   }
 
   /* Submit Button */
