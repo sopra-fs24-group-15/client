@@ -19,6 +19,18 @@ import { Rules } from "../ui/Rules";
 import Lobby from "models/Lobby";
 
 const LobbyOwner = () => {
+  //close
+  window.onbeforeunload = (event) => {
+    // Prevent the page from unloading
+    event.preventDefault();
+    if (localStorage.getItem("ownUserId") !== null) {
+      api.delete(`/users/${localStorage.getItem("ownUserId")}`);
+      localStorage.removeItem("ownUserId");
+      navigate("/home");
+    }
+    
+    return "Are you sure you want to leave?";
+  };
   // use react-router-dom's hook to access navigation, more info: https://reactrouter.com/en/main/hooks/use-navigate 
   const navigate = useNavigate();
   // Rules
