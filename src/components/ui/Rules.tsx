@@ -24,7 +24,7 @@ export const Rules = ({ close }) => (
       <h3>Topic Mode</h3>
       <ul>
         <li>There is a fixed amount of rounds played, standard: 5</li>
-        <li>A random player receives 3 topics an can select one</li>
+        <li>The player ranked last receives 3 topics an can select one</li>
         <li>Everyone receives a template and the selected topic to create a meme</li>
         <li>Submit your meme and wait for the others.</li>
         <li>Vote for meme you like the most and fulfills the topic.</li>

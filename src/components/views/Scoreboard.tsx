@@ -4,7 +4,6 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import React, { useState, useEffect} from "react";
 import { api } from "helpers/api";
 import {useNavigate} from "react-router-dom";
-import { User } from "types";
 
 // @ts-ignore
 import logo from "../img/logo.png";
