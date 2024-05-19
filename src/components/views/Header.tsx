@@ -23,6 +23,19 @@ window.addEventListener("beforeunload", (event) => {
   }
 });
 
+window.onbeforeunload = (event) => {
+  if (localStorage.getItem("ownUserId") !== null) {
+    api.delete(`/users/${localStorage.getItem("ownUserId")}`);
+    localStorage.removeItem("ownUserId");
+  } else {
+    // Prevent the page from unloading
+    event.preventDefault();
+    
+    return confirm;
+  }
+};
+
+
 const Header = props => {
   const [isLoading, setIsLoading] = useState(true);
 
