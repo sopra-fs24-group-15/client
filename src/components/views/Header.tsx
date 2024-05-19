@@ -11,25 +11,21 @@ import { Spinner } from "components/ui/Spinner";
  * https://react.dev/learn/your-first-component and https://react.dev/learn/passing-props-to-a-component 
  * @FunctionalComponent
  */
-window.addEventListener("unload", (event) => {
+window.addEventListener("beforeunload", (event) => {
   if (localStorage.getItem("ownUserId") !== null) {
-    api.delete(`/users/${localStorage.getItem("ownUserId")}`);
-    localStorage.removeItem("ownUserId");
-    window.location.reload();
+    console.log("beforeunload eventlistener")
   } else {
     // Prevent the page from unloading
     event.preventDefault();
-    window.location.reload();
     
     return confirm;
   }
 });
 
-window.onunload = (event) => {
+window.onbeforeunload = (event) => {
   if (localStorage.getItem("ownUserId") !== null) {
     api.delete(`/users/${localStorage.getItem("ownUserId")}`);
     localStorage.removeItem("ownUserId");
-    window.location.reload();
   } else {
     // Prevent the page from unloading
     event.preventDefault();
