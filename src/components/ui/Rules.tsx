@@ -11,27 +11,27 @@ export const Rules = ({ close }) => (
       <h3>Basic Mode</h3>
       <ul>
         <li>There is a fixed amount of rounds played, standard: 5</li>
-        <li>Everyones receives a template to create a meme</li>
+        <li>Everyones receives a template to create a meme.</li>
         <li>Submit your meme and wait for the others.</li>
         <li>Vote for meme you like the most.</li>
-        <li>Points</li>
+        <li>Points are given to all players.</li>
         <ul>
-          <li>Points: 1. 3 Points | 2. 2 Points | 3. 1 Point</li>
-          <li>If you receive no vote but are still ranked 2. or 3. you wont receive any points.</li>
+          <li>Each player earns points equal to the number of best meme votes they received.</li>
+          <li>If you receive no votes you receive 0 points.</li>
         </ul>
       </ul><br></br>
 
       <h3>Topic Mode</h3>
       <ul>
         <li>There is a fixed amount of rounds played, standard: 5</li>
-        <li>The player ranked last receives 3 topics an can select one</li>
-        <li>Everyone receives a template and the selected topic to create a meme</li>
+        <li>The player ranked last receives 3 topics an can select one.</li>
+        <li>Everyone receives a template and the selected topic to create a meme.</li>
         <li>Submit your meme and wait for the others.</li>
         <li>Vote for meme you like the most and fulfills the topic.</li>
-        <li>Points are given to the top 3 players</li>
+        <li>Points are given to all players.</li>
         <ul>
-          <li>Points: 1. 3 Points | 2. 2 Points | 3. 1 Point</li>
-          <li>If you receive no vote but are still ranked 2. or 3. you wont receive any points.</li>
+          <li>Each player earns points equal to the number of best meme votes they received.</li>
+          <li>If you receive no votes you receive 0 points.</li>
         </ul>
       </ul>
       {/*
