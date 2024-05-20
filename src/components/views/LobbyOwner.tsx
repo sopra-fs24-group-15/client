@@ -48,7 +48,7 @@ const LobbyOwner = () => {
   const [settingsMode, setSettingsMode] = useState("BASIC");
 
   const profileImages = {}
-  const totalImages = 15;
+  const totalImages = 20;
 
   for (let i = 1; i <= totalImages; i++) {
     profileImages[i] = `${i}.png`;
@@ -123,7 +123,6 @@ const LobbyOwner = () => {
   const UpdateProfilePicture = async () => {
     try {
       const userId = localStorage.getItem("ownUserId");
-      console.log(userId);
       api.put(`/users/${userId}/profilepictures`);
       fetchUsers();
     }
@@ -160,6 +159,7 @@ const LobbyOwner = () => {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(lobbycode);
+    console.log(profileImages)
   };
 
 
