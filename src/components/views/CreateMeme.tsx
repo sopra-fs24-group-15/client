@@ -224,7 +224,9 @@ const LobbyPlayer = () => {
 
   /* Time Up*/
   const doTimeUp = async () => {
-    doSubmit();
+    if (submitted === false) {
+      doSubmit();
+    }
     navigate("/loading")
     setTimeout(() => {
       setSubmitted(false);

@@ -98,6 +98,7 @@ const FinalScreen = () => {
       setScores(sortedData[0]);
       const responseMeme = await api.get(`users/${sortedData[0].userId}/memes`);
       setWinnerMeme(responseMeme.data.MemeURL);
+      console.log(responseMeme)
       
       /* Check if owner, leave if not*/
       const ownUser = Number(localStorage.getItem("ownUserId"))
