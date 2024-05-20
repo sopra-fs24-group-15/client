@@ -36,6 +36,18 @@ FormField1.propTypes = {
 };
 
 const LobbyPlayer = () => {
+  //close
+  window.onbeforeunload = (event) => {
+    // Prevent the page from unloading
+    event.preventDefault();
+    if (localStorage.getItem("ownUserId") !== null) {
+      api.delete(`/users/${localStorage.getItem("ownUserId")}`);
+      localStorage.removeItem("ownUserId");
+      navigate("/home");
+    }
+    
+    return "Are you sure you want to leave?";
+  };
   // use react-router-dom's hook to access navigation, more info: https://reactrouter.com/en/main/hooks/use-navigate 
   const navigate = useNavigate();
   // meme
@@ -187,10 +199,14 @@ const LobbyPlayer = () => {
   /* return to lobby if game is inactive*/
   useEffect(() => {
     const checkStatus = async () => {
-      const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
-      if (!response.data.gameActive) {
-        navigate("/lobby/player");
-        console.log(checkStatus)
+      try{
+        const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
+        if (!response.data.gameActive) {
+          navigate("/lobby/player");
+          console.log(checkStatus)
+        }
+      } catch (err) {
+        console.log(err);
       }
     };
   })
@@ -212,12 +228,14 @@ const LobbyPlayer = () => {
 
   /* Time Up*/
   const doTimeUp = async () => {
-    doSubmit();
+    if (submitted === false) {
+      doSubmit();
+    }
     navigate("/loading")
     setTimeout(() => {
       setSubmitted(false);
       navigate("/voting")
-    }, 5000); // let server work
+    }, 8000); // let server work
   }
 
   /* Submit Button */

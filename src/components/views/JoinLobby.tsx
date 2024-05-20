@@ -108,6 +108,7 @@ const JoinLobby = () => {
       const createUserResponse = await api.post("/users", requestBody);
       const user = new User(createUserResponse.data);
       localStorage.setItem("ownUserId", user.userId);
+      localStorage.setItem("username", username);
       console.log("Server response: ", createUserResponse.data);
       const requestBody2 = JSON.stringify({lobbyJoinCode: joinLobby});
       console.log(requestBody2);

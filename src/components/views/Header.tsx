@@ -11,17 +11,6 @@ import { Spinner } from "components/ui/Spinner";
  * https://react.dev/learn/your-first-component and https://react.dev/learn/passing-props-to-a-component 
  * @FunctionalComponent
  */
-window.addEventListener("beforeunload", (event) => {
-  if (localStorage.getItem("ownUserId") !== null) {
-    api.delete(`/users/${localStorage.getItem("ownUserId")}`);
-    localStorage.removeItem("ownUserId");
-  } else {
-    // Prevent the page from unloading
-    event.preventDefault();
-    
-    return confirm;
-  }
-});
 
 const Header = props => {
   const [isLoading, setIsLoading] = useState(true);
