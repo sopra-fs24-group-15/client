@@ -114,6 +114,9 @@ const ScoreboardFinal = () => {
       console.log(response.data)
       const sortedData = response.data.sort((a, b) => b.score - a.score);
       setScores(sortedData);
+      localStorage.setItem("firstPlaceName",sortedData[0].username)
+      localStorage.setItem("firstPlaceId",sortedData[0].userId)
+      localStorage.setItem("firstPlaceScores",sortedData[0].score)
     };
 
     fetchScores();

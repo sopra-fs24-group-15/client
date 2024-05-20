@@ -20,8 +20,6 @@ import { LeavePopUp } from "components/ui/LeavePopUp";
 const FinalScreen = () => {
   // use react-router-dom's hook to access navigation, more info: https://reactrouter.com/en/main/hooks/use-navigate 
   const navigate = useNavigate();
-  // scores
-  const [scores, setScores] = useState([]);
   // join again
   const [joincode, setJoincode] = useState("");
   // Rules
@@ -60,32 +58,35 @@ const FinalScreen = () => {
     if (responseIsOwner.data.lobbyOwner === ownUser){
       navigate("/lobby/owner");
     } else {
-      localStorage.removeItem("ownUserId");
-      const requestBody = JSON.stringify({username: localStorage.getItem("username"), isOwner: false});
-      console.log("Request to create user: " , requestBody);
-      try{
-        const createUserResponse = await api.post("/users", requestBody);
-        const user = new User(createUserResponse.data);
-        localStorage.setItem("ownUserId", user.userId);
-        console.log("Server response: ", createUserResponse.data);
-        const requestBody2 = JSON.stringify({lobbyJoinCode: joincode});
-        console.log(requestBody2);
-        try {
-          const createLobbyResponse = await api.put(`/lobbys/${user.userId}`, requestBody2);
-          console.log(createLobbyResponse.data);
-          const lobby = new Lobby(createLobbyResponse.data);
-          localStorage.setItem("lobbyId", lobby.lobbyId);
-          navigate("/lobby/player");
-        } catch (err) {
-          const ownUser = localStorage.getItem("ownUserId");
-          localStorage.removeItem("ownUserId");
-          await api.delete(`/users/${ownUser}`);
+      navigate("/loading");
+      setTimeout(async () => {
+        localStorage.removeItem("ownUserId");
+        const requestBody = JSON.stringify({username: localStorage.getItem("username"), isOwner: false});
+        console.log("Request to create user: " , requestBody);
+        try{
+          const createUserResponse = await api.post("/users", requestBody);
+          const user = new User(createUserResponse.data);
+          localStorage.setItem("ownUserId", user.userId);
+          console.log("Server response: ", createUserResponse.data);
+          const requestBody2 = JSON.stringify({lobbyJoinCode: joincode});
+          console.log(requestBody2);
+          try {
+            const createLobbyResponse = await api.put(`/lobbys/${user.userId}`, requestBody2);
+            console.log(createLobbyResponse.data);
+            const lobby = new Lobby(createLobbyResponse.data);
+            localStorage.setItem("lobbyId", lobby.lobbyId);
+            navigate("/lobby/player");
+          } catch (err) {
+            const ownUser = localStorage.getItem("ownUserId");
+            localStorage.removeItem("ownUserId");
+            await api.delete(`/users/${ownUser}`);
+            navigate("/home");
+          }
+        }
+        catch (err) {
           navigate("/home");
         }
-      }
-      catch (err) {
-        navigate("/home");
-      }
+      }, 2000);  
     };
   }
 
@@ -94,21 +95,21 @@ const FinalScreen = () => {
     const fetchScores = async () => {
       console.log("test")
       try {
-        const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/scores`);
-        const sortedData = response.data.sort((a, b) => b.score - a.score);
-        setScores(sortedData[0]);
-        const responseMeme = await api.get(`users/${sortedData[0].userId}/memes`);
+        const responseMeme = await api.get(`users/${localStorage.getItem("firstPlaceId")}/memes`);
         setWinnerMeme(responseMeme.data.MemeURL);
         console.log(responseMeme)
         
         /* Check if owner, leave if not*/
-        const ownUser = Number(localStorage.getItem("ownUserId"))
-        const responseIsOwner = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
-        setJoincode(responseIsOwner.data.lobbyJoinCode);
-        if (responseIsOwner.data.lobbyOwner !== ownUser){
-          const ownUser = localStorage.getItem("ownUserId");
-          await api.delete(`/users/${ownUser}`);
-        }
+        
+        setTimeout(async () => {
+          const ownUser = Number(localStorage.getItem("ownUserId"))
+          const responseIsOwner = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
+          setJoincode(responseIsOwner.data.lobbyJoinCode);
+          if (responseIsOwner.data.lobbyOwner !== ownUser){
+            const ownUser = localStorage.getItem("ownUserId");
+            await api.delete(`/users/${ownUser}`);
+          }
+        }, 2000);
       } catch (err) {
         console.log(err)
       }
@@ -135,7 +136,7 @@ const FinalScreen = () => {
         <h1 className="finalscreen title">WINNER</h1>
         <div className="finalscreen winner">
           <div className="finalscreen usernameBox">
-            <h1 className="finalscreen username">{scores.username} | {scores.score}p</h1>
+            <h1 className="finalscreen username">{localStorage.getItem("firstPlaceName")} | {localStorage.getItem("firstPlaceScores")}p</h1>
           </div>
           <img src={winnerMeme} alt="best meme of winner" className="finalscreen meme"></img>
           
