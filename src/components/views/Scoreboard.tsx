@@ -33,7 +33,7 @@ const ScoreboardFinal = () => {
 
   // profile images
   const profileImages = {}
-  const totalImages = 15;
+  const totalImages = 20;
 
   for (let i = 1; i <= totalImages; i++) {
     profileImages[i] = `${i}.png`;
