@@ -13,6 +13,8 @@ import rules from "../img/rules.png";
 import home from "../img/home.png";
 // @ts-ignore
 import refresh from "../img/refresh.png";
+// @ts-ignore
+import copy from "../img/copy.png";
 //Rules
 import { LeavePopUp } from "../ui/LeavePopUp";
 import { Rules } from "../ui/Rules";
@@ -156,6 +158,11 @@ const LobbyOwner = () => {
     return () => clearInterval(intervalId);
   }, []);
 
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(lobbycode);
+  };
+
+
   return (
     <BaseContainer className="lobby container">
       <div className="home rulediv">
@@ -175,6 +182,11 @@ const LobbyOwner = () => {
           <tr className="infoLobbyCode">
             <td>JOIN CODE</td>
             <td className="infoContent">{lobbycode}</td>
+            <td>
+              <button className="copy-button" onClick={copyToClipboard}>
+                <img src={copy} alt="Copy"/>
+              </button>
+            </td>
           </tr>
           <tr>
             <td>GAMEMODE</td>
