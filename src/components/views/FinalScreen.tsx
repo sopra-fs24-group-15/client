@@ -93,20 +93,24 @@ const FinalScreen = () => {
   useEffect(() => {
     const fetchScores = async () => {
       console.log("test")
-      const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/scores`);
-      const sortedData = response.data.sort((a, b) => b.score - a.score);
-      setScores(sortedData[0]);
-      const responseMeme = await api.get(`users/${sortedData[0].userId}/memes`);
-      setWinnerMeme(responseMeme.data.MemeURL);
-      console.log(responseMeme)
-      
-      /* Check if owner, leave if not*/
-      const ownUser = Number(localStorage.getItem("ownUserId"))
-      const responseIsOwner = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
-      setJoincode(responseIsOwner.data.lobbyJoinCode);
-      if (responseIsOwner.data.lobbyOwner !== ownUser){
-        const ownUser = localStorage.getItem("ownUserId");
-        await api.delete(`/users/${ownUser}`);
+      try {
+        const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}/scores`);
+        const sortedData = response.data.sort((a, b) => b.score - a.score);
+        setScores(sortedData[0]);
+        const responseMeme = await api.get(`users/${sortedData[0].userId}/memes`);
+        setWinnerMeme(responseMeme.data.MemeURL);
+        console.log(responseMeme)
+        
+        /* Check if owner, leave if not*/
+        const ownUser = Number(localStorage.getItem("ownUserId"))
+        const responseIsOwner = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
+        setJoincode(responseIsOwner.data.lobbyJoinCode);
+        if (responseIsOwner.data.lobbyOwner !== ownUser){
+          const ownUser = localStorage.getItem("ownUserId");
+          await api.delete(`/users/${ownUser}`);
+        }
+      } catch (err) {
+        console.log(err)
       }
     };
 

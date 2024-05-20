@@ -199,10 +199,14 @@ const LobbyPlayer = () => {
   /* return to lobby if game is inactive*/
   useEffect(() => {
     const checkStatus = async () => {
-      const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
-      if (!response.data.gameActive) {
-        navigate("/lobby/player");
-        console.log(checkStatus)
+      try{
+        const response = await api.get(`lobbys/${localStorage.getItem("lobbyId")}`);
+        if (!response.data.gameActive) {
+          navigate("/lobby/player");
+          console.log(checkStatus)
+        }
+      } catch (err) {
+        console.log(err);
       }
     };
   })
