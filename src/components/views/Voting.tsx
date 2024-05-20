@@ -131,8 +131,14 @@ const Votingscreen = () => {
       api.put(`lobbys/${localStorage.getItem("lobbyId")}/rounds/end`);
     }
     setTimeout(() => {
+      if (responseIsOwner.data.lobbyOwner === ownUser) {
+        //end round as owner
+        api.put(`lobbys/${localStorage.getItem("lobbyId")}/rounds/end`);
+      }
+    }, 2000);
+    setTimeout(() => {
       navigate("/scoreboard");
-    }, 3000);
+    }, 4000);
   };
 
   /* Submit Button */
