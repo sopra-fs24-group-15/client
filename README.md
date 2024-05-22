@@ -8,9 +8,9 @@
 
 Create the best Meme and win the game!
 
-We were motivated to create MemeBattle to build a community-centric, interactive, creative and entertaining online game.
+We were motivated to create MemeBattle to build a community-centric, interactive, creative and entertaining online game. With MemeBattle you can create hilarious memes, share them with your friends and competitors, and engage in friendly competition. By voting for your favorite meme of the round, all the users determine the ultimate winner. Whether you are an advanced meme-maker or just looking to enjoy a good laugh, MemeBattle offers you a space to express your creativity, to connect with others, and to celebrate the joy of memes. 
 
-## Technologies Used:
+## Technologies Used
 For the MemeBattle Webapplication we used the following technologies:
 
 - Frontend Development: HMTL, CSS, React, Imgflip API
@@ -20,15 +20,15 @@ For the MemeBattle Webapplication we used the following technologies:
 - CI/CD: GitHub Actions
 
 
-## High-level components:
-1. #### Lobby: 
+## High-level components
+1. #### Lobby 
     ###### Role
     The Lobby component serves as the central hub where users can gather, interact, and play a game. It manages the overall flow of the user experience and allows the LobbyOwner to change the GameSettings. It also allows every User to change his profilepicture and create memes.
     ##### Correlation
     The Lobby links all other components together. It ensures seamless transition and interaction between them.
     ##### Reference
     The main file for the Lobby component can be found at 'src/main/java/ch.uzh.ifi.hase.soprafs24/entity/Lobby' 
-2. #### User:
+2. #### User
     ##### Role
     The User components handles the creation of a UserProfile and all related aspects to it. This includes user authentication, so that there cannot be username duplicates. Additionally, it also handles profilepictures and saves them for later display in the ranking screen.
     ##### Correlation
@@ -36,7 +36,7 @@ For the MemeBattle Webapplication we used the following technologies:
     ##### Reference
     The main class for the User component is located in 'src/main/java/ch.uzh.ifi.hase.soprafs24/entity/User'
     
-3. #### Meme: 
+3. #### Meme
     ##### Role
     The Meme component is responsible for the creation and displaying of memes within the application. It handles all the meme-related functionalities such as creating a meme.
     ##### Correlation
@@ -47,7 +47,7 @@ For the MemeBattle Webapplication we used the following technologies:
 
 
 
-## Launch & Deployment:
+## Launch & Deployment
 For your local development environment, you will need Node.js.\
 We urge you to install the exact version **v20.11.0** which comes with the npm package manager. You can download it [here](https://nodejs.org/download/release/v20.11.0/).\
 If you are confused about which download to choose, feel free to use these direct links:
@@ -69,18 +69,18 @@ Next, you can start the app with:
 
 Now you can open [http://localhost:3000](http://localhost:3000) to view it in the browser.\
 
-## Illustrations: 
+## Illustrations
+(?)
+
+## Roadmap
+MemeBattle currently consists of two GameModes. There are many more possible GameModes to implement. This could, for example, be a  GameMode where users can choose pictures from their own gallery as the template, allowing a more personalized and diverse MemeBattle experience. Another exciting option could be a GameMode where users could write a Topic themselves, prompting others to create memes based on those topics, fostering creativity and also a more personalized experience.
 
 
-## Roadmap:
-MemeBattle currently consists of two GameModes. There are many more possible GameModes to implement. This could for example be a  Gamemode where Users can choose Pictures from their own gallery as the Template or where users could write a Topic themselves.
-Furthermore, .... (?)
-
-## Authors and acknowledgment:
-##### Authors: 
+## Authors and acknowledgment
+##### Authors
 Jana Muheim, Marc Huber, Marc Amsler, Christof Steiner, Gian Seifert
 
-##### Acknowledgment: 
+##### Acknowledgment
 We want to thank the UZH and Prof. Fritz for offering the SoPra module. Without this module MemeBattle most likely would'nt exist. Furthermore, we want to say a big thanks to our tutor Miro Vannini. With his important and well-thought inputs MemeBattle wouldn't be what it is today. 
 
 ## License
