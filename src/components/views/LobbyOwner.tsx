@@ -200,6 +200,12 @@ const LobbyOwner = () => {
             <td>ROUNDS</td>
             <td className="infoContent">{settingsRounds}</td>
           </tr>
+          {users.length >= 3 && (
+            <tr>
+              <td>MIN PLAYERS</td>
+              <td className="infoContent">3</td>
+            </tr>
+          )}
         </table>
         <div className="lobby users-container">
           {users.map((user, index) => (

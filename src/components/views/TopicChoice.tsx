@@ -41,6 +41,7 @@ const TopicChoice = () => {
 
   const handleLeave = async () => {
     const ownUser = localStorage.getItem("ownUserId");
+    api.post(`/lobbys/${localStorage.getItem("lobbyId")}/topics/${localStorage.getItem("ownUserId")}`, selectableTopics[1])
     localStorage.removeItem("ownUserId");
     await api.delete(`/users/${ownUser}`);
     navigate("/home");
