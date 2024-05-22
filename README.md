@@ -1,6 +1,6 @@
 # MemeBattle
 
-![logo.png](logo.png)
+![image.png](image.png)
 
 ## Introduction
 
