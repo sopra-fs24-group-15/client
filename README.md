@@ -1,4 +1,7 @@
 # MemeBattle
+
+![logo.png](logo.png)
+
 ## Introduction
 
 Create the best Meme and win the game!
@@ -69,7 +72,7 @@ Now you can open [http://localhost:3000](http://localhost:3000) to view it in th
 
 ## Roadmap:
 MemeBattle currently consists of two GameModes. There are many more possible GameModes to implement. This could for example be a  Gamemode where Users can choose Pictures from their own gallery as the Template or where users could write a Topic themselves.
-Furthermore, ....
+Furthermore, .... (?)
 
 ## Authors and acknowledgment:
 ##### Authors: 
