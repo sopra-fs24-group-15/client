@@ -115,4 +115,4 @@ Jana Muheim, Marc Huber, Marc Amsler, Christof Steiner, Gian Seifert
 We want to thank the UZH and Prof. Fritz for offering the SoPra module. Without this module MemeBattle most likely would'nt exist. Furthermore, we want to say a big thanks to our tutor Miro Vannini. With his important and well-thought inputs MemeBattle wouldn't be what it is today. 
 
 ## License
-GNU GPLv3
+Business Source License (BSL)
