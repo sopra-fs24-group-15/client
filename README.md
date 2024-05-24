@@ -70,7 +70,38 @@ Next, you can start the app with:
 Now you can open [http://localhost:3000](http://localhost:3000) to view it in the browser.\
 
 ## Illustrations
-(?)
+##### Home Screen:
+the user start at the Home Screen where they can choose between creating or joining a lobby. 
+
+![homescreen](./homescreen.png) \
+when the user chose to create a lobby, they only have to enter a username. If they chose to join a lobby they have to enter an username and a Lobby Join Code.
+
+After successfully entering a lobby all users can choose their profilepicture and read the rules of MemeBattle.
+The lobbyowner has in addition to that the possibility to select a GameMode, the creation time and the amount of rounds for that round.
+
+![Lobbyscreen](./lobbyscreen.png)
+
+Once there are between 3 and 8 players in the lobby the lobbyowner can start the game. Once the lobbyowner starts the game 
+
+All users get a template of a meme. They have to enter texts into the textfields. 
+
+![Editing](./editing.png)
+
+Once the player is content with his texts and he did not run out of time he can submit the meme early. After either all users have submitted their memes or the time has run out all the users are directed to the Voting Screen.
+
+![votingscreen](./votingscreen.png)
+
+After every player has submitted their vote for their favorite meme of the round, all players get directed to the ranking screen which is showing the current ranking. 
+
+![ranking](./ranking.png)
+
+If all rounds have been played all users get to the winning screen. This displays the best meme of the winner, i.e. the meme from the winner that has gotten the most votes.
+
+
+After the winning screen the players are encouraged to get back to the lobby and then play another round.
+![winningscreen](./winningscreen.png)
+
+During every stage of the game is the user able to leave the lobby and the user can also always click on the rules button to read the rules.
 
 ## Roadmap
 MemeBattle currently consists of two GameModes. There are many more possible GameModes to implement. This could, for example, be a  GameMode where users can choose pictures from their own gallery as the template, allowing a more personalized and diverse MemeBattle experience. Another exciting option could be a GameMode where users could write a Topic themselves, prompting others to create memes based on those topics, fostering creativity and also a more personalized experience.
@@ -84,4 +115,4 @@ Jana Muheim, Marc Huber, Marc Amsler, Christof Steiner, Gian Seifert
 We want to thank the UZH and Prof. Fritz for offering the SoPra module. Without this module MemeBattle most likely would'nt exist. Furthermore, we want to say a big thanks to our tutor Miro Vannini. With his important and well-thought inputs MemeBattle wouldn't be what it is today. 
 
 ## License
-GNU GPLv3
+This project is licensed with Apache-2.0 license.
