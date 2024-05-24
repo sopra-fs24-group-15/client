@@ -89,8 +89,6 @@ All users get a template of a meme. They have to enter texts into the textfields
 
 Once the player is content with his texts and he did not run out of time he can submit the meme early. After either all users have submitted their memes or the time has run out all the users are directed to the Voting Screen.
 
-![Lobbyscreen](./lobbyscreen.png)
-
 
 After every player has submitted their vote for their favorite meme of the round, all players get directed to the ranking screen which is showing the current ranking. 
 
