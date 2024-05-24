@@ -89,16 +89,17 @@ All users get a template of a meme. They have to enter texts into the textfields
 
 Once the player is content with his texts and he did not run out of time he can submit the meme early. After either all users have submitted their memes or the time has run out all the users are directed to the Voting Screen.
 
+![votingscreen](./votingscreen.png)
 
 After every player has submitted their vote for their favorite meme of the round, all players get directed to the ranking screen which is showing the current ranking. 
 
+![ranking](./ranking.png)
+
 If all rounds have been played all users get to the winning screen. This displays the best meme of the winner, i.e. the meme from the winner that has gotten the most votes.
 
-![votingscreen](./votingscreen.png)
 
 After the winning screen the players are encouraged to get back to the lobby and then play another round.
-
-![ranking](./ranking.png)
+![winningscreen](./winningscreen.png)
 
 During every stage of the game is the user able to leave the lobby and the user can also always click on the rules button to read the rules.
 
