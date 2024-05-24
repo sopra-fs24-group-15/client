@@ -22,7 +22,9 @@ const TopicChoice = () => {
     // Prevent the page from unloading
     event.preventDefault();
     if (localStorage.getItem("ownUserId") !== null) {
-      api.post(`/lobbys/${localStorage.getItem("lobbyId")}/topics/${localStorage.getItem("ownUserId")}`, selectableTopics[1])
+      if (doSelect){
+        api.post(`/lobbys/${localStorage.getItem("lobbyId")}/topics/${localStorage.getItem("ownUserId")}`, selectableTopics[1])
+      }
       api.delete(`/users/${localStorage.getItem("ownUserId")}`);
       localStorage.removeItem("ownUserId");
       navigate("/home");
@@ -41,6 +43,9 @@ const TopicChoice = () => {
 
   const handleLeave = async () => {
     const ownUser = localStorage.getItem("ownUserId");
+    if (doSelect) {
+      api.post(`/lobbys/${localStorage.getItem("lobbyId")}/topics/${localStorage.getItem("ownUserId")}`, selectableTopics[1])
+    }
     localStorage.removeItem("ownUserId");
     await api.delete(`/users/${ownUser}`);
     navigate("/home");
